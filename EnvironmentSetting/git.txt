@@ -1,0 +1,11 @@
+新增檔案的時候要先
+
+1. git status
+
+2. git add .
+
+3. git commit -a -m "update 甚麼內容"
+
+4. git push
+
+5. git status

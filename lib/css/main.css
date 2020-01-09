@@ -1,0 +1,160 @@
+.AddTaskBtn {
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  padding: 12px 24px;
+  border: 1px solid #a12727;
+  border-radius: 8px;
+  background: #e01616;
+  background: -webkit-gradient(linear, left top, left bottom, from(#e01616), to(#874040));
+  background: -moz-linear-gradient(top, #e01616, #874040);
+  background: linear-gradient(to bottom, #e01616, #874040);
+  font: normal normal bold 14px arial;
+  color: #ffffff;
+  text-decoration: none;
+}
+.AddTaskBtn:hover,
+.AddTaskBtn:focus {
+  background: #ff1a1a;
+  background: -webkit-gradient(linear, left top, left bottom, from(#ff1a1a), to(#a24d4d));
+  background: -moz-linear-gradient(top, #ff1a1a, #a24d4d);
+  background: linear-gradient(to bottom, #ff1a1a, #a24d4d);
+  color: #ffffff;
+  text-decoration: none;
+}
+.AddTaskBtn:active {
+  background: #860d0d;
+  background: -webkit-gradient(linear, left top, left bottom, from(#860d0d), to(#874040));
+  background: -moz-linear-gradient(top, #860d0d, #874040);
+  background: linear-gradient(to bottom, #860d0d, #874040);
+}
+.AddTaskBtn:before{
+  content:  "\0000a0";
+  display: inline-block;
+  height: 24px;
+  width: 24px;
+  line-height: 24px;
+  margin: 0 4px -6px -4px;
+  position: relative;
+  top: 0px;
+  left: -6px;
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAB4klEQVRIiZXVPWgUQRQH8N+dIYZgISlEJAQLiWghFkHEQmwUUirYKFjZWwo2Ym2hYCEWIioWkiKoXCEKQWyDWFiLpLASi3CIyHFazM7u7GR3sz54d/8387535g0Md+GDeIwXWO6hn3P4advEGk7iMEYN+p14RkXTRCHFC/hc4LliL9dpxTFSH5o2OLcbjhXkgYYZzuXeFJVjdnm2Tfga7mCxQ6fE6TegHiSXI17EOzzBFpbwFM+aKmhrUU5xfwb3McZPvMFrrGMWx/ASm9Eub1FTmWn242RtUjia4huOCnflNg5Fu6bMu07FRFV1lCM9F47zOs7Gxf9t0aRDNybzJ/Xb1KIh9rcYpxW0BUgTqJ2iWdzDcfwQbvAXzCcO1rBd4O/4rWpVmmCUaxEv4Zb6LLqAt9laE+9L8HVciXJazibO41yS8Xusaj5dKR5nLSp10gBbuIqLeCVMz9yhHnhO1boyYvyPfAIfcLqlJV18FyuJ3DroDmCjCJbrdeGR6pvsUMhpCR8Lgz40LxyKkvZggL9FoEHG2/iFy0U1+X7OZ7BXaG9c6/UWjHCkQyfSQ+F5ra33eUBWhFnTpbugujMlpTe5y/hTsX9KGGhNdBOPcl8DO9/Ytkd8GQ/UJ2hKX3Ejt/0HyEWLwlf7VCEAAAAASUVORK5CYII=") no-repeat left center transparent;
+  background-size: 100% 100%;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,400,500');
+@import url('https://fonts.googleapis.com/css?family=Inconsolata');
+$orange: #F25C54;
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #E8E8E8;
+  font-family: 'Raleway', sans-serif;
+}
+
+.cbox,
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  flex-direction: column;
+  height: 100vh;
+}
+
+.parent {
+  width: 200px;
+  height: 50px;
+  position: relative;
+  .add,
+  .cbox,
+  .message {
+    position: absolute;
+  }
+  .add,
+  .message {
+    color: $orange;
+  }
+  .add {
+    top: -3px;
+    right: 25px;
+    transition: 0.6s all 0.3s;
+    letter-spacing: 1px;
+  }
+}
+
+.message,
+.cbox {
+  outline: none;
+}
+
+.cbox {
+  top: -10px;
+  right: -10px;
+  width: 30px;
+  height: 30px;
+  background: $orange;
+  border-radius: 100%;
+  -webkit-appearance: none;
+  z-index: 3;
+  &:before,
+  &:after {
+    position: absolute;
+    content: '';
+    width: 20px;
+    height: 2px;
+    background: #E8E8E8;
+    transition: 0.4s all;
+  }
+  &:after {
+    transform: rotate(90deg);
+  }
+  &:checked {
+    ~.message {
+      width: 300px;
+      height: 50px;
+      transition: 0.3s width, 0.3s height 0.2s;
+    }
+    &:before,
+    &:after {
+      transform: rotate(360deg);
+      transition: 0.4s all;
+    }
+    ~.add {
+      font-size: 13px;
+      transform: translateY(-16px);
+      transition: 0.3s all;
+    }
+  }
+}
+
+.message {
+  right: 0;
+  height: 0;
+  width: 0;
+  transition: 0.4s all;
+  background: none;
+  border: 2px solid $orange;
+  transition: 0.4s width 0.2s, 0.1s height;
+  font-size: 30px;
+  padding-left: 10px;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 12px;
+  padding: 10px;
+  color: #333;
+  letter-spacing: 1px;
+  font-family: 'Inconsolata', monospace;
+  a {
+    color: $orange;
+  }
+}

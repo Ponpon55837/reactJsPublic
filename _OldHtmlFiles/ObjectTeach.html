@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <div id='root'>
+      <h2 id='title'></h2>
+      <input id='input' value='inputsomething'/>
+      <p id='page'></p>
+    </div>
+  </body>
+  <script>
+    var rootInnerHHTML = document.querySelector('#title').innerHTML = "Input March or Artis to show the car data"
+    var detectInput = document.querySelector('#input')
+    detectInput.addEventListener('input', (e) => {
+      if(detectInput.value == "Artis"){
+        artis.greeting()
+      }
+      else if(detectInput.value == "March"){
+        march.greeting()
+      }
+      else{
+        document.querySelector('#page').innerHTML = "Please input correct data"
+      }
+    })
+
+    function Car(band, name, color, price){
+      this.band = band
+      this.name = name
+      this.color = color
+      this.price = price
+    }
+
+    function Car1(band, name, color, price, generation){
+      Car.call(this, band, name, color, price)
+      this.generation = generation
+    }
+
+    Car.prototype.greeting = function() {
+      document.querySelector('#page').innerHTML ="Band: " + this.band + " Name: " + this.name + " olor: " + this.color + " Price: " + this.price
+    }
+
+    var artis = new Car("Toyota", "Artis" ,"Black", 670000)
+
+    Car1.prototype = Object.create(Car.prototype)
+    Car1.prototype.constructor = Car1
+    Car1.prototype.greeting = function() {
+      document.querySelector('#page').innerHTML ="Band: " + this.band + " Name: " + this.name + " olor: " + this.color + " Price: " + this.price  + " Generation: " + this.generation
+    }
+
+    var march = new Car1("Nissan","March", "Blue", 720000 , "GN4")
+  </script>
+</html>

@@ -1,0 +1,7 @@
+import React from 'react';
+export interface DrawerHeaderProps {
+    tag?: string;
+    className?: string;
+}
+declare const DrawerHeader: React.FunctionComponent<DrawerHeaderProps>;
+export default DrawerHeader;

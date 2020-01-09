@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="account.js"></script>
+    <script src="signUp.js"></script>
+  </head>
+  <body>
+    <form>
+      <label>
+        User ID:
+        <input type="text" id="user_id"/>
+        <small style="color:red" class="warningString">UserID format is not correct</small>
+      </label><br />
+      <label>
+        Email:
+        <input type="email" id="user_email"/>
+        <small style="color:red" class="warningString">Email format is not correct</small>
+      </label><br />
+      <label>
+        Password:
+        <input type="password" id="user_password"/><br />
+        <small style="color:red" class="warningString">Password format is not correct</small>
+      </label><br />
+      <label>
+        Password Confirmation:
+        <input type="password" id="user_password_confirmate"/><br />
+        <small style="color:red" class="warningString">Password Confirmation is not correct</small>
+      </label><br />
+      <button class="waves-effect waves-light btn" type="submit" id="submitbutton" disabled>login</button>
+    </form><br />
+    <a class="waves-effect waves-light btn" href="logpage.html">Log In Page</a>
+    <script>
+      var signInUp = new SignUp();
+    </script>
+  </body>
+</html>

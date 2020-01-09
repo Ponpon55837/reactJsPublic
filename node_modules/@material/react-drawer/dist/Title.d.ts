@@ -1,0 +1,7 @@
+import React from 'react';
+export interface DrawerTitleProps {
+    tag?: string;
+    className?: string;
+}
+declare const DrawerTitle: React.FunctionComponent<DrawerTitleProps>;
+export default DrawerTitle;

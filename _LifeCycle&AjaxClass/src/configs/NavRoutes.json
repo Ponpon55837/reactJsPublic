@@ -1,0 +1,7 @@
+[
+  {"url" : "/_LifeCycle&AjaxClass/index.html", "name" : "Home page"},
+  {"url" : "/_LifeCycle&AjaxClass/products/index.html", "name" : "Products page"},
+  {"url" : "/_LifeCycle&AjaxClass/user/index.html", "name" : "User page"},
+  {"url" : "/_LifeCycle&AjaxClass/user/login/index.html", "name" : "Login page"},
+  {"url" : "/_LifeCycle&AjaxClass/cart/index.html", "name" : "Cart page"}
+]
