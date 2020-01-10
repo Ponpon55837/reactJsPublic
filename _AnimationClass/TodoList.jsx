@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { merge, bounce, fadeInDownBig, rotateInDownLeft, zoomInLeft } from 'react-animations'
-import Radium, {StyleRoot} from 'radium';
+import Radium, {StyleRoot} from 'radium'
 
 const divCenter = {
   position: 'absolute', left: '50%', top: '50%',
