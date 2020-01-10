@@ -10,6 +10,17 @@ import TopAppBar, {
 } from '@material/react-top-app-bar'
 import MaterialIcon from '@material/react-material-icon'
 import Drawer, {DrawerAppContent} from '@material/react-drawer'
+import { merge, bounce, fadeInDownBig, rotateInDownLeft, zoomInLeft } from 'react-animations'
+import Radium, {StyleRoot} from 'radium'
+
+const rotateInDownLeftZoomInLeft = merge(rotateInDownLeft, zoomInLeft)
+
+const styles = {
+  rotateInDownLeftZoomInLeft: {
+    animation: 'x 2s',
+    animationName: Radium.keyframes(rotateInDownLeftZoomInLeft, 'rotateInDownLeftZoomInLeft')
+  }
+}
 
 class Nav extends Component {
   constructor(props) {
@@ -26,7 +37,7 @@ class Nav extends Component {
 
   render = () => {
     return (
-      <React.Fragment>
+      <StyleRoot>
         <Drawer modal open={this.state.open} onClose={this.closeDrawer}>
           <nav>
             <ul>
@@ -67,7 +78,7 @@ class Nav extends Component {
               <TopAppBarIcon navIcon tabIndex={0}>
                 <MaterialIcon hasRipple icon='menu' onClick={() => this.setState({open: !this.state.open})}/>
               </TopAppBarIcon>
-              <TopAppBarTitle>Everyday we need 歡樂!</TopAppBarTitle>
+              <TopAppBarTitle><div style={styles.rotateInDownLeftZoomInLeft}>Everyday we need 歡樂!</div></TopAppBarTitle>
             </TopAppBarSection>
             <TopAppBarSection align='end' role='toolbar'>
               <TopAppBarIcon actionItem tabIndex={0}>
@@ -81,7 +92,7 @@ class Nav extends Component {
             </TopAppBarSection>
           </TopAppBarRow>
         </TopAppBar>
-      </React.Fragment>
+      </StyleRoot>
     )
   }
 }
