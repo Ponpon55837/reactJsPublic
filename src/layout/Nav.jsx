@@ -36,6 +36,7 @@ class Nav extends Component {
   }
 
   render = () => {
+    let linkStyle = [styles.rotateInDownLeftZoomInLeft, {color:'#cc0066'}, {fontFamily: 'Open Sans'}]
     return (
       <StyleRoot>
         <Drawer modal open={this.state.open} onClose={this.closeDrawer}>
@@ -78,7 +79,7 @@ class Nav extends Component {
               <TopAppBarIcon navIcon tabIndex={0}>
                 <MaterialIcon hasRipple icon='menu' onClick={() => this.setState({open: !this.state.open})}/>
               </TopAppBarIcon>
-              <TopAppBarTitle><div style={styles.rotateInDownLeftZoomInLeft}>Everyday we need 歡樂!</div></TopAppBarTitle>
+              <TopAppBarTitle><div style={linkStyle}>我要拔刀啦</div></TopAppBarTitle>
             </TopAppBarSection>
             <TopAppBarSection align='end' role='toolbar'>
               <TopAppBarIcon actionItem tabIndex={0}>
