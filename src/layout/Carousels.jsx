@@ -25,7 +25,6 @@ class Carousels extends Component {
   }
 
   render = () => {
-    let PicSize = {width: 'auto', height: 600}
     return (
       <StyleRoot>
         <Carousel>
@@ -34,8 +33,8 @@ class Carousels extends Component {
               className="d-block w-100"
               src="https://images2.alphacoders.com/103/thumb-1920-1039238.jpg"
               alt="First slide"
-              style={styles.fadeInRight, PicSize}
-              fluid
+              style={styles.fadeInRight}
+              
             />
             <Carousel.Caption>
               <h3>First slide label</h3>
@@ -47,8 +46,8 @@ class Carousels extends Component {
               className="d-block w-100"
               src="https://images.alphacoders.com/104/thumb-1920-1044294.jpg"
               alt="Third slide"
-              style={styles.fadeInDown, PicSize}
-              fluid
+              style={styles.fadeInDown}
+              
             />
 
             <Carousel.Caption>
@@ -61,8 +60,8 @@ class Carousels extends Component {
               className="d-block w-100"
               src="https://images2.alphacoders.com/103/thumb-1920-1039239.jpg"
               alt="Third slide"
-              style={styles.fadeInLeft, PicSize}
-              fluid
+              style={styles.fadeInLeft}
+              
             />
 
             <Carousel.Caption>
