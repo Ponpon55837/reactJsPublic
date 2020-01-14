@@ -15,7 +15,7 @@ class Carousels extends Component {
         <Carousel.Item>
           <img
             className="d-block w-100"
-            src="holder.js/800x400?text=First slide&bg=373940"
+            src="https://images2.alphacoders.com/103/thumb-1920-1039238.jpg"
             alt="First slide"
           />
           <Carousel.Caption>
@@ -26,7 +26,7 @@ class Carousels extends Component {
         <Carousel.Item>
           <img
             className="d-block w-100"
-            src="holder.js/800x400?text=Second slide&bg=282c34"
+            src="https://images.alphacoders.com/104/thumb-1920-1044294.jpg"
             alt="Third slide"
           />
 
@@ -38,7 +38,7 @@ class Carousels extends Component {
         <Carousel.Item>
           <img
             className="d-block w-100"
-            src="holder.js/800x400?text=Third slide&bg=20232a"
+            src="https://images2.alphacoders.com/103/thumb-1920-1039239.jpg"
             alt="Third slide"
           />
 

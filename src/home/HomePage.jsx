@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { merge, bounce, fadeInDownBig, rotateInDownLeft, zoomInLeft } from 'react-animations'
 import Radium, {StyleRoot} from 'radium'
 import { Container, Row, Col, Card, CardGroup, Button } from 'react-bootstrap'
-
+import Carousels from '../layout/Carousels.jsx'
 
 const divCenter = {
   position: 'absolute', left: '50%', top: '50%',
@@ -53,6 +53,7 @@ class HomePage extends Component {
 
     return (
       <StyleRoot>
+        <Carousels />
         <Container>
           <Row>
             <CardGroup style={styles.bounce}>
