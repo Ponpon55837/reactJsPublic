@@ -27,22 +27,6 @@ const styles = {
   }
 }
 
-const stylePic = {
-  fadeInDown: {
-    animation: 'x 3s',
-    animationName: Radium.keyframes(fadeInDown, 'fadeInDown')
-  },
-  fadeInLeft: {
-    animation: 'x 3s',
-    animationName: Radium.keyframes(fadeInLeft, 'fadeInLeft')
-  },
-  fadeInRight: {
-    animation: 'x 3s',
-    animationName: Radium.keyframes(fadeInRight, 'fadeInRight')
-  }
-}
-
-
 class HomePage extends Component {
   constructor(props) {
 	super(props)
