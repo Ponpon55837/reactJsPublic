@@ -27,6 +27,21 @@ const styles = {
   }
 }
 
+const stylePic = {
+  fadeInDown: {
+    animation: 'x 3s',
+    animationName: Radium.keyframes(fadeInDown, 'fadeInDown')
+  },
+  fadeInLeft: {
+    animation: 'x 3s',
+    animationName: Radium.keyframes(fadeInLeft, 'fadeInLeft')
+  },
+  fadeInRight: {
+    animation: 'x 3s',
+    animationName: Radium.keyframes(fadeInRight, 'fadeInRight')
+  }
+}
+
 
 class HomePage extends Component {
   constructor(props) {
@@ -53,7 +68,11 @@ class HomePage extends Component {
 
     return (
       <StyleRoot>
-        <Carousels />
+        <Container lg={12} md={8} sm={4} xl={0} xs={0}>
+          <Row>
+            <Carousels />
+          </Row>
+        </Container><br />
         <Container>
           <Row>
             <CardGroup style={styles.bounce}>
