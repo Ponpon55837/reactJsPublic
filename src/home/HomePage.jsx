@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { merge, bounce, fadeInDownBig, rotateInDownLeft, zoomInLeft } from 'react-animations'
 import Radium, {StyleRoot} from 'radium'
-import { Container, Row, Col, Card, CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle, Button } from 'reactstrap'
+import { Container, Row, Col, Card, CardGroup, Button } from 'react-bootstrap'
 
 
 const divCenter = {
@@ -56,28 +55,48 @@ class HomePage extends Component {
       <StyleRoot>
         <Container>
           <Row>
-            <Col>
+            <CardGroup>
               <Card>
-                <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" />
-                <CardBody>
-                  <CardTitle>Card title</CardTitle>
-                  <CardSubtitle>Card subtitle</CardSubtitle>
-                  <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-                  <Button style={linkStyle} onMouseEnter={this.toggleHover}>Button</Button>
-                </CardBody>
+                <Card.Img variant="top" src="holder.js/100px160" />
+                <Card.Body>
+                  <Card.Title>Card title</Card.Title>
+                  <Card.Text>
+                    This is a wider card with supporting text below as a natural lead-in to
+                    additional content. This content is a little bit longer.
+                  </Card.Text>
+                </Card.Body>
+                <Card.Footer>
+                  <small className="text-muted">Last updated 3 mins ago</small>
+                </Card.Footer>
               </Card>
-            </Col>
-            <Col>
               <Card>
-                <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" />
-                <CardBody>
-                  <CardTitle>Card title</CardTitle>
-                  <CardSubtitle>Card subtitle</CardSubtitle>
-                  <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-                  <Button style={linkStyle} onMouseEnter={this.toggleHover}>Button</Button>
-                </CardBody>
+                <Card.Img variant="top" src="holder.js/100px160" />
+                <Card.Body>
+                  <Card.Title>Card title</Card.Title>
+                  <Card.Text>
+                    This card has supporting text below as a natural lead-in to additional
+                    content.{' '}
+                  </Card.Text>
+                </Card.Body>
+                <Card.Footer>
+                  <small className="text-muted">Last updated 3 mins ago</small>
+                </Card.Footer>
               </Card>
-            </Col>
+              <Card>
+                <Card.Img variant="top" src="holder.js/100px160" />
+                <Card.Body>
+                  <Card.Title>Card title</Card.Title>
+                  <Card.Text>
+                    This is a wider card with supporting text below as a natural lead-in to
+                    additional content. This card has even longer content than the first to
+                    show that equal height action.
+                  </Card.Text>
+                </Card.Body>
+                <Card.Footer>
+                  <small className="text-muted">Last updated 3 mins ago</small>
+                </Card.Footer>
+              </Card>
+            </CardGroup>
           </Row>
           <Row>
             <Col>1 of 3</Col>
