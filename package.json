@@ -53,6 +53,8 @@
     "@material/react-top-app-bar": "^0.15.0",
     "@material/react-typography": "^0.15.0",
     "bootstrap": "^4.4.1",
+    "browserslist": "^4.8.3",
+    "caniuse-lite": "^1.0.30001020",
     "fibers": "^4.0.1",
     "radium": "^0.26.0",
     "react-animation": "^1.2.2",
