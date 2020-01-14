@@ -55,9 +55,9 @@ class HomePage extends Component {
       <StyleRoot>
         <Container>
           <Row>
-            <CardGroup>
+            <CardGroup style={styles.bounce}>
               <Card>
-                <Card.Img variant="top" src="holder.js/100px160" />
+                <Card.Img variant="top" src="https://images6.alphacoders.com/103/thumb-1920-1037400.png" />
                 <Card.Body>
                   <Card.Title>Card title</Card.Title>
                   <Card.Text>
@@ -70,7 +70,7 @@ class HomePage extends Component {
                 </Card.Footer>
               </Card>
               <Card>
-                <Card.Img variant="top" src="holder.js/100px160" />
+                <Card.Img variant="top" src="https://images8.alphacoders.com/103/thumb-1920-1035095.png" />
                 <Card.Body>
                   <Card.Title>Card title</Card.Title>
                   <Card.Text>
@@ -83,7 +83,7 @@ class HomePage extends Component {
                 </Card.Footer>
               </Card>
               <Card>
-                <Card.Img variant="top" src="holder.js/100px160" />
+                <Card.Img variant="top" src="https://images.alphacoders.com/101/thumb-1920-1015202.png" />
                 <Card.Body>
                   <Card.Title>Card title</Card.Title>
                   <Card.Text>
