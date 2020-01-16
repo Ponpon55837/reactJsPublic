@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Container, Row, Col } from 'react-bootstrap'
-import Carousels from './Carousels.jsx'
+import Carousels from './Carousels.jsx'œ
 import Cards from './Cards.jsx'
 import Tabs from './Tabs.jsx'
 import { merge, bounce, fadeInDownBig, rotateInDownLeft, zoomInLeft } from 'react-animations'
