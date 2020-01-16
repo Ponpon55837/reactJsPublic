@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Jumbotron, Button } from 'react-bootstrap'
 
 class ProductsPage extends Component {
   constructor(props) {
@@ -16,9 +17,19 @@ class ProductsPage extends Component {
     // products由App.jsx外部傳入ProductsPage.jsx
     const {products} = this.props
     const count = products.length
-    return (<div>
-      Has {count} products
-    </div>)
+    return (
+      <div>
+        <Jumbotron>
+          <h1>Welcome to Product</h1>
+          <p>
+            THas {count} products
+          </p>
+          <p>
+            <Button variant="primary">Learn more</Button>
+          </p>
+        </Jumbotron>
+      </div>
+    )
   }
 }
 
