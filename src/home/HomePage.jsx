@@ -14,7 +14,7 @@ class HomePage extends Component {
 
   render = () => {
     console.log("HomePage render");
-
+    // rwd
     return (
       <Container lg={12} md={8} sm={4} xl={0} xs={0}>
         <Row>
