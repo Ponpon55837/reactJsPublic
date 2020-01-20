@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Jumbotron, Button } from 'react-bootstrap'
+import { Jumbotron, Button, Container, Row, Col} from 'react-bootstrap'
 import Contacts from './Contacts.jsx'
 
 class ProductsPage extends Component {
@@ -31,18 +31,30 @@ class ProductsPage extends Component {
     const {products} = this.props
     const count = products.length
     return (
-      <div>
-        <Jumbotron>
-          <h1>Welcome to Product</h1>
-          <p>
-            THas {count} products
-          </p>
-          <p>
-            <Button variant="primary">Learn more</Button>
-          </p>
-        </Jumbotron>
-        <Contacts contacts={this.state.contacts}/>
-      </div>
+      <Container lg={12} md={8} sm={4} xl={0} xs={0}>
+        <Row>
+          <Col md={1}></Col>
+          <Col md={10}>
+            <Jumbotron>
+              <h1>Welcome to Product</h1>
+              <p>
+                THas {count} products
+              </p>
+              <p>
+                <Button variant="primary">Learn more</Button>
+              </p>
+            </Jumbotron>
+          </Col>
+          <Col md={1}></Col>
+        </Row>
+        <Row>
+          <Col md={1}></Col>
+          <Col md={10}>
+            <Contacts contacts={this.state.contacts}/>
+          </Col>
+          <Col md={1}></Col>
+        </Row>
+      </Container>
     )
   }
 }
