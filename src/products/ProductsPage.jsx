@@ -1,15 +1,28 @@
 import React, { Component } from 'react'
 import { Jumbotron, Button } from 'react-bootstrap'
+import Contacts from './Contacts.jsx'
 
 class ProductsPage extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      contacts: []
+    }
   }
 
   componentDidMount = () => {
     const {productService} = this.props
     // 這裡的getProductdsFromServer是由外部App.jsx導入，才能去要到在ProductService.js裡面的function
     productService.getProductsFromServer()
+  }
+
+  componentDidMount = () => {
+    fetch('http://jsonplaceholder.typicode.com/users')
+    .then(res => res.json())
+    .then((data) => {
+      this.setState({ contacts: data })
+    })
+    .catch(console.log)
   }
 
   render = () => {
@@ -28,6 +41,7 @@ class ProductsPage extends Component {
             <Button variant="primary">Learn more</Button>
           </p>
         </Jumbotron>
+        <Contacts contacts={this.state.contacts}/>
       </div>
     )
   }
