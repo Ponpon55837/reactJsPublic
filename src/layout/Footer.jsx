@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { Container, Row, Col} from 'react-bootstrap'
 
 const fatFooter = {
-  position: 'fixed',
+  // position: 'fixed',
   height: '100px',
   bottom: '0',
   width: '100%',
@@ -16,12 +16,8 @@ class Footer extends Component {
 
   render = () => {
     return (
-      <Container>
-        <Row style={fatFooter}>
-          <Col>
-            hello world
-          </Col>
-        </Row>
+      <Container style={fatFooter}>
+        hello world
       </Container>
     )
   }

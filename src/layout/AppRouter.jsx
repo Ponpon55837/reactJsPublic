@@ -4,6 +4,7 @@ import LoginPage from '../user/LoginPage.jsx'
 import CartPage from '../cart/CartPage.jsx'
 import ProductsPage from '../products/ProductsPage.jsx'
 import HomePage from '../home/HomePage.jsx'
+import Footer from './Footer.jsx'
 
 // 原本應該要用<BrowserRouter>，但是用 as Router 之後就可以改成<Router>
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom"
@@ -74,6 +75,7 @@ class AppRouter extends Component {
               )
             }
           />
+          <Footer />
         </main>
       </Router>
     )
