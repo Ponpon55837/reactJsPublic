@@ -7,6 +7,8 @@ const fatFooter = {
   height: '100px',
   bottom: '0',
   width: '100%',
+  background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+  textAlign: 'center',
 }
 
 class Footer extends Component {
@@ -16,9 +18,9 @@ class Footer extends Component {
 
   render = () => {
     return (
-      <Container style={fatFooter}>
-        hello world
-      </Container>
+      <div style={fatFooter}>
+        Copyright by @upfloor5 2020
+      </div>
     )
   }
 }

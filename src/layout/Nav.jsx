@@ -22,6 +22,10 @@ const styles = {
   }
 }
 
+const mainStyle = {
+  background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)'
+}
+
 class Nav extends Component {
   constructor(props) {
     super(props)
@@ -73,7 +77,7 @@ class Nav extends Component {
             </ul>
           </nav>
         </Drawer>
-        <TopAppBar>
+        <TopAppBar style={mainStyle}>
           <TopAppBarRow>
             <TopAppBarSection align='start'>
               <TopAppBarIcon navIcon tabIndex={0}>
