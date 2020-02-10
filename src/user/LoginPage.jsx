@@ -46,36 +46,38 @@ class LoginPage extends Component {
 
   render = () => {
     console.log("LoginPage render")
-    return (<div>
-      <form ref={this.form}>
-        <h1>Log In</h1>
-        <p>
-          <input
-            type="text"
-            name="username"
-            value={this.state.username}
-            onChange={this.inputHandler}
-          />
-        </p>
-        <p>
-          <input
-            type="password"
-            name="password"
-            value={this.state.password}
-            onChange={this.inputHandler}
-          />
-        </p>
-        {
-          this.state.error ?
-          (
-            <p style={{color: "red"}} >
-              Error: { this.state.error.message}
-            </p>
-          ) : null
-        }
-        <button type="submit" onClick={this.login}>Login</button>
-      </form>
-    </div>)
+    return (
+      <div>
+        <form ref={this.form}>
+          <h1>Log In</h1>
+          <p>
+            <input
+              type="text"
+              name="username"
+              value={this.state.username}
+              onChange={this.inputHandler}
+            />
+          </p>
+          <p>
+            <input
+              type="password"
+              name="password"
+              value={this.state.password}
+              onChange={this.inputHandler}
+            />
+          </p>
+          {
+            this.state.error ?
+            (
+              <p style={{color: "red"}} >
+                Error: { this.state.error.message}
+              </p>
+            ) : null
+          }
+          <button type="submit" onClick={this.login}>Login</button>
+        </form>
+      </div>
+    )
   }
 }
 

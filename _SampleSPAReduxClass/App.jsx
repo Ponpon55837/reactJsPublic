@@ -5,7 +5,6 @@ import ProductService from './utils/ProductService'
 import AppRouter from './layout/AppRouter.jsx'
 import Nav from './layout/Nav.jsx'
 
-
 // 為了讓async await能跑才要import這個進來
 import 'babel-polyfill'
 
