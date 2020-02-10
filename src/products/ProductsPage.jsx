@@ -17,7 +17,7 @@ class ProductsPage extends Component {
   }
 
   componentDidMount = () => {
-    fetch('http://jsonplaceholder.typicode.com/users')
+    fetch('https://vuetest-69b45.firebaseapp.com/json/contact.json')
     .then(res => res.json())
     .then((data) => {
       this.setState({ contacts: data })
