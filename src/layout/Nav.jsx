@@ -43,7 +43,7 @@ class Nav extends Component {
     let linkStyle = [styles.rotateInDownLeftZoomInLeft, {color:'#cc0066'}, {fontFamily: 'Open Sans'}]
     return (
       <StyleRoot>
-        <Drawer modal open={this.state.open} onClose={this.closeDrawer}>
+        <Drawer modal open={this.state.open} onClose={this.closeDrawer} style={{background: 'linear-gradient(45deg, #FE6B8B 20%, #FF8E53 100%)'}}>
           <nav>
             <ul>
               <li>
