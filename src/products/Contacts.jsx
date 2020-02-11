@@ -5,7 +5,7 @@ import { Container, Row, Col, Card, CardGroup, Carousel, Button } from 'react-bo
 const Contacts = ({ contacts }) => {
 
   return (
-    <div>
+    <React.Fragment>
       <center><h1>Contact List</h1></center>
       {
         contacts.map( (contact) => (
@@ -20,7 +20,7 @@ const Contacts = ({ contacts }) => {
           </Card>
         ))
       }
-    </div>
+    </React.Fragment>
   )
 }
 
