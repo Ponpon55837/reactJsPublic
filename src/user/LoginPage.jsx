@@ -1,4 +1,14 @@
 import React, { Component } from 'react'
+import { Container, Row, Col, Card, CardGroup, Carousel, Button } from 'react-bootstrap'
+
+const loginStyle = {
+  marginTop: '20%',
+  marginBottom: '26%'
+}
+
+const inputOutlineStyle = {
+  borderColor: 'pink'
+}
 
 class LoginPage extends Component {
   constructor(props) {
@@ -47,36 +57,52 @@ class LoginPage extends Component {
   render = () => {
     console.log("LoginPage render")
     return (
-      <div>
-        <form ref={this.form}>
-          <h1>Log In</h1>
-          <p>
-            <input
-              type="text"
-              name="username"
-              value={this.state.username}
-              onChange={this.inputHandler}
-            />
-          </p>
-          <p>
-            <input
-              type="password"
-              name="password"
-              value={this.state.password}
-              onChange={this.inputHandler}
-            />
-          </p>
-          {
-            this.state.error ?
-            (
-              <p style={{color: "red"}} >
-                Error: { this.state.error.message}
-              </p>
-            ) : null
-          }
-          <button type="submit" onClick={this.login}>Login</button>
-        </form>
-      </div>
+      <Container>
+        <Row>
+          <Col md={1}></Col>
+          <Col md={10}>
+            <Card style={loginStyle}>
+              <Card.Body>
+                <form ref={this.form}>
+                  <center>
+                    <h1>Log In</h1>
+                    <Card.Title>
+                      Username
+                      <input
+                        type="text"
+                        name="username"
+                        value={this.state.username}
+                        onChange={this.inputHandler}
+                        style={inputOutlineStyle}
+                      />
+                    </Card.Title>
+                    <Card.Title>
+                      Password
+                      <input
+                        type="password"
+                        name="password"
+                        value={this.state.password}
+                        onChange={this.inputHandler}
+                        style={inputOutlineStyle}
+                      />
+                    </Card.Title>
+                    {
+                      this.state.error ?
+                      (
+                        <p style={{color: "red"}} >
+                          Error: { this.state.error.message}
+                        </p>
+                      ) : null
+                    }
+                    <button type="submit" onClick={this.login}>Login</button>
+                  </center>
+                </form>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md={1}></Col>
+        </Row>
+      </Container>
     )
   }
 }

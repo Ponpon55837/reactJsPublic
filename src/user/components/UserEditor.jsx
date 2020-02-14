@@ -1,4 +1,10 @@
 import React from 'react'
+import { Container, Row, Col, Card, CardGroup, Carousel, Button } from 'react-bootstrap'
+
+const fragmentStyle = {
+  marginTop: '30px',
+  marginBottom: '30px',
+}
 
 // 原本寫成 const UserEditor = (props, handler) => {
 const UserEditor = ({ user, handler }) => {
@@ -16,19 +22,24 @@ const UserEditor = ({ user, handler }) => {
   // 因為使用textarea的關係,所以value值要直接寫進來,而不是放在textarea之間</textarea>
   // 因為這邊用是let textareaHandler 是變數所以不用this.textareaHandler
   return (
-    <div>
-      <p>{id}</p>
-      <p>{name}</p>
-      <p>{email}</p>
-      <textarea
-        name="description"
-        cols="100"
-        rows="10"
-        value={description}
-        onChange={textareaHandler}
-      ></textarea>
-    </div>
+    <React.Fragment>
+      <Card style={fragmentStyle}>
+        <Card.Body>
+          <Card.Title>{id}</Card.Title>
+          <Card.Subtitle className="mb-2 text-muted">{name}</Card.Subtitle>
+          <Card.Text>{email}</Card.Text>
+          <Card.Text>
+            <textarea
+              name="description"
+              rows="10"
+              value={description}
+              onChange={textareaHandler}
+            ></textarea>
+          </Card.Text>
+        </Card.Body>
+      </Card>
+    </React.Fragment>
   )
 }
 
-export default UserEditor;
+export default UserEditor

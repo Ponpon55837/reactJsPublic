@@ -14,9 +14,8 @@ class ProductsPage extends Component {
     const {productService} = this.props
     // 這裡的getProductdsFromServer是由外部App.jsx導入，才能去要到在ProductService.js裡面的function
     productService.getProductsFromServer()
-  }
 
-  componentDidMount = () => {
+    // api using
     fetch('https://vuetest-69b45.firebaseapp.com/json/contact.json')
     .then(res => res.json())
     .then((data) => {
@@ -38,7 +37,7 @@ class ProductsPage extends Component {
             <Jumbotron>
               <h1>Welcome to Product</h1>
               <p>
-                THas {count} products
+                That Has {count} products
               </p>
               <p>
                 <Button variant="primary">Learn more</Button>
