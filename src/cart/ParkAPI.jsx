@@ -8,7 +8,7 @@ const ParkAPI = ({ parkAPI }) => {
     <React.Fragment>
       <center><h1>Park List</h1></center>
       {
-        parkAPI.map( (park) => (
+        parkAPI.map( (park, parkIndex) => (
           <Card>
             <Card.Body key={park.areaId}>
               <Card.Title>{park.parkId}</Card.Title>

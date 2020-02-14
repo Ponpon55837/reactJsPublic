@@ -8,7 +8,7 @@ const Contacts = ({ contacts }) => {
     <React.Fragment>
       <center><h1>Contact List</h1></center>
       {
-        contacts.map( (contact) => (
+        contacts.map( (contact, contactIndex) => (
           <Card>
             <Card.Body key={contact.id}>
               <Card.Title>{contact.name}</Card.Title>
