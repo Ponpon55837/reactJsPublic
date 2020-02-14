@@ -10,7 +10,7 @@ const Contacts = ({ contacts }) => {
       {
         contacts.map( (contact, contactIndex) => (
           <Card>
-            <Card.Body key={contactIndex}>
+            <Card.Body {...contact} key={contactIndex.toString()} >
               <Card.Title>{contact.name}</Card.Title>
               <Card.Subtitle className="mb-2 text-muted">{contact.email}</Card.Subtitle>
               <Card.Text>{contact.company.catchPhrase}</Card.Text>

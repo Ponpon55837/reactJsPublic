@@ -6,7 +6,8 @@ module.exports = {
   }, //  entry: './src/main.jsx'
   output: {
     path: path.resolve(__dirname, 'lib/js'),
-    filename: '[name].js' // main.js
+    filename: '[name].js', // main.js
+    publicPath: '/',
   },
   mode: "development", // production || development || none
   module: {
@@ -35,5 +36,8 @@ module.exports = {
   // 為了避免無法bundle的情況,避免某個jsx檔大於250kib
   performance : {
     hints : false
-  }
+  },
+  devServer: {
+    historyApiFallback: true
+  },
 };

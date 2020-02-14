@@ -10,7 +10,7 @@ const ParkAPI = ({ parkAPI }) => {
       {
         parkAPI.map( (park, parkIndex) => (
           <Card>
-            <Card.Body key={parkIndex}>
+            <Card.Body {...park} key={parkIndex.toString()}>
               <Card.Title>{park.parkId}</Card.Title>
               <Card.Text>停車場：{park.parkName}</Card.Text>
               <Card.Text>收費方式：{park.payGuide}</Card.Text>
