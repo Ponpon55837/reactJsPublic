@@ -16,7 +16,7 @@ class HomePage extends Component {
     console.log("HomePage render");
     // rwd test
     return (
-      <Container lg={12} md={8} sm={4} xl={0} xs={0}>
+      <Container maxWidth="xl">
         <Row>
           <Carousels />
         </Row><br />

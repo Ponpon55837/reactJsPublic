@@ -22,7 +22,7 @@ class UserPage extends Component {
 
     const {user} = this.props
     return (
-      <Container>
+      <Container maxWidth="xl">
         <Row>
           <Col md={1}></Col>
           <Col md={10}>

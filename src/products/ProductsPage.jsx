@@ -30,7 +30,7 @@ class ProductsPage extends Component {
     const {products} = this.props
     const count = products.length
     return (
-      <Container lg={12} md={8} sm={4} xl={0} xs={0}>
+      <Container maxWidth="xl">
         <Row>
           <Col md={1}></Col>
           <Col md={10}>
