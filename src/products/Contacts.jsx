@@ -9,20 +9,22 @@ import Typography from '@material-ui/core/Typography'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
 
-const useStyles = makeStyles(theme => ({
-  rootBorder: {
-    width: '100%',
-    marginBottom: '2rem',
-  },
-  root: {
-    width: '100%',
-    marginBottom: '1rem',
-  },
-  heading: {
-    fontSize: theme.typography.pxToRem(20),
-    fontWeight: theme.typography.fontWeightRegular,
-  },
-}))
+const useStyles = makeStyles(
+  theme => ({
+    rootBorder: {
+      width: '100%',
+      marginBottom: '2rem',
+    },
+    root: {
+      width: '100%',
+      marginBottom: '1rem',
+    },
+    heading: {
+      fontSize: theme.typography.pxToRem(20),
+      fontWeight: theme.typography.fontWeightRegular,
+    },
+  }
+))
 
 
 const Contacts = ({ contacts }) => {
