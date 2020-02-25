@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 import { Jumbotron, Button, Container, Row, Col} from 'react-bootstrap'
 import Contacts from './Contacts.jsx'
 
+const jumbotronStyle = {
+  marginTop:'1rem',
+}
+
 class ProductsPage extends Component {
   constructor(props) {
     super(props)
@@ -34,7 +38,7 @@ class ProductsPage extends Component {
         <Row>
           <Col md={1}></Col>
           <Col md={10}>
-            <Jumbotron>
+            <Jumbotron style={jumbotronStyle}>
               <h1>Welcome to Product</h1>
               <p>
                 That Has {count} products
