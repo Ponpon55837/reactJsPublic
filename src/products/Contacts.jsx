@@ -23,6 +23,10 @@ const useStyles = makeStyles(
       fontSize: theme.typography.pxToRem(20),
       fontWeight: theme.typography.fontWeightRegular,
     },
+    texting: {
+      fontSize: theme.typography.pxToRem(18),
+      fontWeight: theme.typography.fontWeightRegular,
+    },
   }
 ))
 
@@ -42,11 +46,14 @@ const Contacts = ({ contacts }) => {
                 aria-controls="{contact.id}a-content"
                 id={contact.id}
               >
-                <Typography className={classes.heading}>{contact.name}，{contact.email}</Typography>
+                <Typography className={classes.heading}>ID：{contact.id} & Name：{contact.name}</Typography>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
-                <Typography>
-                {contact.company.catchPhrase}，{contact.phone}，{contact.address.street}
+                <Typography className={classes.texting}>
+                Mail：{contact.email}<br />
+                Company：{contact.company.catchPhrase}<br />
+                Phone：{contact.phone}<br />
+                Address：{contact.address.street}
                 </Typography>
               </ExpansionPanelDetails>
             </ExpansionPanel>
