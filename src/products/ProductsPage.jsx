@@ -36,8 +36,7 @@ class ProductsPage extends Component {
     return (
       <Container maxWidth="xl">
         <Row>
-          <Col md={1}></Col>
-          <Col md={10}>
+          <Col md={12}>
             <Jumbotron style={jumbotronStyle}>
               <h1>Welcome to Product</h1>
               <p>
@@ -48,14 +47,11 @@ class ProductsPage extends Component {
               </p>
             </Jumbotron>
           </Col>
-          <Col md={1}></Col>
         </Row>
         <Row>
-          <Col md={1}></Col>
-          <Col md={10}>
+          <Col md={12}>
             <Contacts contacts={this.state.contacts}/>
           </Col>
-          <Col md={1}></Col>
         </Row>
       </Container>
     )

@@ -59,8 +59,7 @@ class LoginPage extends Component {
     return (
       <Container maxWidth="xl">
         <Row>
-          <Col md={1}></Col>
-          <Col md={10}>
+          <Col md={12}>
             <Card style={loginStyle}>
               <Card.Body>
                 <form ref={this.form}>
@@ -100,7 +99,6 @@ class LoginPage extends Component {
               </Card.Body>
             </Card>
           </Col>
-          <Col md={1}></Col>
         </Row>
       </Container>
     )

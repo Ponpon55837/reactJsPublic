@@ -32,8 +32,7 @@ class CartPage extends Component {
     return (
       <Container maxWidth="xl">
         <Row>
-          <Col md={1}></Col>
-          <Col md={10}>
+          <Col md={12}>
             <Jumbotron style={jumbotronStyle}>
               <h1>Welcome to CartPage</h1>
               <p>
@@ -42,14 +41,11 @@ class CartPage extends Component {
             </Jumbotron>
             <CartPageBread />
           </Col>
-          <Col md={1}></Col>
         </Row>
         <Row>
-          <Col md={1}></Col>
-          <Col md={10}>
+          <Col md={12}>
             <ParkAPI parkAPI={parkAPI}/>
           </Col>
-          <Col md={1}></Col>
         </Row>
       </Container>
     )

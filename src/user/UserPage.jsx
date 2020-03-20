@@ -24,19 +24,15 @@ class UserPage extends Component {
     return (
       <Container maxWidth="xl">
         <Row>
-          <Col md={1}></Col>
-          <Col md={10}>
+          <Col md={12}>
             <center><h2>Say Something</h2></center>
           </Col>
-          <Col md={1}></Col>
         </Row>
         <Row>
-          <Col md={1}></Col>
-          <Col md={10}>
+          <Col md={12}>
             <UserEditor user={user} handler={this.inputHandler} />
             <UserVideos likes={user.videos.likes} />
           </Col>
-          <Col md={1}></Col>
         </Row>
     </Container>
     )
