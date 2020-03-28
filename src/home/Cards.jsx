@@ -46,7 +46,7 @@ class Cards extends Component {
     else {
       linkStyle = styles.bounce
     }
-    
+
     return (
       <StyleRoot>
         <CardGroup style={styles.bounce}>
@@ -56,7 +56,7 @@ class Cards extends Component {
               <Card.Title>Card title</Card.Title>
               <Card.Text>
                 This is a wider card with supporting text below as a natural lead-in to
-                additional content. This content is a little bit longer.
+                additional content. This content is a little bit longer.TTT
               </Card.Text>
             </Card.Body>
             <Card.Footer>
