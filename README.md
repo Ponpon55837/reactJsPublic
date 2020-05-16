@@ -6,8 +6,9 @@
 3.   選擇想要的資料夾，將內容複製到src資料夾
 4.   在終端機中 `npm run watch` 或是 `npm run build` 即可進行compile動作  
 
->####如果安裝完畢發現無法使用`npm run build` 或是 `npm run watch`
->####請使用 `npm install`重新安裝 npm
+>如果安裝完畢發現無法使用`npm run build` 或是 `npm run watch`
+>
+>請使用 `npm install`重新安裝 npm
 ---
 
 ## 2. 文件內容
@@ -15,6 +16,18 @@
 2. 使用`npm run build` 就是使用在package.json中 `"build": "webpack"`
 3.   使用`npm run watch` 就是使用在package.json中 `"watch": "webpack -w"` 因為watch可要讓在開發時持續compile，**推薦使用**
 4.  **至於其它部分如無需要儘量不要修改，避免出錯**
+
+```
+"build": "webpack",
+    "watch": "webpack -w",
+    "build_webpack": "webpack --config webpack.config.js",
+    "build_js&sass": "npm run js & npm run sass",
+    "dev_watch": "start npm run js_watch & start npm run sass_watch",
+    "js": "babel src -d lib",
+    "js_watch": "babel --watch src -d lib",
+    "sass": "sass scss:css",
+    "sass_watch": "sass --watch scss:css"
+```
     
 ## 3. 備註 
 下面是被丟到firebase上的測試程式，使用目前在src資料夾compile的內容
