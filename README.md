@@ -6,6 +6,10 @@
 3.   選擇想要的資料夾，將內容複製到src資料夾
 4.   在終端機中 `npm run watch` 或是 `npm run build` 即可進行compile動作  
 
+>####如果安裝完畢發現無法使用`npm run build` 或是 `npm run watch`
+>####請使用 `npm install`重新安裝 npm
+---
+
 ## 2. 文件內容
 1. 在資料夾名稱前面有_前綴的資料夾都是舊的檔案，使用者可以直接拿來閱讀或是複製到src資料夾compile使用
 2. 使用`npm run build` 就是使用在package.json中 `"build": "webpack"`
@@ -17,3 +21,4 @@
 	
 <label>測試網站</label>
 <a href="https://vuetest-69b45.firebaseapp.com/">https://vuetest-69b45.firebaseapp.com/</a>
+
