@@ -114,6 +114,7 @@ const Table = ({
 
     th {
       padding: 0.4rem;
+      border-right: 1px solid #e1e5eb;
     }
 
     td {
@@ -136,14 +137,27 @@ const Table = ({
       left: 0;
       top: 0;
       z-index: 1;
+      border-right: 3px solid #e1e5eb;
+    }
+
+    th.sticky-left {
+      background-color: #FBFBFB
+    }
+    th.sticky-right {
+      background-color: #FBFBFB
+    }
+
+    td.sticky-left:nth-of-type(odd) {
       background-color: #F2F2F2;
     }
+
     .sticky-right {
       position: sticky !important;
       right: 0;
       top: 0;
       z-index: 1;
       background-color: #F2F2F2;
+      border-left: 3px solid #e1e5eb;
     }
   `;
 
@@ -169,7 +183,7 @@ const Table = ({
     <div css={styles} className="overflow-scroll">
       <table
         className={`table table-striped mb-0
-          ${tableStyle ? 'fixed-table' : 'free-table'}`}
+          ${tableStyle && data.length > 0 ? 'fixed-table' : 'free-table'}`}
         {...getTableProps()}
       >
         <thead className="bg-light ">
@@ -248,7 +262,7 @@ const Table = ({
           {page.length === 0 && !loading &&
             <tr><td className="text-center">目前無資料</td></tr>}
         </tbody>
-        {tableStyle &&
+        {tableStyle && data.length > 0 &&
           <tfoot>
             <tr>
               <td> </td>
