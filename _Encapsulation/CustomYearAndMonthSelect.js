@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Row,
   Col,
-} from 'shards-react';
+} from 'react-bootstrap';
 import moment from 'moment';
 import Select from 'react-select';
 import { css } from "@emotion/core";

@@ -3,7 +3,7 @@ import {
   ButtonGroup,
   Button,
   FormSelect,
-} from "shards-react";
+} from "react-bootstrap";
 
 const PaginationAndSelect = ({
   pageValue,

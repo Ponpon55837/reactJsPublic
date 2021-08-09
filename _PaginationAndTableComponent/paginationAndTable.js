@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardBody,
   FormSelect,
-} from 'shards-react';
+} from 'react-bootstrap';
 import Pagination from "./Pagination";
 import Table from './Table';
 
