@@ -5,6 +5,7 @@ const CustomTextField = ({
   label,
   type = 'text',
   variant = 'standard',
+  helperText='',
   autoComplete = null,
   error = null,
   disabled = false,
@@ -20,6 +21,7 @@ const CustomTextField = ({
       label={label}
       type={type}
       variant={variant}
+      helperText={helperText}
       autoComplete={autoComplete}
       disabled={disabled}
       error={error}

@@ -17,7 +17,7 @@ const CustomFullDialog = ({ toolBarTitle, open, closeFunc, contentComponent }) =
       // fullScreen
       fullWidth
       open={open}
-      onClose={closeFunc}
+      // onClose={closeFunc}
       TransitionComponent={Transition}
     >
       <AppBar position="fixed">
