@@ -1,11 +1,9 @@
 import { FormControl, FormLabel, Radio, RadioGroup, FormControlLabel } from '@mui/material'
 import PropTypes from 'prop-types'
 
-const CustomStatus = ({
-  statusTitle = '狀態',
+const CustomAttendance = ({
+  statusTitle = '補登卡別',
   statusValue,
-  successValue = '啟用',
-  failedValue = '停用',
   enableStatusFunc = () => {},
   disableStatusFunc = () => {},
 }) => {
@@ -14,31 +12,29 @@ const CustomStatus = ({
       <FormLabel component="legend">{statusTitle}</FormLabel>
       <RadioGroup
         row
-        aria-label="狀態"
+        aria-label={statusTitle}
         name="row-radio-buttons-group"
-        value={statusValue ? successValue : failedValue}
+        value={statusValue ? '上班打卡' : '下班打卡'}
         onChange={(e, value) => {
-          if (value === successValue) {
+          if (value === '上班打卡') {
             enableStatusFunc()
           } else {
             disableStatusFunc()
           }
         }}
       >
-        <FormControlLabel value={successValue} control={<Radio />} label={successValue} />
-        <FormControlLabel value={failedValue} control={<Radio />} label={failedValue} />
+        <FormControlLabel value="上班打卡" control={<Radio />} label="上班打卡" />
+        <FormControlLabel value="下班打卡" control={<Radio />} label="下班打卡" />
       </RadioGroup>
     </FormControl>
   )
 }
 
-export default CustomStatus
+export default CustomAttendance
 
-CustomStatus.propTypes = {
+CustomAttendance.propTypes = {
   statusTitle: PropTypes.string,
   statusValue: PropTypes.bool,
-  successValue: PropTypes.string,
-  failedValue: PropTypes.string,
   enableStatusFunc: PropTypes.func,
   disableStatusFunc: PropTypes.func,
 }

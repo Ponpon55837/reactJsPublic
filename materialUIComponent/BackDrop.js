@@ -1,21 +1,15 @@
-import {
-  Backdrop,
-  CircularProgress,
-  Box,
-  Typography
-}from '@mui/material'
+import { Backdrop, CircularProgress, Box, Typography } from '@mui/material'
+import PropTypes from 'prop-types'
 
-const BackDrop = ({
-  backDropOpen
-}) => {
+const BackDrop = ({ backDropOpen = false }) => {
   return (
     <Backdrop
-      sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }}
       open={backDropOpen}
       onClick={() => {}}
     >
       <Box sx={{ position: 'relative', display: 'inline-flex' }}>
-        <CircularProgress size='10rem' color="inherit" />
+        <CircularProgress size="10rem" color="inherit" />
         <Box
           sx={{
             top: 0,
@@ -38,3 +32,7 @@ const BackDrop = ({
 }
 
 export default BackDrop
+
+BackDrop.propTypes = {
+  backDropOpen: PropTypes.bool,
+}

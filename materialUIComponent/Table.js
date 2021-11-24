@@ -1,16 +1,8 @@
-import React, { useEffect, useState, useMemo } from "react"
-import {
-  useTable,
-  usePagination,
-  useFlexLayout,
-  useRowSelect,
-  useSortBy,
-} from "react-table"
-import _ from 'lodash'
-import { PulseLoader } from "react-spinners"
-import { css } from "@emotion/react"
-import classNames from "classnames"
-// import MaUTable from '@material-ui/core/Table'
+import React, { useEffect, useState, useMemo } from 'react'
+import { useTable, usePagination, useFlexLayout, useRowSelect, useSortBy } from 'react-table'
+import PropTypes from 'prop-types'
+import { css } from '@emotion/react'
+import classNames from 'classnames'
 import {
   Table,
   TableContainer,
@@ -22,28 +14,23 @@ import {
   Pagination,
   FormControl,
   Select,
-  MenuItem
+  MenuItem,
+  LinearProgress,
 } from '@mui/material'
 import { makeStyles, withStyles } from '@mui/styles'
 import SwapVertIcon from '@mui/icons-material/SwapVert'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
-// import { Box } from '@mui/system'
 
-const mergeProps = (
-  props, {
-    align = "left",
-    stickyLeft = false,
-    stickyRight = false,
-  }) => {
+const mergeProps = (props, { align = 'left', stickyLeft = false, stickyRight = false }) => {
   // align = align.replace("left", "start")
   // align = align.replace("right", "end")
   const className = classNames(
-    "d-flex",
-    "align-items-center",
+    'd-flex',
+    'align-items-center',
     `justify-content-${align}`,
     `${stickyLeft && 'sticky-left'}`,
-    `${stickyRight && 'sticky-right'}`
+    `${stickyRight && 'sticky-right'}`,
   )
 
   return [props, { className }]
@@ -65,15 +52,15 @@ const CustomTable = ({
   pageValue,
   resultPageSize,
   pageOnChange,
-  pageSizeOnChange
+  pageSizeOnChange,
 }) => {
   const defaultColumn = useMemo(
     () => ({
-      minWidth: 2, // minWidth is only used as a limit for resizing
-      width: 70, // width is used for both the flex-basis and flex-grow
-      maxWidth: 200, // maxWidth is only used as a limit for resizing
+      // minWidth: 2, // minWidth is only used as a limit for resizing
+      // width: 70, // width is used for both the flex-basis and flex-grow
+      // maxWidth: 200, // maxWidth is only used as a limit for resizing
     }),
-    []
+    [],
   )
   // const state = useMemo(() => ({ selectedRowIds: { ['1']: true } }), [])
   // Use the state and functions returned from useTable to build your UI
@@ -93,28 +80,25 @@ const CustomTable = ({
       data,
       defaultColumn,
       initialState: {
-        selectedRowIds: initSelectedRow.reduce(
-          (acc, value) => ({ ...acc, [value]: true }),
-          {}
-        ),
+        selectedRowIds: initSelectedRow.reduce((acc, value) => ({ ...acc, [value]: true }), {}),
       },
       autoResetPage: false,
     },
     useSortBy,
     usePagination,
     useFlexLayout,
-    useRowSelect
+    useRowSelect,
   )
   const [initFlag, setInitFlag] = useState(true)
   const [sortFlag, setSortFlag] = useState(null)
-  const changeSort = (id) => {
+  const changeSort = id => {
     onClick(id)
     setSortFlag(id)
     setInitFlag(!initFlag)
   }
 
   useEffect(() => {
-    onSelectedChange(_.map(selectedFlatRows, "original"))
+    onSelectedChange(selectedFlatRows.map(map => map.original))
   }, [selectedRowIds])
 
   useEffect(() => {
@@ -129,7 +113,7 @@ const CustomTable = ({
     root: {
       overflow: 'scroll',
       border: '5px solid #f3f3f4',
-      borderRadius: '5px'
+      borderRadius: '5px',
     },
     freeTable: {
       tableLayout: 'fixed',
@@ -143,11 +127,10 @@ const CustomTable = ({
     tbTh: {
       padding: '0.4rem',
       textAlign: 'center',
-      borderRight: '1px solid #e1e5eb'
+      borderRight: '1px solid #e1e5eb',
     },
     thTd: {
       padding: '0.1rem',
-      wordBreak: 'break-all',
       textAlign: 'center',
     },
     loader: {
@@ -160,7 +143,7 @@ const CustomTable = ({
       },
     },
     icon: {
-      cursor: 'pointer'
+      cursor: 'pointer',
     },
     stickyLeft: {
       position: 'sticky !important',
@@ -174,7 +157,9 @@ const CustomTable = ({
   const StyledTableRow = withStyles(() => ({
     root: {
       '&:nth-of-type(odd)': {
-        backgroundColor: '#f3f3f4',
+        '& td': {
+          backgroundColor: '#f3f3f4',
+        },
       },
     },
   }))(TableRow)
@@ -191,14 +176,14 @@ const CustomTable = ({
     }
 
     th.sticky-left {
-      background-color: #FBFBFB
+      background-color: #fbfbfb;
     }
     th.sticky-right {
-      background-color: #FBFBFB
+      background-color: #fbfbfb;
     }
 
     td.sticky-left:nth-of-type(odd) {
-      background-color: #F2F2F2;
+      background-color: #f2f2f2;
     }
 
     .sticky-right {
@@ -206,7 +191,7 @@ const CustomTable = ({
       right: 0;
       top: 0;
       z-index: 1;
-      background-color: #F2F2F2;
+      background-color: #f2f2f2;
       border-left: 3px solid #e1e5eb;
     }
   `
@@ -221,64 +206,55 @@ const CustomTable = ({
         <TableHead className="bg-light">
           {headerGroups.map((headerGroup, idx) => (
             <TableRow key={idx} {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(
-                ({ className, width, minWidth, ...column }, idx) => (
-                  <TableCell key={idx}
-                    size="small"
-                    component="th"
-                    className={classes.tbTh}
-                    {...column.getHeaderProps( headerProps )}
-                  >
-                    {/* Add a sort direction indicator */}
-                    {column.sort ? (
-                      <div style={{ display: 'flex' }}>
-                        <span
-                          style={{ cursor: "pointer" }}
-                          onClick={() => changeSort(column.id)}>
-                          {column.Header}
-                        </span>
-                        {sortFlag === column.id ?
-                          initFlag
-                            ? <KeyboardArrowUpIcon
-                                fontSize="small"
-                                color="primary"
-                                className={classes.icon}
-                                onClick={() => changeSort(column.id)}
-                              />
-                            : <KeyboardArrowDownIcon
-                                fontSize="small"
-                                color="primary"
-                                className={classes.icon}
-                                onClick={() => changeSort(column.id)}
-                              />
-                          :
-                            <SwapVertIcon
-                              fontSize="small"
-                              color="primary"
-                              className={classes.icon}
-                              onClick={() => changeSort(column.id)} />
-                        }
-                      </div>
-                    ) : (
-                      column.render("Header")
-                    )}
-                  </TableCell>
-                )
-              )}
+              {headerGroup.headers.map(({ className, width, minWidth, ...column }, idx) => (
+                <TableCell
+                  key={idx}
+                  size="small"
+                  component="th"
+                  className={classes.tbTh}
+                  {...column.getHeaderProps(headerProps)}
+                >
+                  {/* Add a sort direction indicator */}
+                  {column.sort ? (
+                    <div style={{ display: 'flex' }}>
+                      <span style={{ cursor: 'pointer' }} onClick={() => changeSort(column.id)}>
+                        {column.Header}
+                      </span>
+                      {sortFlag === column.id ? (
+                        initFlag ? (
+                          <KeyboardArrowUpIcon
+                            fontSize="small"
+                            color="primary"
+                            className={classes.icon}
+                            onClick={() => changeSort(column.id)}
+                          />
+                        ) : (
+                          <KeyboardArrowDownIcon
+                            fontSize="small"
+                            color="primary"
+                            className={classes.icon}
+                            onClick={() => changeSort(column.id)}
+                          />
+                        )
+                      ) : (
+                        <SwapVertIcon
+                          fontSize="small"
+                          color="primary"
+                          className={classes.icon}
+                          onClick={() => changeSort(column.id)}
+                        />
+                      )}
+                    </div>
+                  ) : (
+                    column.render('Header')
+                  )}
+                </TableCell>
+              ))}
             </TableRow>
           ))}
           <TableRow style={{ display: !loading && 'none' }}>
-            <TableCell
-              size="small"
-              component="th"
-              className={classes.tbTh}
-            >
-              <PulseLoader
-                color='#6588D5'
-                size={7}
-                margin={2}
-                loading={loading}
-              />
+            <TableCell size="small" component="th" className={classes.tbTh}>
+              <LinearProgress />
             </TableCell>
           </TableRow>
         </TableHead>
@@ -294,17 +270,16 @@ const CustomTable = ({
                       size="small"
                       component="td"
                       align="justify"
-                      className={classes.tbTd}
                       {...cell.getCellProps(cellProps)}
                     >
-                      <div>{cell.render("Cell")}</div>
+                      {cell.render('Cell')}
                     </TableCell>
                   )
                 })}
               </StyledTableRow>
             )
           })}
-          {page.length === 0 && !loading &&
+          {page.length === 0 && !loading && (
             <TableRow>
               <TableCell
                 size="small"
@@ -313,24 +288,19 @@ const CustomTable = ({
                 style={{ textAlign: 'center' }}
               >
                 目前無資料
-                </TableCell>
-            </TableRow>}
+              </TableCell>
+            </TableRow>
+          )}
         </TableBody>
-        {/* <TableFooter>
-          <Pagination count={10} page={pageValue} onChange={pageOnChange} />
-        </TableFooter> */}
       </Table>
       <Box sx={{ padding: '0.4rem 0', display: 'inline-flex' }}>
         <Pagination count={resultPageSize} page={pageValue} onChange={pageOnChange} />
         <FormControl variant="standard">
-          {/* <InputLabel id="demo-simple-select-label">數量</InputLabel> */}
-          <Select
-            value={pageSize}
-            label="數量"
-            onChange={pageSizeOnChange}
-          >
+          <Select value={pageSize} label="數量" onChange={pageSizeOnChange}>
             {pageSizeOptions.map((size, idx) => (
-              <MenuItem key={idx} value={size}>{size}</MenuItem>
+              <MenuItem key={idx} value={size}>
+                {size}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>
@@ -344,4 +314,20 @@ export default CustomTable
 CustomTable.defaultProps = {
   loading: false,
   onSelectedChange: () => {},
+}
+
+CustomTable.propTypes = {
+  tableStyle: PropTypes.bool,
+  columns: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+  data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+  loading: PropTypes.bool,
+  pageSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  pageSizeOptions: PropTypes.array,
+  onSelectedChange: PropTypes.func,
+  initSelectedRow: PropTypes.array,
+  onClick: PropTypes.func,
+  pageValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  resultPageSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  pageOnChange: PropTypes.func,
+  pageSizeOnChange: PropTypes.func,
 }

@@ -1,12 +1,12 @@
 import React from 'react'
-import { Dialog, AppBar, Toolbar, Slide, Paper } from '@mui/material'
+import { Dialog, AppBar, Toolbar, Slide, Paper, DialogTitle } from '@mui/material'
 import PropTypes from 'prop-types'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="down" ref={ref} {...props} />
 })
 
-const CustomFullDialog = ({ toolBarTitle, open, closeFunc, contentComponent }) => {
+const CustomViewDialog = ({ toolBarTitle, dialogTitle, open, closeFunc, contentComponent }) => {
   return (
     <Dialog
       // fullScreen
@@ -15,9 +15,10 @@ const CustomFullDialog = ({ toolBarTitle, open, closeFunc, contentComponent }) =
       onClose={closeFunc}
       TransitionComponent={Transition}
     >
-      <AppBar position="fixed">
+      {/* <AppBar position="fixed">
         <Toolbar sx={{ backgroundColor: '#1E333F' }}>{toolBarTitle}</Toolbar>
-      </AppBar>
+      </AppBar> */}
+      <DialogTitle sx={{ backgroundColor: '#1E333F', color: '#DDDDDD' }}>{dialogTitle}</DialogTitle>
       <Paper
         elevation={3}
         sx={{
@@ -32,10 +33,11 @@ const CustomFullDialog = ({ toolBarTitle, open, closeFunc, contentComponent }) =
   )
 }
 
-export default CustomFullDialog
+export default CustomViewDialog
 
-CustomFullDialog.propTypes = {
+CustomViewDialog.propTypes = {
   toolBarTitle: PropTypes.string,
+  dialogTitle: PropTypes.string,
   open: PropTypes.bool,
   closeFunc: PropTypes.func,
   contentComponent: PropTypes.node,

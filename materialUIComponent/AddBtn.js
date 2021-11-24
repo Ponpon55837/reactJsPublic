@@ -1,9 +1,7 @@
-import {
-  Box,
-  Button
-} from '@mui/material'
+import { Box, Button } from '@mui/material'
+import PropTypes from 'prop-types'
 
-const AddBtn = ({ btnName = '新增', onClick }) => {
+const AddBtn = ({ btnName = '新增', onClick = () => {} }) => {
   return (
     <Box
       sx={{
@@ -15,10 +13,7 @@ const AddBtn = ({ btnName = '新增', onClick }) => {
         bgcolor: 'background.paper',
       }}
     >
-      <Button
-        variant='outlined'
-        onClick={() => onClick()}
-      >
+      <Button variant="outlined" onClick={() => onClick()}>
         {btnName}
       </Button>
     </Box>
@@ -26,3 +21,8 @@ const AddBtn = ({ btnName = '新增', onClick }) => {
 }
 
 export default AddBtn
+
+AddBtn.propTypes = {
+  btnName: PropTypes.string,
+  onClick: PropTypes.func,
+}
