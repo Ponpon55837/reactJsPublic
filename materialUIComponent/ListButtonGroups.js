@@ -27,9 +27,6 @@ const ListButtonGroups = ({
   isCloseDay = false,
   sign = false,
   otherCheck = true,
-  viewLabel = '檢視',
-  auditLabel = '編輯',
-  deleteLabel = '刪除',
   deleteClick = () => {},
   editClick = () => {},
   viewClick = () => {},
@@ -47,7 +44,7 @@ const ListButtonGroups = ({
         }}
         onClick={() => viewClick()}
       >
-        {viewLabel}
+        檢視
       </Button>
 
       <Button
@@ -61,7 +58,7 @@ const ListButtonGroups = ({
         }}
         onClick={() => editClick()}
       >
-        {auditLabel}
+        {sign ? '簽核' : '編輯'}
       </Button>
 
       <Button
@@ -75,7 +72,7 @@ const ListButtonGroups = ({
         }}
         onClick={() => deleteClick()}
       >
-        {deleteLabel}
+        刪除
       </Button>
     </ButtonGroup>
   )
@@ -91,9 +88,6 @@ ListButtonGroups.propTypes = {
   status: PropTypes.number,
   isCloseDay: PropTypes.bool,
   sign: PropTypes.bool,
-  viewLabel: PropTypes.string,
-  auditLabel: PropTypes.string,
-  deleteLabel: PropTypes.string,
   otherCheck: PropTypes.bool,
   deleteClick: PropTypes.func,
   editClick: PropTypes.func,

@@ -65,18 +65,18 @@ const CustomDateTimePicker = ({
   label = '請選擇時間',
   inputFormat = 'yyyy-MM-dd HH:mm',
   ampm = true,
+  minutesStep = 1,
   helperText = '',
   error = false,
-  disabled = false,
 }) => {
   return (
     <LocalizationProvider locale={zhLocale} dateAdapter={AdapterDateFns}>
       <DateTimePicker
-        disabled={disabled}
         label={label}
         value={time}
         ampm={ampm}
         inputFormat={inputFormat}
+        minutesStep={minutesStep}
         mask="____-__-__ __:__"
         onChange={onChange}
         renderInput={params => (
@@ -119,7 +119,7 @@ CustomDateTimePicker.propTypes = {
   label: PropTypes.string,
   inputFormat: PropTypes.string,
   ampm: PropTypes.bool,
+  minutesStep: PropTypes.number,
   helperText: PropTypes.node,
   error: PropTypes.bool,
-  disabled: PropTypes.bool,
 }

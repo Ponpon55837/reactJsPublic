@@ -15,9 +15,9 @@ const CustomViewDialog = ({ toolBarTitle, dialogTitle, open, closeFunc, contentC
       onClose={closeFunc}
       TransitionComponent={Transition}
     >
-      {/* <AppBar position="fixed">
+      <AppBar position="fixed">
         <Toolbar sx={{ backgroundColor: '#1E333F' }}>{toolBarTitle}</Toolbar>
-      </AppBar> */}
+      </AppBar>
       <DialogTitle sx={{ backgroundColor: '#1E333F', color: '#DDDDDD' }}>{dialogTitle}</DialogTitle>
       <Paper
         elevation={3}

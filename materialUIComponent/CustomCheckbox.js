@@ -8,10 +8,9 @@ const CustomCheckbox = ({
   check = false,
   label = 'checkbox',
   register,
-  disabled = false,
 }) => {
   return (
-    <FormControl disabled={disabled} required={required} error={error}>
+    <FormControl required={required} error={error}>
       <FormLabel sx={{ fontWeight: 400, fontSize: '.8rem' }}>{title}</FormLabel>
       <FormGroup style={{ display: 'block' }}>
         <FormControlLabel
@@ -32,5 +31,4 @@ CustomCheckbox.propTypes = {
   check: PropTypes.bool,
   label: PropTypes.string,
   register: PropTypes.object,
-  disabled: PropTypes.bool,
 }

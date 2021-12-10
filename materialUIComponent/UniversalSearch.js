@@ -14,7 +14,6 @@ const UniversalSearch = ({
   isEnabled = '',
   statusOnChange = () => {},
   btnName,
-  addBtnStatus = true,
   addOnClick,
 }) => {
   return (
@@ -29,11 +28,9 @@ const UniversalSearch = ({
         />
         {statusExist && <StatusSelect isEnabled={isEnabled} onChange={statusOnChange} />}
       </Grid>
-      {addBtnStatus && (
-        <Grid item xs={12} md={4}>
-          <AddBtn btnName={btnName} onClick={() => addOnClick()} />
-        </Grid>
-      )}
+      <Grid item xs={12} md={4}>
+        <AddBtn btnName={btnName} onClick={() => addOnClick()} />
+      </Grid>
     </Grid>
   )
 }
@@ -49,7 +46,6 @@ UniversalSearch.propTypes = {
   statusExist: PropTypes.bool,
   isEnabled: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   statusOnChange: PropTypes.func,
-  addBtnStatus: PropTypes.bool,
   btnName: PropTypes.string,
   addOnClick: PropTypes.func,
 }

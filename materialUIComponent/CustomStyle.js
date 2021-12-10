@@ -1,5 +1,5 @@
 import { styled } from '@mui/styles'
-import { Box, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 
 const CustomBox = styled(Box)({
   margin: '0.5rem 0.3rem',
@@ -28,13 +28,8 @@ const CustomBox3 = styled(Box)({
   },
 })
 
-const CustomTypography = styled(Typography)({
-  paddingBottom: '7px',
-  borderBottom: '1px dotted #DDDDDD',
-})
-
 export default function Hide() {
   return <div />
 }
 
-export { CustomBox, CustomBox2, CustomBox3, CustomTypography }
+export { CustomBox, CustomBox2, CustomBox3 }
