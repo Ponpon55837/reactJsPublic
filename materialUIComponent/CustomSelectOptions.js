@@ -6,13 +6,14 @@ const CustomSelectOptions = ({
   defaultValue = '0',
   value = '0',
   label = '',
+  variant = 'outlined',
   nullValueOption = false,
   selectOptions = [],
   onChange = () => {},
 }) => {
   return (
     <FormControl
-      variant="outlined"
+      variant={variant}
       size="small"
       error={checked}
       sx={{
@@ -23,12 +24,11 @@ const CustomSelectOptions = ({
       <InputLabel id="demo-simple-select-helper-label">{label}</InputLabel>
       <Select autoWidth defaultValue={defaultValue} value={value} label={label} onChange={onChange}>
         {nullValueOption && <MenuItem value={''}>-</MenuItem>}
-        {selectOptions !== null &&
-          selectOptions.map(sle => (
-            <MenuItem key={sle.id} value={sle.id}>
-              {sle.name}
-            </MenuItem>
-          ))}
+        {selectOptions.map(sle => (
+          <MenuItem key={sle.id} value={sle.id}>
+            {sle.name}
+          </MenuItem>
+        ))}
       </Select>
       {checked && <FormHelperText>請選擇{label}</FormHelperText>}
     </FormControl>
@@ -42,6 +42,8 @@ CustomSelectOptions.propTypes = {
   defaultValue: PropTypes.string,
   value: PropTypes.string,
   label: PropTypes.string,
+  variant: PropTypes.string,
+  shrink: PropTypes.bool,
   nullValueOption: PropTypes.bool,
   selectOptions: PropTypes.array,
   onChange: PropTypes.func,
