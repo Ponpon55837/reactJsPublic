@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useMemo } from 'react'
+import { useState, useMemo } from 'react'
+import { useUpdateEffect } from 'react-use'
 import { useTable, usePagination, useFlexLayout, useRowSelect, useSortBy } from 'react-table'
 import PropTypes from 'prop-types'
 import { css } from '@emotion/react'
@@ -97,15 +98,15 @@ const CustomTable = ({
     setInitFlag(!initFlag)
   }
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     onSelectedChange(selectedFlatRows.map(map => map.original))
   }, [selectedRowIds])
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     gotoPage(0)
   }, [data])
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     setPageSize(parseInt(pageSize, 10))
   }, [pageSize])
 
