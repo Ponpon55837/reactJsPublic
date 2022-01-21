@@ -1,8 +1,8 @@
-import React from 'react'
+import { forwardRef } from 'react'
 import { Dialog, AppBar, Toolbar, Slide, Paper } from '@mui/material'
 import PropTypes from 'prop-types'
 
-const Transition = React.forwardRef(function Transition(props, ref) {
+const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="down" ref={ref} {...props} />
 })
 

@@ -1,4 +1,5 @@
 import { Grid } from '@mui/material'
+import { CustomBox3 } from '@components/CustomStyle'
 import CustomSearch from '@components/CustomSearch'
 import SelectYearAndMonth from '@components/SelectYearAndMonth'
 import AddBtn from '@components/AddBtn'
@@ -23,25 +24,24 @@ const UniversalSearchWithTime = ({
   return (
     <Grid container spacing={2} sx={{ mb: 1 }}>
       <Grid item xs={12} md={8}>
-        <Grid item sm={12}>
-          <CustomSearch
-            width={searchWidth}
-            placeholder={placeholder}
-            inputSub={inputSub}
-            inputValue={inputValue}
-            clear={clear}
-            onChange={onChange}
-          />
-        </Grid>
-        <Grid item sm={12}>
+        <CustomSearch
+          width={searchWidth}
+          placeholder={placeholder}
+          inputSub={inputSub}
+          inputValue={inputValue}
+          clear={clear}
+          onChange={onChange}
+        />
+        <CustomBox3>
           <SelectYearAndMonth
+            marginTopBoolean={false}
             yearValue={yearValue}
             monthValue={monthValue}
             monthOpen={monthOpen}
             yearOnChange={yearOnChange}
             monthOnChange={monthOnChange}
           />
-        </Grid>
+        </CustomBox3>
       </Grid>
       {btnChecked && (
         <Grid item xs={12} md={4}>

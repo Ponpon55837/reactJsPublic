@@ -26,6 +26,7 @@ const SelectYearAndMonth = ({
   monthOpen = true,
   yearOnChange,
   monthOnChange,
+  marginTopBoolean = true,
 }) => {
   return (
     <>
@@ -33,7 +34,7 @@ const SelectYearAndMonth = ({
         size="small"
         sx={{
           minWidth: 120,
-          mt: 1,
+          mt: marginTopBoolean ? 1 : 0,
           mr: 1,
           mb: 1,
         }}
@@ -51,7 +52,7 @@ const SelectYearAndMonth = ({
       <FormControl
         size="small"
         sx={{
-          mt: 1,
+          mt: marginTopBoolean ? 1 : 0,
           minWidth: 120,
           display: !monthOpen && 'none',
         }}
@@ -77,4 +78,5 @@ SelectYearAndMonth.propTypes = {
   monthOpen: PropTypes.bool,
   yearOnChange: PropTypes.func,
   monthOnChange: PropTypes.func,
+  marginTopBoolean: PropTypes.bool,
 }
