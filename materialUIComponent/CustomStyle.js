@@ -1,7 +1,7 @@
 import { styled } from '@mui/styles'
 import { Box } from '@mui/material'
 
-const CustomBox = styled(Box)({
+const CustomBox1 = styled(Box)({
   margin: '0.5rem 0.3rem',
   padding: 0,
   display: 'inline-flex',
@@ -32,4 +32,4 @@ export default function Hide() {
   return <div />
 }
 
-export { CustomBox, CustomBox2, CustomBox3 }
+export { CustomBox1, CustomBox2, CustomBox3 }
