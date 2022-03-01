@@ -1,12 +1,23 @@
-import { Radio, RadioGroup, FormControlLabel, FormControl, FormLabel } from '@mui/material'
+import Radio from '@mui/material/Radio'
+import RadioGroup from '@mui/material/RadioGroup'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import FormControl from '@mui/material/FormControl'
+import FormLabel from '@mui/material/FormLabel'
 import PropTypes from 'prop-types'
+
+interface Props {
+  title?: string
+  optionArr?: Array<{ id: number | string; name: string }>
+  value?: number | string
+  onChange?: () => void
+}
 
 const CustomRadioGroups = ({
   title = '標題',
   optionArr = [{ id: 0, name: 'test' }],
   value = '0',
   onChange = () => {},
-}) => {
+}: Props) => {
   return (
     <FormControl component="fieldset">
       <FormLabel component="legend">{title}</FormLabel>

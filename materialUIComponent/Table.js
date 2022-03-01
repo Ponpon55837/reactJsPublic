@@ -4,20 +4,18 @@ import { useTable, usePagination, useFlexLayout, useRowSelect, useSortBy } from 
 import PropTypes from 'prop-types'
 import { css } from '@emotion/react'
 import classNames from 'classnames'
-import {
-  Table,
-  TableContainer,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableCell,
-  Box,
-  Pagination,
-  FormControl,
-  Select,
-  MenuItem,
-  LinearProgress,
-} from '@mui/material'
+import Table from '@mui/material/Table'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import TableBody from '@mui/material/TableBody'
+import TableRow from '@mui/material/TableRow'
+import TableCell from '@mui/material/TableCell'
+import Box from '@mui/material/Box'
+import Pagination from '@mui/material/Pagination'
+import FormControl from '@mui/material/FormControl'
+import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
+import LinearProgress from '@mui/material/LinearProgress'
 import { makeStyles, withStyles } from '@mui/styles'
 import SwapVertIcon from '@mui/icons-material/SwapVert'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'

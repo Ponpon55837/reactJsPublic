@@ -1,13 +1,11 @@
 import { forwardRef } from 'react'
-import {
-  Slide,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from '@mui/material'
+import Slide from '@mui/material/Slide'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
 import PropTypes from 'prop-types'
 
 const Transition = forwardRef(function Transition(props, ref) {

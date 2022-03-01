@@ -1,5 +1,5 @@
 import zhLocale from 'date-fns/locale/zh-TW'
-import { TextField } from '@mui/material'
+import TextField from '@mui/material/TextField'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import DatePicker from '@mui/lab/DatePicker'
@@ -9,7 +9,7 @@ import PropTypes from 'prop-types'
 
 const CustomDatePicker = ({
   time,
-  onChange,
+  onChange = () => {},
   views = ['year', 'month', 'date'],
   label = '請選擇時間',
   format = 'yyyy-MM-dd',

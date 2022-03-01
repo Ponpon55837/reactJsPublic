@@ -1,9 +1,19 @@
-import { Paper, InputBase, Divider } from '@mui/material'
+import Paper from '@mui/material/Paper'
+import InputBase from '@mui/material/InputBase'
+import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton'
 import SearchIcon from '@mui/icons-material/Search'
 import CloseIcon from '@mui/icons-material/Close'
 import PropTypes from 'prop-types'
 
+interface Props {
+  placeholder?: string
+  inputValue?: string
+  width?: string
+  inputSub?: () => void
+  clear?: () => void
+  onChange?: () => void
+}
 const CustomSearch = ({
   placeholder = '請輸入搜尋內容',
   inputValue = '',
@@ -11,7 +21,7 @@ const CustomSearch = ({
   inputSub = () => {},
   clear = () => {},
   onChange = () => {},
-}) => {
+}: Props) => {
   return (
     <Paper
       sx={{
@@ -32,12 +42,12 @@ const CustomSearch = ({
         onChange={onChange}
       />
       {inputValue.length > 0 && (
-        <IconButton aria-label="search" onClick={() => clear()}>
+        <IconButton aria-label="search" onClick={clear}>
           <CloseIcon />
         </IconButton>
       )}
       <Divider sx={{ height: 20, m: 0.5 }} orientation="vertical" />
-      <IconButton onClick={() => inputSub()} aria-label="search">
+      <IconButton onClick={inputSub} aria-label="search">
         <SearchIcon />
       </IconButton>
     </Paper>
@@ -48,7 +58,7 @@ export default CustomSearch
 
 CustomSearch.propTypes = {
   placeholder: PropTypes.string,
-  inputValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  inputValue: PropTypes.string,
   width: PropTypes.string,
   inputSub: PropTypes.func,
   clear: PropTypes.func,

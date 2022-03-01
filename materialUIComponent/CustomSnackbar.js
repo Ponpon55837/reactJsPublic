@@ -1,4 +1,5 @@
-import { Snackbar, Alert } from '@mui/material'
+import Snackbar from '@mui/material/Snackbar'
+import Alert from '@mui/material/Alert'
 import PropTypes from 'prop-types'
 
 const CustomSnackbar = ({

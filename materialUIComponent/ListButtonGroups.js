@@ -1,6 +1,9 @@
 import { useState } from 'react'
-import { Typography, Button, Tooltip, ClickAwayListener } from '@mui/material'
 import { makeStyles } from '@mui/styles'
+import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
+import Tooltip from '@mui/material/Tooltip'
+import ClickAwayListener from '@mui/material/ClickAwayListener'
 import PageviewOutlinedIcon from '@mui/icons-material/PageviewOutlined'
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
@@ -47,6 +50,7 @@ const ListButtonGroups = ({
   sign = false,
   otherCheck = true,
   copy = false,
+  attendance = false,
   deleteClick = () => {},
   editClick = () => {},
   copyClick = () => {},
@@ -64,7 +68,7 @@ const ListButtonGroups = ({
         startIcon={<PageviewOutlinedIcon size="small" />}
         sx={{
           p: '0 !important',
-          display: (status === 3 || isCloseDay || !otherCheck) && 'none',
+          display: (status === 3 || !otherCheck) && 'none',
         }}
         onClick={() => viewClick()}
       >
@@ -78,7 +82,7 @@ const ListButtonGroups = ({
         startIcon={<ModeEditOutlinedIcon size="small" />}
         sx={{
           p: '0 !important',
-          display: (status !== 2 || isCloseDay) && 'none',
+          display: (status !== 2 || attendance || isCloseDay) && 'none',
         }}
         onClick={() => editClick()}
       >
@@ -107,7 +111,9 @@ const ListButtonGroups = ({
           open={open}
           title={
             <CustomBox2>
-              <Typography sx={{ display: 'block', mb: 1 }}>是否刪除此筆資料？</Typography>
+              <Typography sx={{ display: 'block', mb: 1 }}>
+                是否{attendance ? '取消' : '刪除'}此筆資料？
+              </Typography>
               <Button
                 size="small"
                 variant="contained"
@@ -119,7 +125,7 @@ const ListButtonGroups = ({
                 }}
                 onClick={() => setOpen(false)}
               >
-                取消
+                {attendance ? '否' : '取消'}
               </Button>
               <Button
                 size="small"
@@ -131,7 +137,7 @@ const ListButtonGroups = ({
                 }}
                 onClick={() => deleteClick()}
               >
-                刪除
+                {attendance ? '是' : '刪除'}
               </Button>
             </CustomBox2>
           }
@@ -147,7 +153,7 @@ const ListButtonGroups = ({
             }}
             onClick={() => setOpen(true)}
           >
-            刪除
+            {attendance ? '取消' : '刪除'}
           </Button>
         </Tooltip>
       </ClickAwayListener>
@@ -166,6 +172,7 @@ ListButtonGroups.propTypes = {
   isCloseDay: PropTypes.bool,
   sign: PropTypes.bool,
   copy: PropTypes.bool,
+  attendance: PropTypes.bool,
   otherCheck: PropTypes.bool,
   deleteClick: PropTypes.func,
   editClick: PropTypes.func,

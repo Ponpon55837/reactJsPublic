@@ -1,5 +1,18 @@
-import { FormControl, FormGroup, FormLabel, FormControlLabel, Checkbox } from '@mui/material'
+import FormControl from '@mui/material/FormControl'
+import FormGroup from '@mui/material/FormGroup'
+import FormLabel from '@mui/material/FormLabel'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Checkbox from '@mui/material/Checkbox'
 import PropTypes from 'prop-types'
+
+interface Props {
+  title?: string
+  required?: boolean
+  error?: boolean
+  check?: boolean
+  label?: string
+  register?: any
+}
 
 const CustomCheckbox = ({
   title = 'title',
@@ -7,8 +20,8 @@ const CustomCheckbox = ({
   error = false,
   check = false,
   label = 'checkbox',
-  register,
-}) => {
+  register = {},
+}: Props) => {
   return (
     <FormControl required={required} error={error}>
       <FormLabel sx={{ fontWeight: 400, fontSize: '.8rem' }}>{title}</FormLabel>

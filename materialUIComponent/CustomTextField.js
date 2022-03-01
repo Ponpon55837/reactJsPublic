@@ -1,5 +1,7 @@
-import { TextField, InputAdornment } from '@mui/material'
+import TextField from '@mui/material/TextField'
+import InputAdornment from '@mui/material/InputAdornment'
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined'
+import { makeStyles } from '@mui/styles'
 import PropTypes from 'prop-types'
 
 const CustomTextField = ({
@@ -16,9 +18,21 @@ const CustomTextField = ({
   iconStatus = false,
   icon = <BorderColorOutlinedIcon size="small" />,
   register,
+  redLabel = false,
 }) => {
+  const useStyles = makeStyles(() => ({
+    labelRed: {
+      '& .MuiFormLabel-root': {
+        color: redLabel && 'red', // or black
+      },
+    },
+  }))
+
+  const classes = useStyles()
+
   return (
     <TextField
+      className={classes.labelRed}
       fullWidth={fullWidth}
       label={label}
       type={type}
@@ -59,4 +73,5 @@ CustomTextField.propTypes = {
   iconStatus: PropTypes.bool,
   icon: PropTypes.node,
   register: PropTypes.object,
+  redLabel: PropTypes.bool,
 }

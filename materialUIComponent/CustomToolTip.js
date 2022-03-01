@@ -19,7 +19,7 @@ const CustomToolTip = ({ title, placement = 'top', arrow = true, children }) => 
 export default CustomToolTip
 
 CustomToolTip.propTypes = {
-  title: PropTypes.string,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   placement: PropTypes.string,
   arrow: PropTypes.bool,
   children: PropTypes.node,

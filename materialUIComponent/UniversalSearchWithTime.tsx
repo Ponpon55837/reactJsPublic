@@ -1,9 +1,26 @@
-import { Grid } from '@mui/material'
+import Grid from '@mui/material/Grid'
 import { CustomBox3 } from '@components/CustomStyle'
 import CustomSearch from '@components/CustomSearch'
 import SelectYearAndMonth from '@components/SelectYearAndMonth'
 import AddBtn from '@components/AddBtn'
 import PropTypes from 'prop-types'
+
+interface Props {
+  searchWidth?: string | undefined
+  placeholder?: string
+  inputSub?: () => void
+  inputValue?: string
+  clear?: () => void
+  onChange?: () => void
+  yearValue?: string | number
+  monthValue?: string | number
+  monthOpen?: boolean
+  yearOnChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  monthOnChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  btnChecked?: boolean
+  btnName?: string
+  addOnClick?: () => void
+}
 
 const UniversalSearchWithTime = ({
   searchWidth,
@@ -20,7 +37,7 @@ const UniversalSearchWithTime = ({
   btnChecked = true,
   btnName,
   addOnClick,
-}) => {
+}: Props) => {
   return (
     <Grid container spacing={2} sx={{ mb: 1 }}>
       <Grid item xs={12} md={8}>
@@ -45,7 +62,7 @@ const UniversalSearchWithTime = ({
       </Grid>
       {btnChecked && (
         <Grid item xs={12} md={4}>
-          <AddBtn btnName={btnName} onClick={() => addOnClick()} />
+          <AddBtn btnName={btnName} onClick={addOnClick} />
         </Grid>
       )}
     </Grid>
@@ -58,7 +75,7 @@ UniversalSearchWithTime.propTypes = {
   searchWidth: PropTypes.string,
   placeholder: PropTypes.string,
   inputSub: PropTypes.func,
-  inputValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  inputValue: PropTypes.string,
   clear: PropTypes.func,
   onChange: PropTypes.func,
   yearValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

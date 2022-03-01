@@ -1,5 +1,11 @@
-import { Box, Button } from '@mui/material'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 import PropTypes from 'prop-types'
+
+interface Props {
+  btnName?: string
+  onClick?: () => void
+}
 
 const AddBtn = ({ btnName = '新增', onClick = () => {} }) => {
   return (
