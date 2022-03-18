@@ -1,4 +1,5 @@
 import { forwardRef, useState } from 'react'
+import { useUpdateEffect } from 'react-use'
 import Dialog from '@mui/material/Dialog'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
@@ -17,10 +18,15 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 const CustomFullDialog = ({ toolBarTitle, open, closeFunc, contentComponent }) => {
   const { extendState, setExtendState } = useMiddleware()
+  const [fullScreen, setFullScreen] = useState(extendState)
+
+  useUpdateEffect(() => {
+    if (!open) setExtendState(fullScreen)
+  }, [open])
 
   return (
     <Dialog
-      fullScreen={extendState}
+      fullScreen={fullScreen}
       fullWidth
       open={open}
       onClose={closeFunc}
@@ -32,24 +38,24 @@ const CustomFullDialog = ({ toolBarTitle, open, closeFunc, contentComponent }) =
             {toolBarTitle}
           </Typography>
 
-          {/* <IconButton
+          <IconButton
             edge="end"
             color="inherit"
-            onClick={() => setExtendState(!extendState)}
+            onClick={() => setFullScreen(!fullScreen)}
             aria-label="close"
           >
-            <OpenInFullIcon size="small" sx={{ display: extendState ? 'none' : 'default' }} />
-            <CloseFullscreenIcon size="small" sx={{ display: !extendState ? 'none' : 'default' }} />
-          </IconButton> */}
+            <OpenInFullIcon size="small" sx={{ display: fullScreen ? 'none' : 'default' }} />
+            <CloseFullscreenIcon size="small" sx={{ display: !fullScreen ? 'none' : 'default' }} />
+          </IconButton>
         </Toolbar>
       </AppBar>
       <Paper
-        elevation={extendState ? 0 : 3}
+        elevation={fullScreen ? 0 : 3}
         sx={{
-          padding: extendState ? '2rem 4rem' : '1.5rem 6% 0.8rem 6%',
-          margin: extendState ? '2rem auto auto auto' : 'auto',
+          padding: fullScreen ? '2rem 4rem' : '1.5rem 6% 0.8rem 6%',
+          margin: fullScreen ? '2rem auto auto auto' : 'auto',
           width: '100%',
-          height: extendState ? 'auto' : 'default',
+          height: fullScreen ? 'auto' : 'default',
         }}
       >
         {contentComponent}

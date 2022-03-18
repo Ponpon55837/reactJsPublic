@@ -5,6 +5,7 @@ import IconButton from '@mui/material/IconButton'
 import SearchIcon from '@mui/icons-material/Search'
 import CloseIcon from '@mui/icons-material/Close'
 import PropTypes from 'prop-types'
+import { KeyboardEvent } from 'react'
 
 interface Props {
   placeholder?: string
@@ -22,6 +23,17 @@ const CustomSearch = ({
   clear = () => {},
   onChange = () => {},
 }: Props) => {
+  let filterTimeout: any
+
+  const handleKeyPress = (e: KeyboardEvent<HTMLDivElement>): void => {
+    clearTimeout(filterTimeout)
+    if (e.key === 'Enter') {
+      filterTimeout = setTimeout(() => {
+        inputSub()
+      }, 500)
+    }
+  }
+
   return (
     <Paper
       sx={{
@@ -40,6 +52,7 @@ const CustomSearch = ({
         inputProps={{ 'aria-label': placeholder }}
         value={inputValue}
         onChange={onChange}
+        onKeyPress={handleKeyPress}
       />
       {inputValue.length > 0 && (
         <IconButton aria-label="search" onClick={clear}>

@@ -33,6 +33,7 @@ const CustomDialog = ({
       TransitionComponent={Transition}
       keepMounted
       aria-describedby="alert-dialog-slide-description"
+      sx={{ zIndex: '2000' }}
     >
       <DialogTitle sx={{ borderBottom: '1px solid #DDDDDD' }}>{dialogTitle}</DialogTitle>
       <DialogContent sx={{ marginTop: '1rem' }}>
@@ -56,7 +57,12 @@ export default CustomDialog
 
 CustomDialog.propTypes = {
   open: PropTypes.bool,
-  dialogTitle: PropTypes.string,
+  dialogTitle: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.array,
+    PropTypes.object,
+  ]),
   maxWidth: PropTypes.string,
   fullWidth: PropTypes.bool,
   fullScreen: PropTypes.bool,
