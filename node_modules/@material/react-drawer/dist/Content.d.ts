@@ -1,7 +1,0 @@
-import React from 'react';
-export interface DrawerContentProps {
-    tag?: string;
-    className?: string;
-}
-declare const DrawerContent: React.FunctionComponent<DrawerContentProps>;
-export default DrawerContent;
