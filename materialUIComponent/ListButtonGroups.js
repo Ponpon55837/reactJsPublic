@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { makeStyles } from '@mui/styles'
+import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
@@ -12,36 +12,27 @@ import CancelIcon from '@mui/icons-material/Cancel'
 import PropTypes from 'prop-types'
 import { CustomBox2 } from '@components/CustomStyle'
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'inline-table',
-    flexDirection: 'row',
-    alignItems: 'center',
-    '& button': {
-      marginRight: theme.spacing(1),
-      marginBottom: theme.spacing(0.5),
-    },
+const RootDiv = styled('div')(({ theme }) => ({
+  display: 'inline-table',
+  flexDirection: 'row',
+  alignItems: 'center',
+  '& button': {
+    marginRight: theme.spacing(1),
+    marginBottom: theme.spacing(0.5),
   },
-  tooltip: {
-    background: 'rgba(97, 97, 97, 0.92)',
-    color: '#FFFFFF',
+}))
+
+const StyledTooltip = styled(Tooltip)(() => ({
+  width: 17,
+  '&::before': {
     border: '1px solid rgba(97, 97, 97, 0.92)',
-    borderRadius: '5px',
-  },
-  arrow: {
-    fontSize: 18,
-    width: 17,
-    '&::before': {
-      border: '1px solid rgba(97, 97, 97, 0.92)',
-      backgroundColor: 'rgba(97, 97, 97, 0.92)',
-      boxSizing: 'border-box',
-    },
+    backgroundColor: 'rgba(97, 97, 97, 0.92)',
+    boxSizing: 'border-box',
   },
 }))
 
 const ButtonGroup = ({ children }) => {
-  const classes = useStyles()
-  return <div className={classes.root}>{children}</div>
+  return <RootDiv>{children}</RootDiv>
 }
 
 const ListButtonGroups = ({
@@ -56,7 +47,6 @@ const ListButtonGroups = ({
   copyClick = () => {},
   viewClick = () => {},
 }) => {
-  const classes = useStyles()
   const [open, setOpen] = useState(false)
 
   return (
@@ -104,8 +94,7 @@ const ListButtonGroups = ({
       </Button>
 
       <ClickAwayListener onClickAway={() => setOpen(false)}>
-        <Tooltip
-          classes={{ tooltip: classes.tooltip, arrow: classes.arrow }}
+        <StyledTooltip
           arrow
           placement="top"
           open={open}
@@ -155,7 +144,7 @@ const ListButtonGroups = ({
           >
             {attendance ? '取消' : '刪除'}
           </Button>
-        </Tooltip>
+        </StyledTooltip>
       </ClickAwayListener>
     </ButtonGroup>
   )

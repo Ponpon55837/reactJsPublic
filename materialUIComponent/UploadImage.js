@@ -33,7 +33,11 @@ const UploadImage = ({
           color="primary"
           component="span"
           onClick={() => {}}
-          sx={{ display: Image !== undefined ? 'none' : 'flex', justifyContent: 'flex-start' }}
+          sx={{
+            display: Image !== undefined ? 'none' : 'flex',
+            justifyContent: 'flex-start',
+            width: 'fit-content',
+          }}
         >
           <PhotoCamera size="small" />
         </IconButton>
@@ -44,7 +48,11 @@ const UploadImage = ({
       <IconButton
         color="error"
         onClick={() => deleteFunc()}
-        sx={{ display: Image === undefined ? 'none' : 'flex', justifyContent: 'center' }}
+        sx={{
+          display: Image === undefined ? 'none' : 'flex',
+          justifyContent: 'center',
+          width: 'fit-content',
+        }}
       >
         <DeleteForeverIcon size="small" />
       </IconButton>

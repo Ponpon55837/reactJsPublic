@@ -1,4 +1,4 @@
-import { makeStyles } from '@mui/styles'
+import { styled } from '@mui/material/styles'
 import ButtonGroup from '@mui/material/ButtonGroup'
 import Button from '@mui/material/Button'
 import EditIcon from '@mui/icons-material/Edit'
@@ -26,31 +26,34 @@ const CustomBtn = ({
   m = 0,
   p = 1,
 }: Props) => {
-  const useStyles = makeStyles(() => ({
-    edit: {
-      margin: `${m}px`,
-      padding: `${p}px`,
-      color: `${firstColor} !important`,
-      backgroundColor: '#ffffff',
-    },
-    delete: {
-      margin: `${m}px`,
-      padding: `${p}px`,
-      color: `${secondColor} !important`,
-      backgroundColor: '#ffffff',
-    },
+  const EditButton = styled(
+    Button,
+    {},
+  )(({}) => ({
+    margin: `${m}px`,
+    padding: `${p}px`,
+    color: `${firstColor} !important`,
+    backgroundColor: '#ffffff',
   }))
 
-  const classes = useStyles()
+  const DeleteButton = styled(
+    Button,
+    {},
+  )(({}) => ({
+    margin: `${m}px`,
+    padding: `${p}px`,
+    color: `${secondColor} !important`,
+    backgroundColor: '#ffffff',
+  }))
 
   return (
     <ButtonGroup color="primary" aria-label="outlined primary button group">
-      <Button variant="contained" className={classes.edit} onClick={editClick}>
+      <EditButton variant="contained" onClick={editClick}>
         {firstName}
-      </Button>
-      <Button variant="contained" className={classes.delete} onClick={deleteClick}>
+      </EditButton>
+      <DeleteButton variant="contained" onClick={deleteClick}>
         {secondName}
-      </Button>
+      </DeleteButton>
     </ButtonGroup>
   )
 }

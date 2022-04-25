@@ -1,4 +1,3 @@
-import { makeStyles } from '@mui/styles'
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
 import LoadingButton from '@mui/lab/LoadingButton'
@@ -27,27 +26,30 @@ const CustomViewBtn = ({
   deleteFunc = () => {},
   subLoading = false,
 }: Props) => {
-  const useStyles = makeStyles(() => ({
-    root: { justifyContent: 'flex-end' },
-    delete: {
-      display: subLoading || !deleteCheck ? 'none' : 'flex',
-    },
-    edit: { display: subLoading || !editCheck ? 'none' : 'flex' },
-    hide: { display: subLoading ? 'none' : 'flex', color: 'text.secondary' },
-  }))
-
-  const classes = useStyles()
-
   return (
     <>
-      <Stack direction="row" spacing={1} className={classes.root}>
-        <Button variant="outlined" color="error" onClick={deleteFunc} className={classes.delete}>
+      <Stack direction="row" spacing={1} sx={{ justifyContent: 'flex-end' }}>
+        <Button
+          variant="outlined"
+          color="error"
+          onClick={deleteFunc}
+          sx={{ display: subLoading || !deleteCheck ? 'none' : 'flex' }}
+        >
           {deleteLabel}
         </Button>
-        <Button variant="outlined" color="warning" onClick={editFunc} className={classes.edit}>
+        <Button
+          variant="outlined"
+          color="warning"
+          onClick={editFunc}
+          sx={{ display: subLoading || !editCheck ? 'none' : 'flex' }}
+        >
           {editLabel}
         </Button>
-        <Button variant="outlined" onClick={closeFunc} className={classes.hide}>
+        <Button
+          variant="outlined"
+          onClick={closeFunc}
+          sx={{ display: subLoading ? 'none' : 'flex', color: 'text.secondary' }}
+        >
           {hideLabel}
         </Button>
         {subLoading && (

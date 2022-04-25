@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { useUpdateEffect } from 'react-use'
+import { useEffectOnce, useUpdateEffect } from 'react-use'
 import { useTable, usePagination, useFlexLayout, useRowSelect, useSortBy } from 'react-table'
 import PropTypes from 'prop-types'
 import { css } from '@emotion/react'
@@ -16,7 +16,7 @@ import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import LinearProgress from '@mui/material/LinearProgress'
-import { makeStyles, withStyles } from '@mui/styles'
+import { styled } from '@mui/material/styles'
 import SwapVertIcon from '@mui/icons-material/SwapVert'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
@@ -37,6 +37,20 @@ const mergeProps = (props, { align = 'left', stickyLeft = false, stickyRight = f
 
 const headerProps = (props, { column }) => mergeProps(props, column)
 const cellProps = (props, { cell }) => mergeProps(props, cell.column)
+
+const StyledTableContainer = styled(TableContainer)(({}) => ({
+  overflow: 'scroll',
+  border: '5px solid #f3f3f4',
+  borderRadius: '5px',
+}))
+
+const StyledTableRow = styled(TableRow)(({}) => ({
+  '&:nth-of-type(odd)': {
+    '& td': {
+      backgroundColor: '#f3f3f4',
+    },
+  },
+}))
 
 const CustomTable = ({
   tableStyle = false,
@@ -90,6 +104,8 @@ const CustomTable = ({
   )
   const [initFlag, setInitFlag] = useState(true)
   const [sortFlag, setSortFlag] = useState(null)
+  const [small, setSmall] = useState(false)
+
   const changeSort = id => {
     onClick(id)
     setSortFlag(id)
@@ -108,62 +124,13 @@ const CustomTable = ({
     setPageSize(parseInt(pageSize, 10))
   }, [pageSize])
 
-  const useStyles = makeStyles(() => ({
-    root: {
-      overflow: 'scroll',
-      border: '5px solid #f3f3f4',
-      borderRadius: '5px',
-    },
-    freeTable: {
-      tableLayout: 'fixed',
-      overflowX: 'clip',
-    },
-    fixTable: {
-      tableLayout: 'fixed',
-      overflowX: 'scroll',
-      width: '1400px',
-    },
-    tbTh: {
-      padding: '0.4rem',
-      textAlign: 'center',
-      borderRight: '1px solid #e1e5eb',
-    },
-    thTd: {
-      padding: '0.1rem',
-      textAlign: 'center',
-    },
-    loader: {
-      textAlign: 'center',
-      padding: 0,
-      border: 'none',
-      '> div': {
-        width: '100%',
-        marginTop: '-2px',
-      },
-    },
-    icon: {
-      cursor: 'pointer',
-    },
-    stickyLeft: {
-      position: 'sticky !important',
-      left: 0,
-      top: 0,
-      zIndex: 1,
-      borderRight: '3px solid #e1e5eb',
-    },
-  }))
+  useEffectOnce(() => {
+    window.innerWidth <= 400 ? setSmall(true) : setSmall(false)
 
-  const StyledTableRow = withStyles(() => ({
-    root: {
-      '&:nth-of-type(odd)': {
-        '& td': {
-          backgroundColor: '#f3f3f4',
-        },
-      },
-    },
-  }))(TableRow)
+    const handleResize = () => (window.innerWidth <= 400 ? setSmall(true) : setSmall(false))
 
-  const classes = useStyles()
+    window.addEventListener('resize', handleResize)
+  })
 
   const styles = css`
     .sticky-left {
@@ -197,105 +164,115 @@ const CustomTable = ({
 
   // Render the UI for your table
   return (
-    <TableContainer css={styles} className={classes.root}>
-      <Table
-        className={tableStyle && data.length > 0 ? classes.fixTable : classes.freeTable}
-        {...getTableProps()}
-      >
-        <TableHead className="bg-light">
-          {headerGroups.map((headerGroup, idx) => (
-            <TableRow key={idx} {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(({ className, width, minWidth, ...column }, idx) => (
-                <TableCell
-                  key={idx}
-                  size="small"
-                  component="th"
-                  className={classes.tbTh}
-                  {...column.getHeaderProps(headerProps)}
-                >
-                  {/* Add a sort direction indicator */}
-                  {column.sort ? (
-                    <div style={{ display: 'flex' }}>
-                      <span style={{ cursor: 'pointer' }} onClick={() => changeSort(column.id)}>
-                        {column.Header}
-                      </span>
-                      {sortFlag === column.id ? (
-                        initFlag ? (
-                          <KeyboardArrowUpIcon
-                            fontSize="small"
-                            color="primary"
-                            className={classes.icon}
-                            onClick={() => changeSort(column.id)}
-                          />
+    <>
+      <StyledTableContainer css={styles}>
+        <Table
+          sx={{
+            tableLayout: 'fixed',
+            overflowX: tableStyle && data.length > 0 ? 'clip' : 'scroll',
+            width: tableStyle && data.length > 0 ? '1400px' : 'default',
+          }}
+          {...getTableProps()}
+        >
+          <TableHead className="bg-light">
+            {headerGroups.map((headerGroup, idx) => (
+              <TableRow key={idx} {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map(({ className, width, minWidth, ...column }, idx) => (
+                  <TableCell
+                    key={idx}
+                    size="small"
+                    component="th"
+                    {...column.getHeaderProps(headerProps)}
+                  >
+                    {/* Add a sort direction indicator */}
+                    {column.sort ? (
+                      <div style={{ display: 'flex' }}>
+                        <span style={{ cursor: 'pointer' }} onClick={() => changeSort(column.id)}>
+                          {column.Header}
+                        </span>
+                        {sortFlag === column.id ? (
+                          initFlag ? (
+                            <KeyboardArrowUpIcon
+                              fontSize="small"
+                              color="primary"
+                              sx={{ cursor: 'pointer' }}
+                              onClick={() => changeSort(column.id)}
+                            />
+                          ) : (
+                            <KeyboardArrowDownIcon
+                              fontSize="small"
+                              color="primary"
+                              sx={{ cursor: 'pointer' }}
+                              onClick={() => changeSort(column.id)}
+                            />
+                          )
                         ) : (
-                          <KeyboardArrowDownIcon
+                          <SwapVertIcon
                             fontSize="small"
                             color="primary"
-                            className={classes.icon}
+                            sx={{ cursor: 'pointer' }}
                             onClick={() => changeSort(column.id)}
                           />
-                        )
-                      ) : (
-                        <SwapVertIcon
-                          fontSize="small"
-                          color="primary"
-                          className={classes.icon}
-                          onClick={() => changeSort(column.id)}
-                        />
-                      )}
-                    </div>
-                  ) : (
-                    column.render('Header')
-                  )}
-                </TableCell>
-              ))}
-            </TableRow>
-          ))}
-          <TableRow style={{ display: !loading && 'none' }}>
-            <TableCell size="small" component="th" className={classes.tbTh}>
-              <LinearProgress />
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody {...getTableBodyProps()}>
-          {page.map((row, idx) => {
-            prepareRow(row)
-            return (
-              <StyledTableRow key={idx} {...row.getRowProps()}>
-                {row.cells.map((cell, idx) => {
-                  return (
-                    <TableCell
-                      key={idx}
-                      size="small"
-                      component="td"
-                      align="justify"
-                      {...cell.getCellProps(cellProps)}
-                    >
-                      {cell.render('Cell')}
-                    </TableCell>
-                  )
-                })}
-              </StyledTableRow>
-            )
-          })}
-          {page.length === 0 && !loading && (
-            <TableRow>
-              <TableCell
-                size="small"
-                component="td"
-                className={classes.tbTd}
-                style={{ textAlign: 'center' }}
-              >
-                目前無資料
+                        )}
+                      </div>
+                    ) : (
+                      column.render('Header')
+                    )}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+            <TableRow style={{ display: !loading && 'none' }}>
+              <TableCell size="small" component="th">
+                <LinearProgress />
               </TableCell>
             </TableRow>
-          )}
-        </TableBody>
-      </Table>
+          </TableHead>
+          <TableBody {...getTableBodyProps()}>
+            {page.map((row, idx) => {
+              prepareRow(row)
+              return (
+                <StyledTableRow key={idx} {...row.getRowProps()}>
+                  {row.cells.map((cell, idx) => {
+                    return (
+                      <TableCell
+                        key={idx}
+                        size="small"
+                        component="td"
+                        align="justify"
+                        {...cell.getCellProps(cellProps)}
+                      >
+                        {cell.render('Cell')}
+                      </TableCell>
+                    )
+                  })}
+                </StyledTableRow>
+              )
+            })}
+            {page.length === 0 && !loading && (
+              <TableRow>
+                <TableCell size="small" component="td" style={{ textAlign: 'center' }}>
+                  目前無資料
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </StyledTableContainer>
       <Box sx={{ padding: '0.4rem 0', display: 'inline-flex' }}>
-        <Pagination count={resultPageSize} page={pageValue} onChange={pageOnChange} />
+        <Pagination
+          count={resultPageSize}
+          page={pageValue}
+          onChange={pageOnChange}
+          size={small ? 'small' : 'default'}
+        />
         <FormControl variant="standard">
-          <Select value={pageSize} label="數量" onChange={pageSizeOnChange}>
+          <Select
+            value={pageSize}
+            label="數量"
+            onChange={pageSizeOnChange}
+            size={small ? 'small' : 'default'}
+          >
             {pageSizeOptions.map((size, idx) => (
               <MenuItem key={idx} value={size}>
                 {size}
@@ -304,7 +281,7 @@ const CustomTable = ({
           </Select>
         </FormControl>
       </Box>
-    </TableContainer>
+    </>
   )
 }
 

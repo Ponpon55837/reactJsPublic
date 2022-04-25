@@ -1,4 +1,4 @@
-import { makeStyles } from '@mui/styles'
+import { styled } from '@mui/material/styles'
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
 import LoadingButton from '@mui/lab/LoadingButton'
@@ -9,25 +9,28 @@ interface Props {
   subLoading?: boolean
 }
 
+const CustomStack = styled(Stack)(() => ({
+  justifyContent: 'flex-end',
+}))
+
 const CustomSubmit = ({ onClick = () => {}, subLoading = false }: Props) => {
-  const useStyles = makeStyles(() => ({
-    stack: {
-      justifyContent: 'flex-end',
-    },
-    baseBtn: {
-      display: subLoading ? 'none' : 'flex',
-    },
-  }))
-
-  const classes = useStyles()
-
   return (
     <>
-      <Stack direction="row" spacing={1} className={classes.stack}>
-        <Button variant="outlined" color="error" className={classes.baseBtn} onClick={onClick}>
+      <CustomStack direction="row" spacing={1}>
+        <Button
+          variant="outlined"
+          color="error"
+          onClick={onClick}
+          sx={{ display: subLoading ? 'none' : 'flex' }}
+        >
           取消
         </Button>
-        <Button variant="outlined" color="primary" type="submit" className={classes.baseBtn}>
+        <Button
+          variant="outlined"
+          color="primary"
+          type="submit"
+          sx={{ display: subLoading ? 'none' : 'flex' }}
+        >
           送出
         </Button>
         {subLoading && (
@@ -35,7 +38,7 @@ const CustomSubmit = ({ onClick = () => {}, subLoading = false }: Props) => {
             Submit
           </LoadingButton>
         )}
-      </Stack>
+      </CustomStack>
     </>
   )
 }
