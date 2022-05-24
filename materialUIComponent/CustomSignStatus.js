@@ -1,23 +1,12 @@
-import FormControl from '@mui/material/FormControl'
-import FormLabel from '@mui/material/FormLabel'
-import Radio from '@mui/material/Radio'
-import RadioGroup from '@mui/material/RadioGroup'
-import FormControlLabel from '@mui/material/FormControlLabel'
+import { FormControl, FormLabel, Radio, RadioGroup, FormControlLabel } from '@mui/material'
 import PropTypes from 'prop-types'
-
-interface Props {
-  statusTitle?: string
-  statusValue?: boolean
-  enableStatusFunc?: () => void
-  disableStatusFunc?: () => void
-}
 
 const CustomSignStatus = ({
   statusTitle = '簽核',
-  statusValue = true,
+  statusValue,
   enableStatusFunc = () => {},
   disableStatusFunc = () => {},
-}: Props) => {
+}) => {
   return (
     <FormControl component="fieldset">
       <FormLabel component="legend">{statusTitle}</FormLabel>

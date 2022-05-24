@@ -9,10 +9,10 @@ interface Props {
   inputSub?: () => void
   inputValue?: string
   clear?: () => void
-  onChange?: () => void
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   statusExist?: boolean
   isEnabled?: string | boolean
-  statusOnChange?: (value: string) => void
+  statusOnChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   btnName?: string
   addOnClick?: () => void
 }
@@ -25,7 +25,7 @@ const UniversalSearch = ({
   onChange,
   statusExist = false,
   isEnabled = '',
-  statusOnChange = () => {},
+  statusOnChange,
   btnName,
   addOnClick,
 }: Props) => {

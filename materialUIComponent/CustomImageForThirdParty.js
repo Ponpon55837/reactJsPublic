@@ -7,8 +7,8 @@ const CustomImageForThirdParty = ({
   className = '',
   alt = 'its a image for this page',
   layout = 'responsive',
-  width = 100,
-  height = 100,
+  width = 16,
+  height = 9,
   displayNone = false,
 }) => {
   const imgLoader = ({ src, width, quality }) => {

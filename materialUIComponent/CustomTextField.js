@@ -1,5 +1,4 @@
-import TextField from '@mui/material/TextField'
-import InputAdornment from '@mui/material/InputAdornment'
+import { TextField, InputAdornment } from '@mui/material'
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined'
 import PropTypes from 'prop-types'
 
@@ -15,9 +14,9 @@ const CustomTextField = ({
   fullWidth = true,
   shrink = true,
   iconStatus = false,
+  multiline = false,
   icon = <BorderColorOutlinedIcon size="small" />,
   register,
-  redLabel = false,
 }) => {
   return (
     <TextField
@@ -28,14 +27,10 @@ const CustomTextField = ({
       helperText={helperText}
       autoComplete={autoComplete}
       disabled={disabled}
+      multiline={multiline}
       error={error}
       placeholder={placeholder}
       {...register}
-      sx={{
-        '& .MuiFormLabel-root': {
-          color: redLabel && 'red', // or black
-        },
-      }}
       InputLabelProps={{
         shrink: shrink,
       }}
@@ -60,11 +55,11 @@ CustomTextField.propTypes = {
   placeholder: PropTypes.string,
   autoComplete: PropTypes.node,
   error: PropTypes.bool,
+  multiline: PropTypes.bool,
   disabled: PropTypes.bool,
   fullWidth: PropTypes.bool,
   shrink: PropTypes.bool,
   iconStatus: PropTypes.bool,
   icon: PropTypes.node,
   register: PropTypes.object,
-  redLabel: PropTypes.bool,
 }

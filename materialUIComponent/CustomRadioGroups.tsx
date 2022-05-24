@@ -10,6 +10,7 @@ interface Props {
   optionArr?: Array<{ id: number | string; name: string }>
   value?: number | string
   onChange?: () => void
+  disabled?: boolean
 }
 
 const CustomRadioGroups = ({
@@ -17,9 +18,10 @@ const CustomRadioGroups = ({
   optionArr = [{ id: 0, name: 'test' }],
   value = '0',
   onChange = () => {},
+  disabled = false,
 }: Props) => {
   return (
-    <FormControl component="fieldset">
+    <FormControl component="fieldset" disabled={disabled}>
       <FormLabel component="legend">{title}</FormLabel>
       <RadioGroup row value={value} onChange={onChange}>
         {optionArr.map((option, idx) => (
@@ -42,4 +44,5 @@ CustomRadioGroups.propTypes = {
   optionArr: PropTypes.array,
   value: PropTypes.string,
   onChange: PropTypes.func,
+  disabled: PropTypes.bool,
 }

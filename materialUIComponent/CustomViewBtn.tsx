@@ -1,5 +1,4 @@
-import Button from '@mui/material/Button'
-import Stack from '@mui/material/Stack'
+import { Button, Stack } from '@mui/material'
 import LoadingButton from '@mui/lab/LoadingButton'
 import PropTypes from 'prop-types'
 
@@ -47,8 +46,8 @@ const CustomViewBtn = ({
         </Button>
         <Button
           variant="outlined"
-          onClick={closeFunc}
           sx={{ display: subLoading ? 'none' : 'flex', color: 'text.secondary' }}
+          onClick={closeFunc}
         >
           {hideLabel}
         </Button>

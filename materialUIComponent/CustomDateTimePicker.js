@@ -1,5 +1,5 @@
 import zhLocale from 'date-fns/locale/zh-TW'
-import TextField from '@mui/material/TextField'
+import { TextField } from '@mui/material'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import DatePicker from '@mui/lab/DatePicker'
@@ -9,23 +9,28 @@ import PropTypes from 'prop-types'
 
 const CustomDatePicker = ({
   time,
-  onChange = () => {},
+  onChange,
+  disabled = false,
   views = ['year', 'month', 'date'],
   label = '請選擇時間',
   format = 'yyyy-MM-dd',
   helperText = '',
   error = false,
+  clearable = false,
+  variant = 'standard',
 }) => {
   return (
     <LocalizationProvider locale={zhLocale} dateAdapter={AdapterDateFns}>
       <DatePicker
         label={label}
         inputFormat={format}
+        clearable={clearable}
         mask="____-__-__"
         value={time}
         onChange={onChange}
+        disabled={disabled}
         renderInput={params => (
-          <TextField {...params} variant="standard" helperText={helperText} error={error} />
+          <TextField {...params} variant={variant} helperText={helperText} error={error} />
         )}
       />
     </LocalizationProvider>
@@ -65,18 +70,18 @@ const CustomDateTimePicker = ({
   label = '請選擇時間',
   inputFormat = 'yyyy-MM-dd HH:mm',
   ampm = true,
-  minutesStep = 1,
   helperText = '',
   error = false,
+  disabled = false,
 }) => {
   return (
     <LocalizationProvider locale={zhLocale} dateAdapter={AdapterDateFns}>
       <DateTimePicker
+        disabled={disabled}
         label={label}
         value={time}
         ampm={ampm}
         inputFormat={inputFormat}
-        minutesStep={minutesStep}
         mask="____-__-__ __:__"
         onChange={onChange}
         renderInput={params => (
@@ -101,6 +106,9 @@ CustomDatePicker.propTypes = {
   format: PropTypes.string,
   helperText: PropTypes.node,
   error: PropTypes.bool,
+  variant: PropTypes.string,
+  clearable: PropTypes.bool,
+  disabled: PropTypes.bool,
 }
 
 CustomTimePicker.propTypes = {
@@ -119,7 +127,7 @@ CustomDateTimePicker.propTypes = {
   label: PropTypes.string,
   inputFormat: PropTypes.string,
   ampm: PropTypes.bool,
-  minutesStep: PropTypes.number,
   helperText: PropTypes.node,
   error: PropTypes.bool,
+  disabled: PropTypes.bool,
 }

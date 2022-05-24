@@ -1,12 +1,8 @@
 import { useState } from 'react'
+import { Typography, Button, Tooltip, ClickAwayListener } from '@mui/material'
 import { styled } from '@mui/material/styles'
-import Typography from '@mui/material/Typography'
-import Button from '@mui/material/Button'
-import Tooltip from '@mui/material/Tooltip'
-import ClickAwayListener from '@mui/material/ClickAwayListener'
 import PageviewOutlinedIcon from '@mui/icons-material/PageviewOutlined'
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined'
-import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
 import CancelIcon from '@mui/icons-material/Cancel'
 import PropTypes from 'prop-types'
@@ -40,11 +36,14 @@ const ListButtonGroups = ({
   isCloseDay = false,
   sign = false,
   otherCheck = true,
-  copy = false,
-  attendance = false,
+  viewNone = false,
+  editNone = false,
+  deleteNone = false,
+  viewLabel = '檢視',
+  auditLabel = '編輯',
+  deleteLabel = '刪除',
   deleteClick = () => {},
   editClick = () => {},
-  copyClick = () => {},
   viewClick = () => {},
 }) => {
   const [open, setOpen] = useState(false)
@@ -58,11 +57,11 @@ const ListButtonGroups = ({
         startIcon={<PageviewOutlinedIcon size="small" />}
         sx={{
           p: '0 !important',
-          display: (status === 3 || !otherCheck) && 'none',
+          display: (status === 3 || isCloseDay || !otherCheck || viewNone) && 'none',
         }}
         onClick={() => viewClick()}
       >
-        檢視
+        {viewLabel}
       </Button>
 
       <Button
@@ -72,25 +71,11 @@ const ListButtonGroups = ({
         startIcon={<ModeEditOutlinedIcon size="small" />}
         sx={{
           p: '0 !important',
-          display: (status !== 2 || attendance || isCloseDay) && 'none',
+          display: (status !== 2 || isCloseDay || editNone) && 'none',
         }}
         onClick={() => editClick()}
       >
-        {sign ? '簽核' : '編輯'}
-      </Button>
-
-      <Button
-        size="small"
-        variant="outlined"
-        color="success"
-        startIcon={<ContentCopyIcon size="small" />}
-        sx={{
-          p: '0 !important',
-          display: !copy && 'none',
-        }}
-        onClick={() => copyClick()}
-      >
-        複製
+        {auditLabel}
       </Button>
 
       <ClickAwayListener onClickAway={() => setOpen(false)}>
@@ -100,9 +85,7 @@ const ListButtonGroups = ({
           open={open}
           title={
             <CustomBox2>
-              <Typography sx={{ display: 'block', mb: 1 }}>
-                是否{attendance ? '取消' : '刪除'}此筆資料？
-              </Typography>
+              <Typography sx={{ display: 'block', mb: 1 }}>是否刪除此筆資料？</Typography>
               <Button
                 size="small"
                 variant="contained"
@@ -114,7 +97,7 @@ const ListButtonGroups = ({
                 }}
                 onClick={() => setOpen(false)}
               >
-                {attendance ? '否' : '取消'}
+                取消
               </Button>
               <Button
                 size="small"
@@ -126,7 +109,7 @@ const ListButtonGroups = ({
                 }}
                 onClick={() => deleteClick()}
               >
-                {attendance ? '是' : '刪除'}
+                刪除
               </Button>
             </CustomBox2>
           }
@@ -138,11 +121,11 @@ const ListButtonGroups = ({
             startIcon={<DeleteOutlineOutlinedIcon size="small" />}
             sx={{
               p: '0 !important',
-              display: (status === 0 || status === 3 || isCloseDay || sign) && 'none',
+              display: (status === 0 || status === 3 || isCloseDay || sign || deleteNone) && 'none',
             }}
             onClick={() => setOpen(true)}
           >
-            {attendance ? '取消' : '刪除'}
+            {deleteLabel}
           </Button>
         </StyledTooltip>
       </ClickAwayListener>
@@ -160,11 +143,14 @@ ListButtonGroups.propTypes = {
   status: PropTypes.number,
   isCloseDay: PropTypes.bool,
   sign: PropTypes.bool,
-  copy: PropTypes.bool,
-  attendance: PropTypes.bool,
+  viewLabel: PropTypes.string,
+  auditLabel: PropTypes.string,
+  deleteLabel: PropTypes.string,
   otherCheck: PropTypes.bool,
   deleteClick: PropTypes.func,
   editClick: PropTypes.func,
-  copyClick: PropTypes.func,
   viewClick: PropTypes.func,
+  viewNone: PropTypes.bool,
+  editNone: PropTypes.bool,
+  deleteNone: PropTypes.bool,
 }

@@ -1,29 +1,30 @@
-import { styled } from '@mui/material/styles'
-import Button from '@mui/material/Button'
-import Stack from '@mui/material/Stack'
+import { Button, Stack } from '@mui/material'
 import LoadingButton from '@mui/lab/LoadingButton'
 import PropTypes from 'prop-types'
 
 interface Props {
   onClick?: () => void
   subLoading?: boolean
+  cancelLabel?: string
+  successLabel?: string
 }
 
-const CustomStack = styled(Stack)(() => ({
-  justifyContent: 'flex-end',
-}))
-
-const CustomSubmit = ({ onClick = () => {}, subLoading = false }: Props) => {
+const CustomSubmit = ({
+  onClick,
+  subLoading = false,
+  cancelLabel = '取消',
+  successLabel = '送出',
+}: Props) => {
   return (
     <>
-      <CustomStack direction="row" spacing={1}>
+      <Stack direction="row" spacing={1} sx={{ justifyContent: 'flex-end' }}>
         <Button
           variant="outlined"
           color="error"
-          onClick={onClick}
           sx={{ display: subLoading ? 'none' : 'flex' }}
+          onClick={onClick}
         >
-          取消
+          {cancelLabel}
         </Button>
         <Button
           variant="outlined"
@@ -31,14 +32,14 @@ const CustomSubmit = ({ onClick = () => {}, subLoading = false }: Props) => {
           type="submit"
           sx={{ display: subLoading ? 'none' : 'flex' }}
         >
-          送出
+          {successLabel}
         </Button>
         {subLoading && (
           <LoadingButton loading={subLoading} variant="outlined" color="secondary">
             Submit
           </LoadingButton>
         )}
-      </CustomStack>
+      </Stack>
     </>
   )
 }
@@ -49,4 +50,6 @@ CustomSubmit.propTypes = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onClick: PropTypes.func,
   subLoading: PropTypes.bool,
+  cancelLabel: PropTypes.bool,
+  successLabel: PropTypes.bool,
 }

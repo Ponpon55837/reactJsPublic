@@ -1,6 +1,4 @@
-import Paper from '@mui/material/Paper'
-import InputBase from '@mui/material/InputBase'
-import Divider from '@mui/material/Divider'
+import { Paper, InputBase, Divider } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import SearchIcon from '@mui/icons-material/Search'
 import CloseIcon from '@mui/icons-material/Close'
@@ -13,15 +11,15 @@ interface Props {
   width?: string
   inputSub?: () => void
   clear?: () => void
-  onChange?: () => void
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 const CustomSearch = ({
   placeholder = '請輸入搜尋內容',
   inputValue = '',
   width = 'calc(80% - 200px)',
   inputSub = () => {},
-  clear = () => {},
-  onChange = () => {},
+  clear,
+  onChange,
 }: Props) => {
   let filterTimeout: any
 
@@ -41,7 +39,13 @@ const CustomSearch = ({
         alignItems: 'center',
         minWidth: 300,
         maxWidth: 470,
-        width: width,
+        width: {
+          xs: '100%',
+          sm: 'calc(100% - 100px)',
+          md: 'calc(90% - 100px)',
+          lg: 'calc(90% - 200px)',
+          xl: 'calc(90% - 300px)',
+        },
         mr: 1,
         mb: 1,
       }}
@@ -60,7 +64,7 @@ const CustomSearch = ({
         </IconButton>
       )}
       <Divider sx={{ height: 20, m: 0.5 }} orientation="vertical" />
-      <IconButton onClick={inputSub} aria-label="search">
+      <IconButton onClick={() => inputSub()} aria-label="search">
         <SearchIcon />
       </IconButton>
     </Paper>
@@ -71,7 +75,7 @@ export default CustomSearch
 
 CustomSearch.propTypes = {
   placeholder: PropTypes.string,
-  inputValue: PropTypes.string,
+  inputValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   width: PropTypes.string,
   inputSub: PropTypes.func,
   clear: PropTypes.func,

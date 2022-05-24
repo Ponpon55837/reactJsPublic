@@ -2,7 +2,6 @@ import { useState, useMemo } from 'react'
 import { useEffectOnce, useUpdateEffect } from 'react-use'
 import { useTable, usePagination, useFlexLayout, useRowSelect, useSortBy } from 'react-table'
 import PropTypes from 'prop-types'
-import { css } from '@emotion/react'
 import classNames from 'classnames'
 import Table from '@mui/material/Table'
 import TableContainer from '@mui/material/TableContainer'
@@ -40,8 +39,13 @@ const cellProps = (props, { cell }) => mergeProps(props, cell.column)
 
 const StyledTableContainer = styled(TableContainer)(({}) => ({
   overflow: 'scroll',
+  overflowX: 'initial',
   border: '5px solid #f3f3f4',
   borderRadius: '5px',
+  // '& .css-15wwp11-MuiTableHead-root': {
+  //   position: 'sticky',
+  //   top: '0px',
+  // },
 }))
 
 const StyledTableRow = styled(TableRow)(({}) => ({
@@ -105,6 +109,7 @@ const CustomTable = ({
   const [initFlag, setInitFlag] = useState(true)
   const [sortFlag, setSortFlag] = useState(null)
   const [small, setSmall] = useState(false)
+  const [tableHeight, setTableHeight] = useState(window.innerHeight - 252)
 
   const changeSort = id => {
     onClick(id)
@@ -124,6 +129,11 @@ const CustomTable = ({
     setPageSize(parseInt(pageSize, 10))
   }, [pageSize])
 
+  useUpdateEffect(() => {
+    const handleResize = () => setTableHeight(window.innerHeight - 252)
+    window.addEventListener('resize', handleResize)
+  }, [window.innerHeight])
+
   useEffectOnce(() => {
     window.innerWidth <= 400 ? setSmall(true) : setSmall(false)
 
@@ -132,41 +142,13 @@ const CustomTable = ({
     window.addEventListener('resize', handleResize)
   })
 
-  const styles = css`
-    .sticky-left {
-      position: sticky !important;
-      left: 0;
-      top: 0;
-      z-index: 1;
-      border-right: 3px solid #e1e5eb;
-    }
-
-    th.sticky-left {
-      background-color: #fbfbfb;
-    }
-    th.sticky-right {
-      background-color: #fbfbfb;
-    }
-
-    td.sticky-left:nth-of-type(odd) {
-      background-color: #f2f2f2;
-    }
-
-    .sticky-right {
-      position: sticky !important;
-      right: 0;
-      top: 0;
-      z-index: 1;
-      background-color: #f2f2f2;
-      border-left: 3px solid #e1e5eb;
-    }
-  `
-
   // Render the UI for your table
   return (
     <>
-      <StyledTableContainer css={styles}>
+      <StyledTableContainer sx={{ maxHeight: tableHeight }}>
         <Table
+          stickyHeader
+          aria-label="sticky table"
           sx={{
             tableLayout: 'fixed',
             overflowX: tableStyle && data.length > 0 ? 'clip' : 'scroll',

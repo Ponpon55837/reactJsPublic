@@ -11,7 +11,7 @@ interface Props {
   inputSub?: () => void
   inputValue?: string
   clear?: () => void
-  onChange?: () => void
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   yearValue?: string | number
   monthValue?: string | number
   monthOpen?: boolean
@@ -51,7 +51,6 @@ const UniversalSearchWithTime = ({
         />
         <CustomBox3>
           <SelectYearAndMonth
-            marginTopBoolean={false}
             yearValue={yearValue}
             monthValue={monthValue}
             monthOpen={monthOpen}

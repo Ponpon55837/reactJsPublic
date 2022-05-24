@@ -23,11 +23,19 @@ for (let i = 1; i <= 12; i += 1) {
 const SelectYearAndMonth = ({
   yearValue,
   monthValue,
+  dateValue,
   monthOpen = true,
   yearOnChange,
   monthOnChange,
+  dateOnChange,
   disabled,
 }) => {
+  const getLastDay = new Date(yearValue, monthValue, 0).getDate()
+  const dateOption = []
+  for (let i = 1; i <= getLastDay; i += 1) {
+    dateOption.push({ value: i, label: `${(i + '').padStart(2, '0')} 日` })
+  }
+
   return (
     <>
       <FormControl
@@ -35,7 +43,7 @@ const SelectYearAndMonth = ({
         sx={{
           minWidth: 120,
           mt: 1,
-          mr: 1,
+          mr: '.5rem',
           mb: 1,
         }}
         disabled={disabled}
@@ -54,7 +62,7 @@ const SelectYearAndMonth = ({
         size="small"
         sx={{
           mt: 1,
-          mr: '.4rem',
+          mr: '.5rem',
           minWidth: 120,
           display: !monthOpen && 'none',
         }}
@@ -69,6 +77,24 @@ const SelectYearAndMonth = ({
           ))}
         </Select>
       </FormControl>
+
+      <FormControl
+        size="small"
+        sx={{
+          mt: 1,
+          minWidth: 120,
+        }}
+      >
+        <InputLabel id="demo-simple-select-helper-label">日</InputLabel>
+        <Select value={dateValue} label="月" onChange={dateOnChange}>
+          <MenuItem value="">-</MenuItem>
+          {dateOption.map(date => (
+            <MenuItem key={date.value} value={date.value}>
+              {date.label}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
     </>
   )
 }
@@ -78,8 +104,10 @@ export default SelectYearAndMonth
 SelectYearAndMonth.propTypes = {
   yearValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   monthValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  dateValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   monthOpen: PropTypes.bool,
   yearOnChange: PropTypes.func,
   monthOnChange: PropTypes.func,
+  dateOnChange: PropTypes.func,
   disabled: PropTypes.bool,
 }

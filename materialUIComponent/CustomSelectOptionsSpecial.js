@@ -1,4 +1,5 @@
 import { FormControl, InputLabel, Select, MenuItem, FormHelperText } from '@mui/material'
+import OutlinedInput from '@mui/material/OutlinedInput'
 import PropTypes from 'prop-types'
 
 const CustomSelectOptions = ({
@@ -8,7 +9,6 @@ const CustomSelectOptions = ({
   label = '',
   variant = 'outlined',
   nullValueOption = false,
-  nullValueOptionValue = '-',
   disabled = false,
   selectOptions = [],
   onChange,
@@ -28,9 +28,23 @@ const CustomSelectOptions = ({
         ml: ml,
       }}
     >
-      <InputLabel id="demo-simple-select-helper-label">{label}</InputLabel>
-      <Select autoWidth defaultValue={defaultValue} value={value} label={label} onChange={onChange}>
-        {nullValueOption && <MenuItem value={''}>{nullValueOptionValue}</MenuItem>}
+      <InputLabel id="demo-simple-select-helper-label" shrink>
+        {label}
+      </InputLabel>
+      <Select
+        autoWidth
+        displayEmpty
+        defaultValue={defaultValue}
+        value={value}
+        label={label}
+        onChange={onChange}
+        input={<OutlinedInput notched label={label} />}
+      >
+        {nullValueOption && (
+          <MenuItem disabled value={''}>
+            此部門尚無人員
+          </MenuItem>
+        )}
         {selectOptions.map(sle => (
           <MenuItem key={sle.id} value={sle.id}>
             {sle.name}
@@ -50,10 +64,10 @@ CustomSelectOptions.propTypes = {
   value: PropTypes.string,
   label: PropTypes.string,
   variant: PropTypes.string,
-  shrink: PropTypes.bool,
+
   disabled: PropTypes.bool,
   nullValueOption: PropTypes.bool,
-  nullValueOptionValue: PropTypes.string,
+  nullValueOptionLabel: PropTypes.string,
   selectOptions: PropTypes.array,
   onChange: PropTypes.func,
   minWidth: PropTypes.number,

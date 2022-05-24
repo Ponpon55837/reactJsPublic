@@ -22,15 +22,10 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 const CustomFullDialog = ({ toolBarTitle, open, closeFunc, contentComponent }) => {
   const { extendState, setExtendState, dialogSizeState, setDialogSizeState } = useMiddleware()
-  const [fullScreen, setFullScreen] = useState(extendState)
-
-  useUpdateEffect(() => {
-    if (!open) setExtendState(fullScreen)
-  }, [open])
 
   return (
     <Dialog
-      fullScreen={fullScreen}
+      fullScreen={extendState}
       fullWidth
       maxWidth={dialogSizeState}
       open={open}
@@ -47,7 +42,7 @@ const CustomFullDialog = ({ toolBarTitle, open, closeFunc, contentComponent }) =
             noValidate
             component="form"
             sx={{
-              display: fullScreen ? 'none' : 'flex',
+              display: extendState ? 'none' : 'flex',
               flexDirection: 'column',
               m: 'auto',
               width: 'fit-content',
@@ -66,11 +61,9 @@ const CustomFullDialog = ({ toolBarTitle, open, closeFunc, contentComponent }) =
                 label="maxWidth"
                 sx={{ color: '#FFFFFF' }}
               >
-                <MenuItem value="xs">微</MenuItem>
                 <MenuItem value="sm">小</MenuItem>
                 <MenuItem value="md">中</MenuItem>
                 <MenuItem value="lg">大</MenuItem>
-                <MenuItem value="xl">巨</MenuItem>
               </Select>
             </FormControl>
           </Box>
@@ -78,21 +71,21 @@ const CustomFullDialog = ({ toolBarTitle, open, closeFunc, contentComponent }) =
           <IconButton
             edge="end"
             color="inherit"
-            onClick={() => setFullScreen(!fullScreen)}
+            onClick={() => setExtendState(!extendState)}
             aria-label="close"
           >
-            <OpenInFullIcon size="small" sx={{ display: fullScreen ? 'none' : 'default' }} />
-            <CloseFullscreenIcon size="small" sx={{ display: !fullScreen ? 'none' : 'default' }} />
+            <OpenInFullIcon size="small" sx={{ display: extendState ? 'none' : 'default' }} />
+            <CloseFullscreenIcon size="small" sx={{ display: !extendState ? 'none' : 'default' }} />
           </IconButton>
         </Toolbar>
       </AppBar>
       <Paper
-        elevation={fullScreen ? 0 : 3}
+        elevation={extendState ? 0 : 3}
         sx={{
-          padding: fullScreen ? '2rem 4rem' : '1.5rem 6% 0.8rem 6%',
-          margin: fullScreen ? '2rem auto auto auto' : 'auto',
+          padding: extendState ? '2rem 4rem' : '1.5rem 6% 0.8rem 6%',
+          margin: extendState ? '2rem auto auto auto' : 'auto',
           width: '100%',
-          height: fullScreen ? 'auto' : 'default',
+          height: extendState ? 'auto' : 'default',
         }}
       >
         {contentComponent}

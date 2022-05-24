@@ -1,28 +1,32 @@
-import FormControl from '@mui/material/FormControl'
-import InputLabel from '@mui/material/InputLabel'
-import MenuItem from '@mui/material/MenuItem'
-import Select from '@mui/material/Select'
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 import PropTypes from 'prop-types'
 
-const StatusSelect = ({ isEnabled, onChange }) => {
+const StatusSelect = ({
+  isEnabled,
+  onChange,
+  title = '狀態',
+  trueStatus = '啟用',
+  falseStatus = '停用',
+}) => {
   return (
     <FormControl
       // variant="standard"
       size="small"
       sx={{
         minWidth: 120,
+        mr: 1,
       }}
     >
-      <InputLabel id="demo-simple-select-helper-label">狀態</InputLabel>
+      <InputLabel id="demo-simple-select-helper-label">{title}</InputLabel>
       <Select
         value={isEnabled}
-        label="狀態"
+        label={title}
         // displayEmpty
         onChange={onChange}
       >
         <MenuItem value="">-</MenuItem>
-        <MenuItem value={true}>啟用</MenuItem>
-        <MenuItem value={false}>停用</MenuItem>
+        <MenuItem value={true}>{trueStatus}</MenuItem>
+        <MenuItem value={false}>{falseStatus}</MenuItem>
       </Select>
     </FormControl>
   )
@@ -31,6 +35,9 @@ const StatusSelect = ({ isEnabled, onChange }) => {
 export default StatusSelect
 
 StatusSelect.propTypes = {
-  isEnabled: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  isEnabled: PropTypes.oneOfType([PropTypes.string, PropTypes.bool, PropTypes.number]),
   onChange: PropTypes.func,
+  title: PropTypes.string,
+  trueStatus: PropTypes.string,
+  falseStatus: PropTypes.string,
 }
