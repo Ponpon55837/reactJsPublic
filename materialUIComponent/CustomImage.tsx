@@ -1,6 +1,22 @@
 import Image from 'next/image'
 import PropTypes from 'prop-types'
 
+interface Props {
+  src: string
+  title?: string
+  className?: string
+  alt?: string
+  layout?: 'responsive' | 'fill' | 'fixed'
+  width?: number
+  height?: number
+}
+
+interface ImageLoaderProps {
+  src: string
+  width: number
+  quality?: number
+}
+
 const CustomImage = ({
   src,
   title = '',
@@ -9,9 +25,8 @@ const CustomImage = ({
   layout = 'responsive',
   width = 100,
   height = 100,
-  displayNone = false,
-}) => {
-  const imgLoader = ({ src, width, quality }) => {
+}: Props) => {
+  const imgLoader = ({ src, width, quality }: ImageLoaderProps) => {
     return `${process.env.NEXT_PUBLIC_SERVER_HOST}${src}?w=${width}&q=${quality || 75}`
   }
 
@@ -25,7 +40,6 @@ const CustomImage = ({
       layout={layout}
       width={width}
       height={height}
-      sx={{ display: displayNone }}
     />
   )
 }

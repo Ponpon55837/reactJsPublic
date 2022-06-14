@@ -2,6 +2,23 @@ import { TextField, InputAdornment } from '@mui/material'
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined'
 import PropTypes from 'prop-types'
 
+interface Props {
+  label?: string
+  type?: 'text' | 'number' | 'password'
+  variant?: 'outlined' | 'standard'
+  helperText?: string
+  placeholder?: string
+  autoComplete?: null | boolean
+  error?: null | boolean
+  disabled?: boolean
+  fullWidth?: boolean
+  shrink?: boolean
+  iconStatus?: boolean
+  multiline?: boolean
+  icon?: React.ReactElement<any, any>
+  register: any
+}
+
 const CustomTextField = ({
   label,
   type = 'text',
@@ -15,9 +32,9 @@ const CustomTextField = ({
   shrink = true,
   iconStatus = false,
   multiline = false,
-  icon = <BorderColorOutlinedIcon size="small" />,
+  icon = <BorderColorOutlinedIcon fontSize="small" />,
   register,
-}) => {
+}: Props) => {
   return (
     <TextField
       fullWidth={fullWidth}

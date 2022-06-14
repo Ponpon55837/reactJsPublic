@@ -1,7 +1,7 @@
 import { Paper, InputBase, Divider } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import SearchIcon from '@mui/icons-material/Search'
-import CloseIcon from '@mui/icons-material/Close'
+import CancelSharpIcon from '@mui/icons-material/CancelSharp'
 import PropTypes from 'prop-types'
 import { KeyboardEvent } from 'react'
 
@@ -60,7 +60,7 @@ const CustomSearch = ({
       />
       {inputValue.length > 0 && (
         <IconButton aria-label="search" onClick={clear}>
-          <CloseIcon />
+          <CancelSharpIcon />
         </IconButton>
       )}
       <Divider sx={{ height: 20, m: 0.5 }} orientation="vertical" />

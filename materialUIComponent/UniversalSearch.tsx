@@ -31,7 +31,8 @@ const UniversalSearch = ({
 }: Props) => {
   return (
     <Grid container spacing={2} sx={{ mb: 1 }}>
-      <Grid item xs={12} md={8}>
+      <Grid item xs={12}>
+        <AddBtn btnName={btnName} onClick={addOnClick} />
         <CustomSearch
           placeholder={placeholder}
           inputSub={inputSub}
@@ -40,9 +41,6 @@ const UniversalSearch = ({
           onChange={onChange}
         />
         {statusExist && <StatusSelect isEnabled={isEnabled} onChange={statusOnChange} />}
-      </Grid>
-      <Grid item xs={12} md={4}>
-        <AddBtn btnName={btnName} onClick={addOnClick} />
       </Grid>
     </Grid>
   )

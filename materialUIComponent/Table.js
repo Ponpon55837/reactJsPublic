@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react'
-import { useEffectOnce, useUpdateEffect } from 'react-use'
+import { useUpdateEffect } from 'react-use'
 import { useTable, usePagination, useFlexLayout, useRowSelect, useSortBy } from 'react-table'
+import useMediaQuery from '@mui/material/useMediaQuery'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import Table from '@mui/material/Table'
@@ -19,6 +20,7 @@ import { styled } from '@mui/material/styles'
 import SwapVertIcon from '@mui/icons-material/SwapVert'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import { Typography } from '@mui/material'
 
 const mergeProps = (props, { align = 'left', stickyLeft = false, stickyRight = false }) => {
   // align = align.replace("left", "start")
@@ -40,12 +42,14 @@ const cellProps = (props, { cell }) => mergeProps(props, cell.column)
 const StyledTableContainer = styled(TableContainer)(({}) => ({
   overflow: 'scroll',
   overflowX: 'initial',
-  border: '5px solid #f3f3f4',
+  border: '2px solid #f3f3f4',
   borderRadius: '5px',
-  // '& .css-15wwp11-MuiTableHead-root': {
-  //   position: 'sticky',
-  //   top: '0px',
-  // },
+  '& .MuiTableHead-root': {
+    position: 'sticky',
+    top: '0px',
+    backgroundColor: '#FFFFFF',
+    zIndex: 1,
+  },
 }))
 
 const StyledTableRow = styled(TableRow)(({}) => ({
@@ -67,6 +71,7 @@ const CustomTable = ({
   initSelectedRow = [],
   onClick,
   pageValue,
+  dataCount,
   resultPageSize,
   pageOnChange,
   pageSizeOnChange,
@@ -108,8 +113,8 @@ const CustomTable = ({
   )
   const [initFlag, setInitFlag] = useState(true)
   const [sortFlag, setSortFlag] = useState(null)
-  const [small, setSmall] = useState(false)
   const [tableHeight, setTableHeight] = useState(window.innerHeight - 252)
+  const small = useMediaQuery('(max-width:600px)')
 
   const changeSort = id => {
     onClick(id)
@@ -133,14 +138,6 @@ const CustomTable = ({
     const handleResize = () => setTableHeight(window.innerHeight - 252)
     window.addEventListener('resize', handleResize)
   }, [window.innerHeight])
-
-  useEffectOnce(() => {
-    window.innerWidth <= 400 ? setSmall(true) : setSmall(false)
-
-    const handleResize = () => (window.innerWidth <= 400 ? setSmall(true) : setSmall(false))
-
-    window.addEventListener('resize', handleResize)
-  })
 
   // Render the UI for your table
   return (
@@ -248,7 +245,10 @@ const CustomTable = ({
           onChange={pageOnChange}
           size={small ? 'small' : 'default'}
         />
-        <FormControl variant="standard">
+        <Typography sx={{ mt: small ? '.1rem' : '.2rem', mr: '.4rem' }}>
+          資料總數： {dataCount} 筆
+        </Typography>
+        <FormControl variant="standard" sx={{ display: small ? 'none' : 'inline-flex' }}>
           <Select
             value={pageSize}
             label="數量"
@@ -257,7 +257,7 @@ const CustomTable = ({
           >
             {pageSizeOptions.map((size, idx) => (
               <MenuItem key={idx} value={size}>
-                {size}
+                每頁筆數：{size}
               </MenuItem>
             ))}
           </Select>
@@ -285,6 +285,7 @@ CustomTable.propTypes = {
   initSelectedRow: PropTypes.array,
   onClick: PropTypes.func,
   pageValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  dataCount: PropTypes.number,
   resultPageSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   pageOnChange: PropTypes.func,
   pageSizeOnChange: PropTypes.func,

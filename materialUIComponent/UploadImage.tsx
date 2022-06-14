@@ -8,17 +8,29 @@ const Input = styled('input')({
   display: 'none',
 })
 
+interface Props {
+  ImgError?: boolean
+  ImgRef?: React.Ref<HTMLInputElement>
+  Image?: string
+  onChange?: () => void
+  deleteFunc?: () => void
+  imgLimit?: number
+}
+
 const UploadImage = ({
   ImgError = false,
   ImgRef,
   Image,
   onChange = () => {},
   deleteFunc = () => {},
-}) => {
+  imgLimit = 2,
+}: Props) => {
+  const imgLength: boolean = Image && Image?.length > 0 ? true : false
+
   return (
     <>
       <label>
-        {Image?.length > 0 && <img src={Image} alt="preview img" width={500} />}
+        {imgLength && <img src={Image} alt="preview img" width={500} />}
         <Input
           accept="image/*"
           id="contained-button-file"
@@ -38,10 +50,13 @@ const UploadImage = ({
             width: 'fit-content',
           }}
         >
-          <PhotoCamera size="small" />
+          <PhotoCamera fontSize="small" />
         </IconButton>
-        <Typography variant="subtitle" sx={{ display: !ImgError && 'none', color: 'red' }}>
-          請確認文件是否存在且檔案大小不能超過 2 MB
+        <Typography
+          variant="subtitle2"
+          sx={{ display: !ImgError ? 'none' : 'default', color: 'red' }}
+        >
+          請確認文件是否存在且檔案大小不能超過 {imgLimit} MB
         </Typography>
       </label>
       <IconButton
@@ -53,7 +68,7 @@ const UploadImage = ({
           width: 'fit-content',
         }}
       >
-        <DeleteForeverIcon size="small" />
+        <DeleteForeverIcon fontSize="small" />
       </IconButton>
     </>
   )

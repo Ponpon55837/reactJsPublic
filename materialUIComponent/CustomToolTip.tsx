@@ -2,7 +2,19 @@ import { useCss } from 'react-use'
 import { Tooltip } from '@mui/material'
 import PropTypes from 'prop-types'
 
-const CustomToolTip = ({ title, placement = 'top', arrow = true, children }) => {
+interface CustomToolTipProps {
+  title: string
+  placement?: 'top' | 'bottom' | 'left' | 'right'
+  arrow?: boolean
+  children: React.ReactElement<any, any>
+}
+
+const CustomToolTip = ({
+  title,
+  placement = 'top',
+  arrow = true,
+  children,
+}: CustomToolTipProps) => {
   const toolClass = useCss({
     '&:hover': {
       cursor: 'pointer',

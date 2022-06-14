@@ -71,7 +71,7 @@ const CustomCarouselArray = ({ imgArr }) => {
                 ml: '.2rem',
                 fontSize: '1rem',
                 fontWeight: 600,
-                WebkitTextFillColor: '#1E333F',
+                WebkitTextFillColor: '#1b2c37',
                 WebkitTextStroke: '1px white',
               }}
             >{`${index + 1}/${imgArr.length}`}</FormLabel>

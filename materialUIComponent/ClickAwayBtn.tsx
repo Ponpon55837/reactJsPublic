@@ -21,6 +21,15 @@ const StyledDiv = styled('div')(() => ({
   padding: '.5rem .2rem',
 }))
 
+interface ClickAwayBtnProps {
+  successClick: () => void
+  executeDescription?: string
+  successLabel: string
+  executeLabel: string
+  successColor?: 'inherit' | 'success' | 'primary' | 'secondary' | 'error' | 'info' | 'warning'
+  executeColor?: 'inherit' | 'success' | 'primary' | 'secondary' | 'error' | 'info' | 'warning'
+}
+
 const ClickAwayBtn = ({
   executeDescription = '',
   successLabel = '確定',
@@ -28,7 +37,7 @@ const ClickAwayBtn = ({
   successColor = 'success',
   executeColor = 'success',
   successClick = () => {},
-}) => {
+}: ClickAwayBtnProps) => {
   const [open, setOpen] = useState(false)
 
   return (
@@ -46,7 +55,7 @@ const ClickAwayBtn = ({
               size="small"
               variant="contained"
               color="primary"
-              startIcon={<CancelIcon size="small" />}
+              startIcon={<CancelIcon fontSize="small" />}
               sx={{
                 p: '0 !important',
                 mr: 2,
@@ -59,7 +68,7 @@ const ClickAwayBtn = ({
               size="small"
               variant="contained"
               color={successColor}
-              startIcon={<CheckCircleIcon size="small" />}
+              startIcon={<CheckCircleIcon fontSize="small" />}
               sx={{
                 p: '0 .2rem !important',
               }}
@@ -74,7 +83,7 @@ const ClickAwayBtn = ({
           size="small"
           variant="outlined"
           color={executeColor}
-          startIcon={<CheckCircleIcon size="small" />}
+          startIcon={<CheckCircleIcon fontSize="small" />}
           sx={{
             p: '0 .2rem !important',
           }}

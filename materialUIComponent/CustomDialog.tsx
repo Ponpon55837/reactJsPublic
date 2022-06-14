@@ -1,4 +1,5 @@
 import { forwardRef } from 'react'
+import { TransitionProps } from '@mui/material/transitions'
 import Slide from '@mui/material/Slide'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
@@ -8,9 +9,30 @@ import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import PropTypes from 'prop-types'
 
-const Transition = forwardRef(function Transition(props, ref) {
+const Transition = forwardRef(function Transition(
+  props: TransitionProps & {
+    children: React.ReactElement<any, any>
+  },
+  ref: React.Ref<unknown>,
+) {
   return <Slide direction="down" ref={ref} {...props} />
 })
+
+interface Props {
+  open: boolean
+  successFunc: () => void
+  cancelFunc?: () => void
+  dialogTitle?: string
+  dialogContent?: string
+  dialogActions?: React.ReactElement<any, any>
+  dialogContentComponent?: React.ReactElement<any, any>
+  TransitionComponent?: React.ElementType
+  fullWidth?: boolean
+  maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+  fullScreen?: boolean
+  labelSuccess?: string
+  labelFailed?: string
+}
 
 const CustomDialog = ({
   open,
@@ -23,7 +45,7 @@ const CustomDialog = ({
   successFunc = () => {},
   cancelFunc = () => {},
   labelFailed,
-}) => {
+}: Props) => {
   return (
     <Dialog
       fullWidth={fullWidth}

@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
+import AddCircleSharpIcon from '@mui/icons-material/AddCircleSharp'
 import PropTypes from 'prop-types'
 
 interface Props {
@@ -7,22 +8,17 @@ interface Props {
   onClick?: () => void
 }
 
-const AddBtn = ({ btnName = '新增', onClick = () => {} }) => {
+const AddBtn = ({ btnName = '新增一筆', onClick = () => {} }: Props) => {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'flex-end',
-        ml: 1,
-        mb: 1,
-        p: 0,
-        bgcolor: 'background.paper',
-      }}
+    <Button
+      variant="contained"
+      color="success"
+      onClick={() => onClick()}
+      sx={{ display: 'inline-flex', mr: 1, px: 1 }}
     >
-      <Button variant="outlined" onClick={() => onClick()}>
-        {btnName}
-      </Button>
-    </Box>
+      <AddCircleSharpIcon sx={{ mr: 1 }} />
+      {btnName}
+    </Button>
   )
 }
 

@@ -27,8 +27,21 @@ const StyledTooltip = styled(Tooltip)(() => ({
   },
 }))
 
-const ButtonGroup = ({ children }) => {
+const ButtonGroup = ({ children }: any) => {
   return <RootDiv>{children}</RootDiv>
+}
+
+interface ListButtonGroupsProps {
+  deleteClick?: () => void
+  editClick?: () => void
+  viewClick?: () => void
+  status?: number
+  isCloseDay?: boolean
+  sign?: boolean
+  otherCheck?: boolean
+  viewNone?: boolean
+  editNone?: boolean
+  deleteNone?: boolean
 }
 
 const ListButtonGroups = ({
@@ -39,44 +52,33 @@ const ListButtonGroups = ({
   viewNone = false,
   editNone = false,
   deleteNone = false,
-  viewLabel = '檢視',
-  auditLabel = '編輯',
-  deleteLabel = '刪除',
   deleteClick = () => {},
   editClick = () => {},
   viewClick = () => {},
-}) => {
+}: ListButtonGroupsProps) => {
   const [open, setOpen] = useState(false)
 
   return (
-    <ButtonGroup variant="text" color="inherit" aria-label="outlined button group">
+    <ButtonGroup aria-label="outlined button group">
       <Button
-        size="small"
-        variant="outlined"
         color="primary"
-        startIcon={<PageviewOutlinedIcon size="small" />}
+        startIcon={<PageviewOutlinedIcon fontSize="small" />}
         sx={{
           p: '0 !important',
-          display: (status === 3 || isCloseDay || !otherCheck || viewNone) && 'none',
+          display: status === 3 || isCloseDay || !otherCheck || viewNone ? 'none' : 'default',
         }}
         onClick={() => viewClick()}
-      >
-        {viewLabel}
-      </Button>
+      />
 
       <Button
-        size="small"
-        variant="outlined"
         color="warning"
-        startIcon={<ModeEditOutlinedIcon size="small" />}
+        startIcon={<ModeEditOutlinedIcon fontSize="small" />}
         sx={{
           p: '0 !important',
-          display: (status !== 2 || isCloseDay || editNone) && 'none',
+          display: status !== 2 || isCloseDay || editNone ? 'none' : 'default',
         }}
         onClick={() => editClick()}
-      >
-        {auditLabel}
-      </Button>
+      />
 
       <ClickAwayListener onClickAway={() => setOpen(false)}>
         <StyledTooltip
@@ -90,7 +92,7 @@ const ListButtonGroups = ({
                 size="small"
                 variant="contained"
                 color="primary"
-                startIcon={<CancelIcon size="small" />}
+                startIcon={<CancelIcon fontSize="small" />}
                 sx={{
                   p: '0 !important',
                   mr: 2,
@@ -103,7 +105,7 @@ const ListButtonGroups = ({
                 size="small"
                 variant="contained"
                 color="error"
-                startIcon={<DeleteOutlineOutlinedIcon size="small" />}
+                startIcon={<DeleteOutlineOutlinedIcon fontSize="small" />}
                 sx={{
                   p: '0 !important',
                 }}
@@ -115,18 +117,17 @@ const ListButtonGroups = ({
           }
         >
           <Button
-            size="small"
-            variant="outlined"
             color="error"
-            startIcon={<DeleteOutlineOutlinedIcon size="small" />}
+            startIcon={<DeleteOutlineOutlinedIcon fontSize="small" />}
             sx={{
               p: '0 !important',
-              display: (status === 0 || status === 3 || isCloseDay || sign || deleteNone) && 'none',
+              display:
+                status === 0 || status === 3 || isCloseDay || sign || deleteNone
+                  ? 'none'
+                  : 'default',
             }}
             onClick={() => setOpen(true)}
-          >
-            {deleteLabel}
-          </Button>
+          />
         </StyledTooltip>
       </ClickAwayListener>
     </ButtonGroup>
@@ -143,9 +144,6 @@ ListButtonGroups.propTypes = {
   status: PropTypes.number,
   isCloseDay: PropTypes.bool,
   sign: PropTypes.bool,
-  viewLabel: PropTypes.string,
-  auditLabel: PropTypes.string,
-  deleteLabel: PropTypes.string,
   otherCheck: PropTypes.bool,
   deleteClick: PropTypes.func,
   editClick: PropTypes.func,
