@@ -7,7 +7,7 @@ import { Typography, IconButton } from '@mui/material'
 import axios from 'axios'
 import moment from 'moment-timezone'
 import CustomDialog from '@components/CustomDialog'
-import useAuth from '@hooks/use-auth'
+import useMiddleWare from '@hooks/use-middleware'
 import FileDownload from 'js-file-download'
 import { REFRESH_TOKEN } from '@api_service/API'
 
@@ -36,7 +36,7 @@ const useApi = () => useContext(ApiContext)
 
 const useApiProvider = () => {
   const router = useRouter()
-  const { token, setToken, signOut } = useAuth()
+  const { tokenState, setTokenState, logoutStore } = useMiddleWare()
   const [state, produce] = useImmer({
     statusCode: null,
     errorMessage: null,
@@ -63,24 +63,25 @@ const useApiProvider = () => {
     try {
       const { data: resultData, status: resultStatus } = await APIKit[API_METHOD.POST](
         REFRESH_TOKEN,
-        { token: token },
+        { token: tokenState },
         {
-          headers: { Authorization: token ? `Bearer ${token}` : '' },
+          headers: { Authorization: tokenState !== '' ? `Bearer ${tokenState}` : '' },
         },
       )
       result = { status: resultStatus, message: '', result: resultData }
 
-      if (result.status === 200 && result.result.newToken !== null) {
-        setToken(result.result?.newToken)
+      if (result.status === 200 && result.result?.token !== null) {
+        setTokenState(result.result?.token)
+        router.reload()
       } else {
         setErrorMessage(authMessage)
         router.push('/Login')
-        signOut()
+        logoutStore()
       }
     } catch (error) {
       setErrorMessage(authMessage)
       router.push('/Login')
-      signOut()
+      logoutStore()
     }
   }
 
@@ -129,11 +130,11 @@ const useApiProvider = () => {
       const { data: resultData, status: resultStatus } =
         method === API_METHOD.GET || method === API_METHOD.DELETE
           ? await APIKit[method](path, {
-              headers: { Authorization: token ? `Bearer ${token}` : '' },
+              headers: { Authorization: tokenState ? `Bearer ${tokenState}` : '' },
               params,
             })
           : await APIKit[method](path, variables, {
-              headers: { Authorization: token ? `Bearer ${token}` : '' },
+              headers: { Authorization: tokenState ? `Bearer ${tokenState}` : '' },
             })
       result = { status: resultStatus, message: '', result: resultData }
 
@@ -188,7 +189,7 @@ const useApiProvider = () => {
     try {
       const { data: resultData, status: resultStatus } = await APIKit[method](path, variables, {
         headers: {
-          Authorization: token ? `Bearer ${token}` : '',
+          Authorization: tokenState ? `Bearer ${tokenState}` : '',
           'Content-Type': 'multipart/form-data',
         },
       })
@@ -226,12 +227,12 @@ const useApiProvider = () => {
       method: method,
       responseType: 'blob', // Important
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${tokenState}`,
       },
       params: params,
     }
 
-    if (method === API_METHOD.GET) request.data = variables
+    if (method === API_METHOD.GET || method === API_METHOD.POST) request.data = variables
 
     return await axios(request)
       .then(response => {
@@ -253,7 +254,6 @@ const useApiProvider = () => {
     setExpiredMessage,
     FetchApi,
     FetchNoTokenApi,
-    signOut,
     setErrorMessage,
     UploadApi,
     DownloadApi,
