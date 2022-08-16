@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { Typography, Button, Tooltip, ClickAwayListener } from '@mui/material'
+import { Typography, Button, Tooltip, ClickAwayListener, IconButton } from '@mui/material'
 import { styled } from '@mui/material/styles'
-import PageviewOutlinedIcon from '@mui/icons-material/PageviewOutlined'
-import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined'
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
+import PageviewIcon from '@mui/icons-material/Pageview'
+import EditIcon from '@mui/icons-material/Edit'
+import DeleteIcon from '@mui/icons-material/Delete'
 import CancelIcon from '@mui/icons-material/Cancel'
 import PropTypes from 'prop-types'
 import { CustomBox2 } from '@components/CustomStyle'
@@ -45,10 +45,6 @@ interface ListButtonGroupsProps {
 }
 
 const ListButtonGroups = ({
-  status = 2,
-  isCloseDay = false,
-  sign = false,
-  otherCheck = true,
   viewNone = false,
   editNone = false,
   deleteNone = false,
@@ -60,25 +56,31 @@ const ListButtonGroups = ({
 
   return (
     <ButtonGroup aria-label="outlined button group">
-      <Button
+      <IconButton
+        aria-label="delete"
         color="primary"
-        startIcon={<PageviewOutlinedIcon fontSize="small" />}
         sx={{
           p: '0 !important',
-          display: status === 3 || isCloseDay || !otherCheck || viewNone ? 'none' : 'default',
+          mr: '16px !important',
+          display: viewNone ? 'none' : 'default',
         }}
         onClick={() => viewClick()}
-      />
+      >
+        <PageviewIcon />
+      </IconButton>
 
-      <Button
+      <IconButton
         color="warning"
-        startIcon={<ModeEditOutlinedIcon fontSize="small" />}
         sx={{
           p: '0 !important',
-          display: status !== 2 || isCloseDay || editNone ? 'none' : 'default',
+          mr: '20px !important',
+          display: editNone ? 'none' : 'default',
+          width: 'fit-content',
         }}
         onClick={() => editClick()}
-      />
+      >
+        <EditIcon fontSize="small" />
+      </IconButton>
 
       <ClickAwayListener onClickAway={() => setOpen(false)}>
         <StyledTooltip
@@ -105,7 +107,7 @@ const ListButtonGroups = ({
                 size="small"
                 variant="contained"
                 color="error"
-                startIcon={<DeleteOutlineOutlinedIcon fontSize="small" />}
+                startIcon={<DeleteIcon fontSize="small" />}
                 sx={{
                   p: '0 !important',
                 }}
@@ -116,18 +118,17 @@ const ListButtonGroups = ({
             </CustomBox2>
           }
         >
-          <Button
+          <IconButton
             color="error"
-            startIcon={<DeleteOutlineOutlinedIcon fontSize="small" />}
             sx={{
               p: '0 !important',
-              display:
-                status === 0 || status === 3 || isCloseDay || sign || deleteNone
-                  ? 'none'
-                  : 'default',
+              display: deleteNone ? 'none' : 'default',
+              width: 'fit-content',
             }}
             onClick={() => setOpen(true)}
-          />
+          >
+            <DeleteIcon fontSize="small" />
+          </IconButton>
         </StyledTooltip>
       </ClickAwayListener>
     </ButtonGroup>

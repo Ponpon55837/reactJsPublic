@@ -1,4 +1,4 @@
-import { Paper, InputBase, Divider } from '@mui/material'
+import { Box, InputBase, Divider } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import SearchIcon from '@mui/icons-material/Search'
 import CancelSharpIcon from '@mui/icons-material/CancelSharp'
@@ -9,6 +9,7 @@ interface Props {
   placeholder?: string
   inputValue?: string
   width?: string
+  minWidth?: string | number
   inputSub?: () => void
   clear?: () => void
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
@@ -17,6 +18,7 @@ const CustomSearch = ({
   placeholder = '請輸入搜尋內容',
   inputValue = '',
   width = 'calc(80% - 200px)',
+  minWidth = 300,
   inputSub = () => {},
   clear,
   onChange,
@@ -33,12 +35,15 @@ const CustomSearch = ({
   }
 
   return (
-    <Paper
+    <Box
       sx={{
         display: 'inline-flex',
         alignItems: 'center',
-        minWidth: 300,
+        minWidth: minWidth,
         maxWidth: 470,
+        border: '1px solid #DDDDDD',
+        borderRadius: 1,
+        height: '2.6rem',
         width: {
           xs: '100%',
           sm: 'calc(100% - 100px)',
@@ -67,7 +72,7 @@ const CustomSearch = ({
       <IconButton onClick={() => inputSub()} aria-label="search">
         <SearchIcon />
       </IconButton>
-    </Paper>
+    </Box>
   )
 }
 

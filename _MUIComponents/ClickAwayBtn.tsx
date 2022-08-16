@@ -23,11 +23,13 @@ const StyledDiv = styled('div')(() => ({
 
 interface ClickAwayBtnProps {
   successClick: () => void
-  executeDescription?: string
-  successLabel: string
-  executeLabel: string
+  executeDescription: string
+  successLabel?: string
+  executeLabel?: string
   successColor?: 'inherit' | 'success' | 'primary' | 'secondary' | 'error' | 'info' | 'warning'
   executeColor?: 'inherit' | 'success' | 'primary' | 'secondary' | 'error' | 'info' | 'warning'
+  startIcon?: React.ReactElement
+  variant?: 'text' | 'outlined' | 'contained'
 }
 
 const ClickAwayBtn = ({
@@ -37,6 +39,8 @@ const ClickAwayBtn = ({
   successColor = 'success',
   executeColor = 'success',
   successClick = () => {},
+  startIcon = <CheckCircleIcon fontSize="small" />,
+  variant = 'outlined',
 }: ClickAwayBtnProps) => {
   const [open, setOpen] = useState(false)
 
@@ -81,12 +85,14 @@ const ClickAwayBtn = ({
       >
         <Button
           size="small"
-          variant="outlined"
+          variant={variant}
           color={executeColor}
-          startIcon={<CheckCircleIcon fontSize="small" />}
-          sx={{
-            p: '0 .2rem !important',
-          }}
+          startIcon={startIcon}
+          sx={
+            {
+              // p: '0 .4rem !important',
+            }
+          }
           onClick={() => setOpen(true)}
         >
           {executeLabel}

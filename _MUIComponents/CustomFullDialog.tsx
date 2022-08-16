@@ -3,6 +3,7 @@ import { TransitionProps } from '@mui/material/transitions'
 import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
+import DialogActions from '@mui/material/DialogActions'
 import IconButton from '@mui/material/IconButton'
 import Box from '@mui/material/Box'
 import FormControl from '@mui/material/FormControl'
@@ -13,6 +14,7 @@ import FullscreenExitIcon from '@mui/icons-material/FullscreenExit'
 import CloseIcon from '@mui/icons-material/Close'
 import Slide from '@mui/material/Slide'
 import PropTypes from 'prop-types'
+import CustomSubmit from '@components/CustomSubmit'
 import useMiddleware from '@hooks/use-middleware'
 
 const Transition = forwardRef(function Transition(
@@ -25,13 +27,24 @@ const Transition = forwardRef(function Transition(
 })
 
 interface Props {
+  viewDialog?: boolean
   toolBarTitle: string
   open: boolean
+  initialExtendClose?: boolean
   closeFunc: () => void
+  maxWidth?: 'sm' | 'md' | 'lg'
   contentComponent: React.ReactElement<any, any>
 }
 
-const CustomFullDialog = ({ toolBarTitle, open, closeFunc, contentComponent }: Props) => {
+const CustomFullDialog = ({
+  viewDialog = false,
+  toolBarTitle,
+  open,
+  closeFunc,
+  contentComponent,
+  maxWidth = 'sm',
+  initialExtendClose = true,
+}: Props) => {
   const { extendState, setExtendState, dialogSizeState, setDialogSizeState } = useMiddleware()
 
   return (
@@ -39,7 +52,7 @@ const CustomFullDialog = ({ toolBarTitle, open, closeFunc, contentComponent }: P
       fullScreen={extendState}
       fullWidth
       scroll="paper"
-      maxWidth={dialogSizeState}
+      maxWidth={maxWidth}
       open={open}
       onClose={closeFunc}
       TransitionComponent={Transition}
@@ -50,7 +63,7 @@ const CustomFullDialog = ({ toolBarTitle, open, closeFunc, contentComponent }: P
           noValidate
           component="form"
           sx={{
-            display: extendState ? 'none' : 'inline-flex',
+            display: extendState || initialExtendClose ? 'none' : 'inline-flex',
             flexDirection: 'column',
             m: 'auto',
             width: 'fit-content',
@@ -91,7 +104,12 @@ const CustomFullDialog = ({ toolBarTitle, open, closeFunc, contentComponent }: P
           color="inherit"
           onClick={() => setExtendState(!extendState)}
           aria-label="close"
-          sx={{ position: 'absolute', right: '3.5rem', top: '.5rem' }}
+          sx={{
+            position: 'absolute',
+            right: '3.5rem',
+            top: '.5rem',
+            display: initialExtendClose ? 'none' : 'inline-flex',
+          }}
         >
           <FullscreenIcon
             fontSize="small"
@@ -122,7 +140,7 @@ const CustomFullDialog = ({ toolBarTitle, open, closeFunc, contentComponent }: P
         dividers={!extendState}
         // elevation={extendState ? 0 : 3}
         sx={{
-          padding: extendState ? '0 2rem 1rem 2rem' : '0.8rem 3% 0.8rem 3%',
+          padding: extendState ? 'auto' : '0.8rem 3% 0.8rem 3%',
           margin: 'auto',
           width: '100%',
           height: extendState ? 'auto' : 'default',
@@ -130,6 +148,9 @@ const CustomFullDialog = ({ toolBarTitle, open, closeFunc, contentComponent }: P
       >
         {contentComponent}
       </DialogContent>
+      <DialogActions sx={{ justifyContent: 'center' }}>
+        <CustomSubmit viewDialog={viewDialog} closeFunc={closeFunc} />
+      </DialogActions>
     </Dialog>
   )
 }

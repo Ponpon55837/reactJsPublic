@@ -4,16 +4,17 @@ import PropTypes from 'prop-types'
 const StatusSelect = ({
   isEnabled,
   onChange,
-  title = '狀態',
-  trueStatus = '啟用',
-  falseStatus = '停用',
+  title = '篩選狀態',
+  trueStatus = '啟用中',
+  falseStatus = '已停用',
+  minWidth = 120,
 }) => {
   return (
     <FormControl
       // variant="standard"
       size="small"
       sx={{
-        minWidth: 120,
+        minWidth: minWidth,
         mr: 1,
       }}
     >
@@ -40,4 +41,5 @@ StatusSelect.propTypes = {
   title: PropTypes.string,
   trueStatus: PropTypes.string,
   falseStatus: PropTypes.string,
+  minWidth: PropTypes.number,
 }

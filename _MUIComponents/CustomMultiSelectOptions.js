@@ -1,7 +1,14 @@
-import { FormControl, InputLabel, Select, MenuItem, FormHelperText } from '@mui/material'
+import {
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  FormHelperText,
+  ListSubheader,
+} from '@mui/material'
 import PropTypes from 'prop-types'
 
-const CustomSelectOptions = ({
+const CustomMultiSelectOptions = ({
   checked = false,
   defaultValue = '0',
   value = '0',
@@ -16,6 +23,22 @@ const CustomSelectOptions = ({
   mr = 1,
   ml = 'default',
 }) => {
+  const renderSelectGroup = (inputArr, idx) => {
+    const items = inputArr.locationData.map(p => {
+      return (
+        <MenuItem key={p.id} value={p.id}>
+          {p.name}
+        </MenuItem>
+      )
+    })
+    return [
+      <ListSubheader sx={{ fontSize: '1rem', fontWeight: 500, fontStyle: 'italic' }} key={idx}>
+        {inputArr.name}
+      </ListSubheader>,
+      items,
+    ]
+  }
+
   return (
     <FormControl
       variant={variant}
@@ -28,23 +51,25 @@ const CustomSelectOptions = ({
         ml: ml,
       }}
     >
-      <InputLabel id="demo-simple-select-helper-label">{label}</InputLabel>
-      <Select autoWidth defaultValue={defaultValue} value={value} label={label} onChange={onChange}>
-        {nullValueOption && <MenuItem value={''}>{nullValueOptionValue}</MenuItem>}
-        {selectOptions.map(sle => (
-          <MenuItem key={sle.id} value={sle.id}>
-            {sle.name}
-          </MenuItem>
-        ))}
+      <InputLabel htmlFor="grouped-native-select">{label}</InputLabel>
+      <Select
+        autoWidth
+        id="grouped-native-select"
+        defaultValue={defaultValue}
+        value={value}
+        label={label}
+        onChange={onChange}
+      >
+        {selectOptions?.map((p, idx) => renderSelectGroup(p, idx))}
       </Select>
       {checked && <FormHelperText>請選擇{label}</FormHelperText>}
     </FormControl>
   )
 }
 
-export default CustomSelectOptions
+export default CustomMultiSelectOptions
 
-CustomSelectOptions.propTypes = {
+CustomMultiSelectOptions.propTypes = {
   checked: PropTypes.bool,
   defaultValue: PropTypes.string,
   value: PropTypes.string,

@@ -63,7 +63,7 @@ const CustomDialog = ({
       </DialogContent>
       <DialogActions>
         {labelFailed && (
-          <Button variant="outlined" color="secondary" onClick={cancelFunc}>
+          <Button variant="outlined" color="error" onClick={cancelFunc}>
             {labelFailed}
           </Button>
         )}

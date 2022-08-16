@@ -40,7 +40,8 @@ const UniversalSearchWithTime = ({
 }: Props) => {
   return (
     <Grid container spacing={2} sx={{ mb: 1 }}>
-      <Grid item xs={12} md={8}>
+      <Grid item xs={12}>
+        {btnChecked && <AddBtn btnName={btnName} onClick={addOnClick} />}
         <CustomSearch
           width={searchWidth}
           placeholder={placeholder}
@@ -49,21 +50,14 @@ const UniversalSearchWithTime = ({
           clear={clear}
           onChange={onChange}
         />
-        <CustomBox3>
-          <SelectYearAndMonth
-            yearValue={yearValue}
-            monthValue={monthValue}
-            monthOpen={monthOpen}
-            yearOnChange={yearOnChange}
-            monthOnChange={monthOnChange}
-          />
-        </CustomBox3>
+        <SelectYearAndMonth
+          yearValue={yearValue}
+          monthValue={monthValue}
+          monthOpen={monthOpen}
+          yearOnChange={yearOnChange}
+          monthOnChange={monthOnChange}
+        />
       </Grid>
-      {btnChecked && (
-        <Grid item xs={12} md={4}>
-          <AddBtn btnName={btnName} onClick={addOnClick} />
-        </Grid>
-      )}
     </Grid>
   )
 }

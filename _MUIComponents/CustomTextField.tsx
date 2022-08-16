@@ -15,6 +15,7 @@ interface Props {
   shrink?: boolean
   iconStatus?: boolean
   multiline?: boolean
+  readOnly?: boolean
   icon?: React.ReactElement<any, any>
   register: any
 }
@@ -22,7 +23,7 @@ interface Props {
 const CustomTextField = ({
   label,
   type = 'text',
-  variant = 'standard',
+  variant = 'outlined',
   helperText = '',
   placeholder = '',
   autoComplete = null,
@@ -32,6 +33,7 @@ const CustomTextField = ({
   shrink = true,
   iconStatus = false,
   multiline = false,
+  readOnly = false,
   icon = <BorderColorOutlinedIcon fontSize="small" />,
   register,
 }: Props) => {
@@ -40,7 +42,7 @@ const CustomTextField = ({
       fullWidth={fullWidth}
       label={label}
       type={type}
-      variant={variant}
+      variant={readOnly ? 'filled' : variant}
       helperText={helperText}
       autoComplete={autoComplete}
       disabled={disabled}
@@ -51,13 +53,12 @@ const CustomTextField = ({
       InputLabelProps={{
         shrink: shrink,
       }}
-      InputProps={
-        iconStatus
-          ? {
-              startAdornment: <InputAdornment position="start">{icon}</InputAdornment>,
-            }
-          : null
-      }
+      InputProps={{
+        startAdornment: iconStatus ? (
+          <InputAdornment position="start">{icon}</InputAdornment>
+        ) : null,
+        readOnly: readOnly,
+      }}
     />
   )
 }

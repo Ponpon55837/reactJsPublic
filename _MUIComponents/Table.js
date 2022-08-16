@@ -42,7 +42,7 @@ const cellProps = (props, { cell }) => mergeProps(props, cell.column)
 const StyledTableContainer = styled(TableContainer)(({}) => ({
   overflow: 'scroll',
   overflowX: 'initial',
-  border: '2px solid #f3f3f4',
+  border: '5px solid #f3f3f4',
   borderRadius: '5px',
   '& .MuiTableHead-root': {
     position: 'sticky',
@@ -165,7 +165,7 @@ const CustomTable = ({
                   >
                     {/* Add a sort direction indicator */}
                     {column.sort ? (
-                      <div style={{ display: 'flex' }}>
+                      <div style={{ display: 'flex', fontWeight: 'bold' }}>
                         <span style={{ cursor: 'pointer' }} onClick={() => changeSort(column.id)}>
                           {column.Header}
                         </span>
@@ -195,7 +195,7 @@ const CustomTable = ({
                         )}
                       </div>
                     ) : (
-                      column.render('Header')
+                      <div style={{ fontWeight: 'bold' }}>{column.render('Header')}</div>
                     )}
                   </TableCell>
                 ))}

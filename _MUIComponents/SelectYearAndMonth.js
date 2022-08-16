@@ -27,6 +27,7 @@ const SelectYearAndMonth = ({
   yearOnChange,
   monthOnChange,
   disabled,
+  mr = 1,
 }) => {
   return (
     <>
@@ -34,8 +35,7 @@ const SelectYearAndMonth = ({
         size="small"
         sx={{
           minWidth: 120,
-          mt: 1,
-          mr: 1,
+          mr: mr,
           mb: 1,
         }}
         disabled={disabled}
@@ -53,7 +53,6 @@ const SelectYearAndMonth = ({
       <FormControl
         size="small"
         sx={{
-          mt: 1,
           mr: '.4rem',
           minWidth: 120,
           display: !monthOpen && 'none',
@@ -82,4 +81,5 @@ SelectYearAndMonth.propTypes = {
   yearOnChange: PropTypes.func,
   monthOnChange: PropTypes.func,
   disabled: PropTypes.bool,
+  mr: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 }

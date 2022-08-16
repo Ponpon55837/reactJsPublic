@@ -73,6 +73,7 @@ const CustomDateTimePicker = ({
   helperText = '',
   error = false,
   disabled = false,
+  variant = 'standard',
 }) => {
   return (
     <LocalizationProvider locale={zhLocale} dateAdapter={AdapterDateFns}>
@@ -85,7 +86,7 @@ const CustomDateTimePicker = ({
         mask="____-__-__ __:__"
         onChange={onChange}
         renderInput={params => (
-          <TextField variant="standard" {...params} error={error} helperText={helperText} />
+          <TextField variant={variant} {...params} error={error} helperText={helperText} />
         )}
       />
     </LocalizationProvider>
@@ -130,4 +131,5 @@ CustomDateTimePicker.propTypes = {
   helperText: PropTypes.node,
   error: PropTypes.bool,
   disabled: PropTypes.bool,
+  variant: PropTypes.string,
 }

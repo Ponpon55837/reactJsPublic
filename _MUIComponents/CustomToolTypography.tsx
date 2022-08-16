@@ -3,7 +3,7 @@ import { Tooltip, Typography } from '@mui/material'
 import PropTypes from 'prop-types'
 
 interface Props {
-  title?: string | number | []
+  title?: any
   placement?: 'top' | 'bottom' | 'left' | 'right'
   arrow?: boolean
 }

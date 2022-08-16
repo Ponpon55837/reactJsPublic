@@ -9,7 +9,7 @@ interface Props {
   title?: string
   optionArr?: Array<{ id: number | string; name: string }>
   value?: number | string
-  onChange?: () => void
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   disabled?: boolean
 }
 

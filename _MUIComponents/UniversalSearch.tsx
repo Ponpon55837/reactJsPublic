@@ -15,6 +15,9 @@ interface Props {
   statusOnChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   btnName?: string
   addOnClick?: () => void
+  statusTitle?: string
+  trueStatus?: string
+  falseStatus?: string
 }
 
 const UniversalSearch = ({
@@ -28,6 +31,9 @@ const UniversalSearch = ({
   statusOnChange,
   btnName,
   addOnClick,
+  statusTitle,
+  trueStatus,
+  falseStatus,
 }: Props) => {
   return (
     <Grid container spacing={2} sx={{ mb: 1 }}>
@@ -40,7 +46,15 @@ const UniversalSearch = ({
           clear={clear}
           onChange={onChange}
         />
-        {statusExist && <StatusSelect isEnabled={isEnabled} onChange={statusOnChange} />}
+        {statusExist && (
+          <StatusSelect
+            title={statusTitle}
+            trueStatus={trueStatus}
+            falseStatus={falseStatus}
+            isEnabled={isEnabled}
+            onChange={statusOnChange}
+          />
+        )}
       </Grid>
     </Grid>
   )
