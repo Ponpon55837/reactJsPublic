@@ -37,12 +37,13 @@ const SelectYearAndMonth = ({
           minWidth: 120,
           mr: mr,
           mb: 1,
+          mt: '3px',
         }}
         disabled={disabled}
       >
         <InputLabel id="demo-simple-select-helper-label">年</InputLabel>
         <Select value={yearValue} label="年" onChange={yearOnChange}>
-          {yearOption.map(year => (
+          {yearOption.map((year) => (
             <MenuItem key={year.value} value={year.value}>
               {year.label}
             </MenuItem>
@@ -56,12 +57,13 @@ const SelectYearAndMonth = ({
           mr: '.4rem',
           minWidth: 120,
           display: !monthOpen && 'none',
+          mt: '3px',
         }}
         disabled={disabled}
       >
         <InputLabel id="demo-simple-select-helper-label">月</InputLabel>
         <Select value={monthValue} label="月" onChange={monthOnChange}>
-          {monthOption.map(month => (
+          {monthOption.map((month) => (
             <MenuItem key={month.value} value={month.value}>
               {month.label}
             </MenuItem>

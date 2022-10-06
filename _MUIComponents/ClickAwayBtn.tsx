@@ -88,11 +88,9 @@ const ClickAwayBtn = ({
           variant={variant}
           color={executeColor}
           startIcon={startIcon}
-          sx={
-            {
-              // p: '0 .4rem !important',
-            }
-          }
+          sx={{
+            p: '0 .4rem !important',
+          }}
           onClick={() => setOpen(true)}
         >
           {executeLabel}

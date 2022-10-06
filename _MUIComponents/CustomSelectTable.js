@@ -116,14 +116,14 @@ const CustomSelectTable = ({
   const [tableHeight, setTableHeight] = useState(window.innerHeight - 252)
   const small = useMediaQuery('(max-width:600px)')
 
-  const changeSort = id => {
+  const changeSort = (id) => {
     onClick(id)
     setSortFlag(id)
     setInitFlag(!initFlag)
   }
 
   useUpdateEffect(() => {
-    onSelectedChange(selectedFlatRows.map(map => map.original))
+    onSelectedChange(selectedFlatRows.map((map) => map.original))
   }, [selectedRowIds])
 
   useUpdateEffect(() => {
@@ -245,7 +245,7 @@ const CustomSelectTable = ({
           onChange={pageOnChange}
           size={small ? 'small' : 'default'}
         />
-        <Typography sx={{ mt: small ? '.1rem' : '.2rem', mr: '.4rem' }}>
+        <Typography sx={{ mt: small ? '.1rem' : '.2rem', mr: '1rem' }}>
           資料總數： {dataCount} 筆
         </Typography>
         <FormControl variant="standard" sx={{ display: small ? 'none' : 'inline-flex' }}>

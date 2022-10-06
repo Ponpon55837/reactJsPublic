@@ -1,5 +1,5 @@
-import useApi, { API_METHOD } from '../_useHooks/use-api'
-import { Fetch, DownLoadFetch } from '../_interface/api_service'
+import useApi, { API_METHOD } from '@hooks/use-api'
+import { Fetch, DownLoadFetch } from '@interface/api_service'
 
 const useGeneralApi = () => {
   const { FetchApi, DownloadApi, UploadApi } = useApi()
@@ -46,6 +46,12 @@ const useGeneralApi = () => {
     return { status, message, result }
   }
 
+  // 修改整份
+  const updateAllThisData = async (apiChannel: string, data: object): Promise<Fetch> => {
+    const { status, message, result } = await FetchApi(API_METHOD.PATCH, apiChannel, data)
+    return { status, message, result }
+  }
+
   // 刪除單筆
   const deleteSingleData = async (apiChannel: string, id: number | string): Promise<Fetch> => {
     const { status, message, result } = await FetchApi(
@@ -67,7 +73,7 @@ const useGeneralApi = () => {
   }
 
   // 覆寫
-  const putAllData = async (apiChannel: string, data: object): Promise<Fetch> => {
+  const putAllData = async (apiChannel: string, data?: object): Promise<Fetch> => {
     const { status, message, result } = await FetchApi(API_METHOD.PUT, apiChannel, data)
     return { status, message, result }
   }
@@ -94,8 +100,19 @@ const useGeneralApi = () => {
   }
 
   // 下載檔案
-  const getExportResult = async (apiChannel: string, fileName: string): Promise<DownLoadFetch> => {
-    const { status } = await DownloadApi(API_METHOD.GET, apiChannel, null, fileName)
+  const getExportResult = async (
+    apiChannel: string,
+    fileName: string,
+    fileFormat?: string,
+  ): Promise<DownLoadFetch> => {
+    const { status } = await DownloadApi(
+      API_METHOD.GET,
+      apiChannel,
+      null,
+      fileName,
+      null,
+      fileFormat,
+    )
     return { status }
   }
 
@@ -103,7 +120,7 @@ const useGeneralApi = () => {
   const getExportResultWithQuery = async (
     apiChannel: string,
     fileName: string,
-    query: object,
+    query?: object,
   ): Promise<DownLoadFetch> => {
     const { status } = await DownloadApi(API_METHOD.GET, apiChannel, null, fileName, query)
     return { status }
@@ -161,6 +178,7 @@ const useGeneralApi = () => {
     createSingleData,
     createSingleDataWithId,
     updateSingleData,
+    updateAllThisData,
     deleteSingleData,
     putSingleData,
     putAllData,

@@ -3,6 +3,7 @@ import CustomSearch from '@components/CustomSearch'
 import StatusSelect from '@components/StatusSelect'
 import AddBtn from '@components/AddBtn'
 import PropTypes from 'prop-types'
+import { CustomBox4 } from './CustomStyle'
 
 interface Props {
   placeholder?: string
@@ -47,13 +48,15 @@ const UniversalSearch = ({
           onChange={onChange}
         />
         {statusExist && (
-          <StatusSelect
-            title={statusTitle}
-            trueStatus={trueStatus}
-            falseStatus={falseStatus}
-            isEnabled={isEnabled}
-            onChange={statusOnChange}
-          />
+          <CustomBox4>
+            <StatusSelect
+              title={statusTitle}
+              trueStatus={trueStatus}
+              falseStatus={falseStatus}
+              isEnabled={isEnabled}
+              onChange={statusOnChange}
+            />
+          </CustomBox4>
         )}
       </Grid>
     </Grid>

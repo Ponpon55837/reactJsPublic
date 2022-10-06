@@ -29,7 +29,7 @@ const CustomDatePicker = ({
         value={time}
         onChange={onChange}
         disabled={disabled}
-        renderInput={params => (
+        renderInput={(params) => (
           <TextField {...params} variant={variant} helperText={helperText} error={error} />
         )}
       />
@@ -56,7 +56,7 @@ const CustomTimePicker = ({
         value={time}
         ampm={ampm}
         onChange={onChange}
-        renderInput={params => (
+        renderInput={(params) => (
           <TextField {...params} variant="standard" helperText={helperText} error={error} />
         )}
       />
@@ -74,6 +74,7 @@ const CustomDateTimePicker = ({
   error = false,
   disabled = false,
   variant = 'standard',
+  minutesStep = 1,
 }) => {
   return (
     <LocalizationProvider locale={zhLocale} dateAdapter={AdapterDateFns}>
@@ -83,9 +84,10 @@ const CustomDateTimePicker = ({
         value={time}
         ampm={ampm}
         inputFormat={inputFormat}
+        minutesStep={minutesStep}
         mask="____-__-__ __:__"
         onChange={onChange}
-        renderInput={params => (
+        renderInput={(params) => (
           <TextField variant={variant} {...params} error={error} helperText={helperText} />
         )}
       />
@@ -132,4 +134,5 @@ CustomDateTimePicker.propTypes = {
   error: PropTypes.bool,
   disabled: PropTypes.bool,
   variant: PropTypes.string,
+  minutesStep: PropTypes.number,
 }

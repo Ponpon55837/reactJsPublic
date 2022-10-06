@@ -13,7 +13,7 @@ const AddBtn = ({ btnName = '新增一筆', onClick = () => {} }: Props) => {
       variant="contained"
       color="success"
       onClick={() => onClick()}
-      sx={{ display: 'inline-flex', mr: 1, px: 1, mb: 1, height: '2.3rem' }}
+      sx={{ display: 'inline-flex', mr: 1, px: 1, mb: 1, mt: '3px', height: '40px' }}
     >
       <AddCircleSharpIcon sx={{ mr: 1 }} />
       {btnName}

@@ -32,7 +32,7 @@ const CustomSelectOptions = ({
       <Select defaultValue={defaultValue} value={value} label={label} onChange={onChange}>
         {nullValueOption && <MenuItem value={''}>{nullValueOptionValue}</MenuItem>}
         {selectOptions.length > 0 &&
-          selectOptions.map(sle => (
+          selectOptions.map((sle) => (
             <MenuItem key={sle.id} value={sle.id}>
               {sle.name}
             </MenuItem>

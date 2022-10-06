@@ -21,6 +21,7 @@ import SwapVertIcon from '@mui/icons-material/SwapVert'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import { Typography } from '@mui/material'
+import useMiddleWare from '@hooks/use-middleware'
 
 const mergeProps = (props, { align = 'left', stickyLeft = false, stickyRight = false }) => {
   // align = align.replace("left", "start")
@@ -75,6 +76,7 @@ const CustomTable = ({
   resultPageSize,
   pageOnChange,
   pageSizeOnChange,
+  noPagin = false,
 }) => {
   const defaultColumn = useMemo(
     () => ({
@@ -115,15 +117,16 @@ const CustomTable = ({
   const [sortFlag, setSortFlag] = useState(null)
   const [tableHeight, setTableHeight] = useState(window.innerHeight - 252)
   const small = useMediaQuery('(max-width:600px)')
+  const { menuListOpen, setTabMaxWidthValue } = useMiddleWare()
 
-  const changeSort = id => {
+  const changeSort = (id) => {
     onClick(id)
     setSortFlag(id)
     setInitFlag(!initFlag)
   }
 
   useUpdateEffect(() => {
-    onSelectedChange(selectedFlatRows.map(map => map.original))
+    onSelectedChange(selectedFlatRows.map((map) => map.original))
   }, [selectedRowIds])
 
   useUpdateEffect(() => {
@@ -139,10 +142,15 @@ const CustomTable = ({
     window.addEventListener('resize', handleResize)
   }, [window.innerHeight])
 
+  useUpdateEffect(() => {
+    const handleResize = () => setTabMaxWidthValue(window.innerWidth)
+    window.addEventListener('resize', handleResize)
+  }, [window.innerWidth, menuListOpen])
+
   // Render the UI for your table
   return (
     <>
-      <StyledTableContainer sx={{ maxHeight: tableHeight }}>
+      <StyledTableContainer id="tableOffset" sx={{ maxHeight: tableHeight }}>
         <Table
           stickyHeader
           aria-label="sticky table"
@@ -161,6 +169,7 @@ const CustomTable = ({
                     key={idx}
                     size="small"
                     component="th"
+                    sx={{ p: '8px 10px' }}
                     {...column.getHeaderProps(headerProps)}
                   >
                     {/* Add a sort direction indicator */}
@@ -219,6 +228,7 @@ const CustomTable = ({
                         size="small"
                         component="td"
                         align="justify"
+                        sx={{ p: '8px 10px' }}
                         {...cell.getCellProps(cellProps)}
                       >
                         {cell.render('Cell')}
@@ -238,14 +248,14 @@ const CustomTable = ({
           </TableBody>
         </Table>
       </StyledTableContainer>
-      <Box sx={{ padding: '0.4rem 0', display: 'inline-flex' }}>
+      <Box sx={{ padding: '0.4rem 0', display: noPagin ? 'none' : 'inline-flex' }}>
         <Pagination
           count={resultPageSize}
           page={pageValue}
           onChange={pageOnChange}
           size={small ? 'small' : 'default'}
         />
-        <Typography sx={{ mt: small ? '.1rem' : '.2rem', mr: '.4rem' }}>
+        <Typography sx={{ mt: small ? '.1rem' : '.2rem', mr: '1rem' }}>
           資料總數： {dataCount} 筆
         </Typography>
         <FormControl variant="standard" sx={{ display: small ? 'none' : 'inline-flex' }}>
@@ -289,4 +299,5 @@ CustomTable.propTypes = {
   resultPageSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   pageOnChange: PropTypes.func,
   pageSizeOnChange: PropTypes.func,
+  noPagin: PropTypes.bool,
 }

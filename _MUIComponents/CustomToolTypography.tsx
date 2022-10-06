@@ -6,9 +6,15 @@ interface Props {
   title?: any
   placement?: 'top' | 'bottom' | 'left' | 'right'
   arrow?: boolean
+  toolTipTrigger?: boolean
 }
 
-const CustomToolTypography = ({ title, placement = 'top', arrow = true }: Props) => {
+const CustomToolTypography = ({
+  title,
+  placement = 'top',
+  arrow = true,
+  toolTipTrigger = false,
+}: Props) => {
   const toolClass = useCss({
     '&:hover': {
       cursor: 'pointer',
@@ -16,11 +22,19 @@ const CustomToolTypography = ({ title, placement = 'top', arrow = true }: Props)
   })
 
   return (
-    <Tooltip title={title ?? '-'} placement={placement} arrow={arrow} className={toolClass}>
-      <Typography noWrap sx={{ fontSize: '0.95rem' }}>
-        {title ?? '-'}
-      </Typography>
-    </Tooltip>
+    <>
+      {toolTipTrigger ? (
+        <Tooltip title={title ?? '-'} placement={placement} arrow={arrow} className={toolClass}>
+          <Typography noWrap sx={{ fontSize: '.95rem' }}>
+            {title ?? '-'}
+          </Typography>
+        </Tooltip>
+      ) : (
+        <Typography noWrap sx={{ fontSize: '.95rem' }}>
+          {title ?? '-'}
+        </Typography>
+      )}
+    </>
   )
 }
 
