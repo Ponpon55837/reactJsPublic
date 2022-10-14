@@ -136,7 +136,7 @@ const ListButtonGroups = ({
 }
 
 export default ListButtonGroups
-
+export { StyledTooltip }
 ButtonGroup.propTypes = {
   children: PropTypes.node,
 }

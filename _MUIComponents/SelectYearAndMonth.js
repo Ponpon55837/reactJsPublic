@@ -28,6 +28,8 @@ const SelectYearAndMonth = ({
   monthOnChange,
   disabled,
   mr = 1,
+  ml = 0,
+  mt = '3px',
 }) => {
   return (
     <>
@@ -37,7 +39,8 @@ const SelectYearAndMonth = ({
           minWidth: 120,
           mr: mr,
           mb: 1,
-          mt: '3px',
+          mt: mt,
+          ml: ml,
         }}
         disabled={disabled}
       >
@@ -57,7 +60,8 @@ const SelectYearAndMonth = ({
           mr: '.4rem',
           minWidth: 120,
           display: !monthOpen && 'none',
-          mt: '3px',
+          mt: mt,
+          ml: ml,
         }}
         disabled={disabled}
       >
@@ -84,4 +88,6 @@ SelectYearAndMonth.propTypes = {
   monthOnChange: PropTypes.func,
   disabled: PropTypes.bool,
   mr: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  ml: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  mt: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 }
