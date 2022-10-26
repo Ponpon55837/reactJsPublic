@@ -1,4 +1,4 @@
-import { useContext, createContext } from 'react'
+import { useContext, createContext, useState, useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import WarningAmberIcon from '@mui/icons-material/WarningAmber'
 import { useRouter } from 'next/router'
@@ -35,6 +35,7 @@ const authMessage = '登入憑證已失效，請重新登入'
 const useApi = () => useContext(ApiContext)
 
 const useApiProvider = () => {
+  const qs = require('qs')
   const router = useRouter()
   const { tokenState, setTokenState, logoutStore } = useMiddleWare()
   const [state, produce] = useImmer({
@@ -45,13 +46,13 @@ const useApiProvider = () => {
   const { statusCode, errorMessage } = state
 
   const clearErrorMessage = () => {
-    produce(draft => {
+    produce((draft) => {
       draft.errorMessage = null
     })
   }
 
-  const setErrorMessage = value => {
-    produce(draft => {
+  const setErrorMessage = (value) => {
+    produce((draft) => {
       draft.errorMessage = value
     })
   }
@@ -131,7 +132,10 @@ const useApiProvider = () => {
         method === API_METHOD.GET || method === API_METHOD.DELETE
           ? await APIKit[method](path, {
               headers: { Authorization: tokenState ? `Bearer ${tokenState}` : '' },
-              params,
+              params: params,
+              paramsSerializer: (params) => {
+                return qs.stringify(params)
+              },
             })
           : await APIKit[method](path, variables, {
               headers: { Authorization: tokenState ? `Bearer ${tokenState}` : '' },
@@ -230,17 +234,20 @@ const useApiProvider = () => {
         Authorization: `Bearer ${tokenState}`,
       },
       params: params,
+      paramsSerializer: (params) => {
+        return qs.stringify(params)
+      },
     }
 
     if (method === API_METHOD.GET || method === API_METHOD.POST) request.data = variables
 
     return await axios(request)
-      .then(response => {
+      .then((response) => {
         FileDownload(response.data, `${fileName}${moment().format('YYYYMMDD')}.${fileFormat}`)
 
         return { status: response.status }
       })
-      .catch(error => {
+      .catch((error) => {
         let message = error.message
         setErrorMessage(message)
         return { status: error.status, message: '', result: null }
@@ -260,12 +267,69 @@ const useApiProvider = () => {
   }
 }
 
+const useTimeOutProvider = () => {
+  const router = useRouter()
+  const { tokenState, logoutStore } = useMiddleWare()
+  const [time, setTime] = useState(600)
+  const [timeCountOver, setTimeCountOver] = useState(false)
+
+  const useInterval = (callback, delay) => {
+    const savedCallback = useRef()
+
+    // 保存新回调
+    useEffect(() => {
+      savedCallback.current = callback
+    })
+
+    // 建立 interval
+    useEffect(() => {
+      const tick = () => {
+        savedCallback.current()
+      }
+      if (delay !== null) {
+        let id = setInterval(tick, delay)
+        return () => clearInterval(id)
+      }
+    }, [delay])
+  }
+
+  let filterTimeout
+
+  const onMouseKeep = () => {
+    clearTimeout(filterTimeout)
+    filterTimeout = setTimeout(() => {
+      setTime(600)
+    }, 30000)
+  }
+
+  useInterval(() => {
+    if (tokenState !== '') {
+      setTime(time - 60)
+    }
+  }, 60000)
+
+  useEffect(() => {
+    if (time === 0) {
+      setTimeCountOver(true)
+      router.push('/Login')
+      logoutStore()
+    }
+  }, [time])
+
+  return { onMouseKeep, timeCountOver, setTimeCountOver }
+}
+
 const ApiProvider = ({ children }) => {
   const api = useApiProvider()
   const { statusCode, errorMessage, clearErrorMessage } = api
+  const { onMouseKeep, timeCountOver, setTimeCountOver } = useTimeOutProvider()
 
   const Action = () => {
     clearErrorMessage()
+  }
+
+  const TimeAction = () => {
+    setTimeCountOver(false)
   }
 
   return (
@@ -286,7 +350,19 @@ const ApiProvider = ({ children }) => {
         dialogContent={errorMessage}
         labelSuccess="關閉"
       />
-      {children}
+      <CustomDialog
+        open={timeCountOver}
+        successFunc={TimeAction}
+        dialogTitle={
+          <IconButton edge="start" color="warning">
+            <WarningAmberIcon size="small" sx={{ mr: 1 }} />
+            頁面逾時
+          </IconButton>
+        }
+        dialogContent="頁面閒置超過 10 分鐘，系統自動將此帳號登出"
+        labelSuccess="關閉"
+      />
+      <div onMouseMove={onMouseKeep}>{children}</div>
     </ApiContext.Provider>
   )
 }

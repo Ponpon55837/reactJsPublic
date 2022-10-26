@@ -3,6 +3,7 @@ import { Typography, Button, Tooltip, ClickAwayListener } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import CancelIcon from '@mui/icons-material/Cancel'
+import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn'
 import PropTypes from 'prop-types'
 
 const StyledTooltip = styled(Tooltip)(() => ({
@@ -21,27 +22,37 @@ const StyledDiv = styled('div')(() => ({
   padding: '.5rem .2rem',
 }))
 
-interface ClickAwayBtnProps {
+interface ClickAwayAuditBtnProps {
   successClick: () => void
+  failedClick: () => void
   executeDescription: string
+  disabledFailBtn?: boolean
   successLabel?: string
+  cancelLabel?: string
   executeLabel?: string
+  failedLabel?: string
   successColor?: 'inherit' | 'success' | 'primary' | 'secondary' | 'error' | 'info' | 'warning'
   executeColor?: 'inherit' | 'success' | 'primary' | 'secondary' | 'error' | 'info' | 'warning'
+  failedColor?: 'inherit' | 'success' | 'primary' | 'secondary' | 'error' | 'info' | 'warning'
   startIcon?: React.ReactElement
   variant?: 'text' | 'outlined' | 'contained'
 }
 
-const ClickAwayBtn = ({
+const ClickAwayAuditBtn = ({
   executeDescription = '',
   successLabel = '確定',
   executeLabel = '',
+  cancelLabel = '關閉',
+  failedLabel = '拒絕',
   successColor = 'success',
+  failedColor = 'error',
   executeColor = 'success',
   successClick = () => {},
+  failedClick = () => {},
+  disabledFailBtn = false,
   startIcon = <CheckCircleIcon fontSize="small" />,
   variant = 'outlined',
-}: ClickAwayBtnProps) => {
+}: ClickAwayAuditBtnProps) => {
   const [open, setOpen] = useState(false)
 
   return (
@@ -66,8 +77,23 @@ const ClickAwayBtn = ({
               }}
               onClick={() => setOpen(false)}
             >
-              取消
+              {cancelLabel}
             </Button>
+            {!disabledFailBtn && (
+              <Button
+                size="small"
+                variant="contained"
+                color={failedColor}
+                startIcon={<DoDisturbOnIcon fontSize="small" />}
+                sx={{
+                  p: '0 .3rem !important',
+                  mr: 2,
+                }}
+                onClick={() => failedClick()}
+              >
+                {failedLabel}
+              </Button>
+            )}
             <Button
               size="small"
               variant="contained"
@@ -87,7 +113,7 @@ const ClickAwayBtn = ({
           size="small"
           variant={variant}
           color={executeColor}
-          // startIcon={startIcon ? startIcon : null}
+          startIcon={startIcon}
           sx={{
             p: '0 .4rem !important',
           }}
@@ -100,9 +126,9 @@ const ClickAwayBtn = ({
   )
 }
 
-export default ClickAwayBtn
+export default ClickAwayAuditBtn
 
-ClickAwayBtn.propTypes = {
+ClickAwayAuditBtn.propTypes = {
   executeDescription: PropTypes.string,
   successLabel: PropTypes.string,
   executeLabel: PropTypes.string,

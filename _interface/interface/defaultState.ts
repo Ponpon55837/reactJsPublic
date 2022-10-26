@@ -24,6 +24,7 @@ export interface ReturnState {
     deleteId: number | string
     deptId: string | number
     quesId: string | number
+    deleteOrAuditCheck: string
   }
   produce: (fn: (draft: any) => void) => void
   handlePageChange: (e: React.ChangeEvent<HTMLInputElement>, value: number) => void
@@ -40,11 +41,14 @@ export interface ReturnState {
   handleGetSingleDataView: (channel: string, id: number | string) => void
   handleDeleteSingleData: (channel: string, id: string | number, query: object) => void
   handleInputSub: (channel: string, query: object) => void
+  handleInputSubWithTimeRange: (channel: string, query: object, timeValue: string[]) => void
   handleClearInputSub: (channel: string, query: object) => void
+  handleClearInputSubWithTimeValue: (channel: string, query: object, timeValue: string[]) => void
   handleAddSingleDataDialog: () => void
   handleCloseSingleDataDialog: () => void
   handleCloseSingleDataViewDialog: () => void
   handleBackDropOpen: () => void
   handleBackDropClose: () => void
   handleFirstPage: () => void
+  handleKeywordClean: () => void
 }

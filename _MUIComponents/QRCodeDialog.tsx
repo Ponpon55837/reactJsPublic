@@ -24,6 +24,7 @@ interface Props {
   contentComponent: React.ReactElement<any, any>
   fullScreen?: boolean
   maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+  printExample1?: boolean
 }
 
 const CustomFullDialog = ({
@@ -33,6 +34,7 @@ const CustomFullDialog = ({
   contentComponent,
   fullScreen = false,
   maxWidth = 'sm',
+  printExample1 = true,
 }: Props) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
   const hoverOpen = Boolean(anchorEl)
@@ -138,10 +140,11 @@ const CustomFullDialog = ({
         onClose={handlePopoverClose}
         disableRestoreFocus
       >
-        <Typography sx={{ ml: 2 }}>1. 紙張尺寸: A4</Typography>
-        <Typography sx={{ ml: 2 }}>2. 標籤尺寸: 寬 10.5 cm 高 7.42 cm</Typography>
-        <Typography sx={{ ml: 2 }}>3. 格數: 8 格</Typography>
-        <img src="printExample.jpg" height="500" title="列印範例" alt="列印範例" />
+        {printExample1 ? (
+          <img src="printExample.png" height="500" title="列印範例" alt="列印範例" />
+        ) : (
+          <img src="printExample2.png" height="500" title="列印範例" alt="列印範例" />
+        )}
       </Popover>
     </>
   )

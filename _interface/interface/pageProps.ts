@@ -11,6 +11,17 @@ export interface EditProps {
 
 export interface ViewProps {
   result: object | []
+  closeFunc?: () => void
+  successFunc?: () => void
+}
+
+export interface AuditProps {
+  result: object | []
+  closeFunc: () => void
+  successFunc: () => void
+  auditAPI: string
+  successAudit?: string
+  failedAudit?: string
 }
 
 export interface TabPanelProps {

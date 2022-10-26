@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { useUpdateEffect } from 'react-use'
+import { useEffectOnce, useUpdateEffect } from 'react-use'
 import { useTable, usePagination, useFlexLayout, useRowSelect, useSortBy } from 'react-table'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import PropTypes from 'prop-types'
@@ -132,6 +132,10 @@ const CustomTable = ({
   useUpdateEffect(() => {
     gotoPage(0)
   }, [data])
+
+  useEffectOnce(() => {
+    setPageSize(parseInt(pageSize, 10))
+  })
 
   useUpdateEffect(() => {
     setPageSize(parseInt(pageSize, 10))

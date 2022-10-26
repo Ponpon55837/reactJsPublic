@@ -8,4 +8,6 @@ export interface Extend {
   isChangePwd: boolean
   propertyStatus: { id: number; name: string }[]
   certificateType: { id: number; name: string }[]
+  tabMaxWidth: string | number
+  leftSideMenu: Array<{ name: string; list: [] }>
 }
