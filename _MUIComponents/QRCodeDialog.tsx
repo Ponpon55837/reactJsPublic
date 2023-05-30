@@ -1,12 +1,21 @@
 import { forwardRef, useState } from 'react'
-import { Dialog, AppBar, Toolbar, Slide, Paper, Popover, Typography } from '@mui/material'
-import { TransitionProps } from '@mui/material/transitions'
-import IconButton from '@mui/material/IconButton'
-import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop'
-import HelpIcon from '@mui/icons-material/Help'
+import Image from '@components/image'
+import useMiddleware from '@hooks/use-middleware'
+import { useLocales } from '@locales/index'
 import CloseIcon from '@mui/icons-material/Close'
-import PropTypes from 'prop-types'
-import styles from '@styles/media.module.scss'
+import HelpIcon from '@mui/icons-material/Help'
+import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop'
+import { AppBar, Box, Button, Dialog, Drawer, Paper, Slide, Toolbar } from '@mui/material'
+import IconButton from '@mui/material/IconButton'
+import { styled } from '@mui/material/styles'
+import { TransitionProps } from '@mui/material/transitions'
+import { COMPONENTS_COMMON_GREY_BLUE } from '@theme/colorManager'
+
+const StyledAppBar = styled(AppBar)(({}) => ({
+  '@media print': {
+    display: 'none !important',
+  },
+}))
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -36,16 +45,10 @@ const CustomFullDialog = ({
   maxWidth = 'sm',
   printExample1 = true,
 }: Props) => {
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
-  const hoverOpen = Boolean(anchorEl)
-  // help hover enter
-  const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget)
-  }
-  // help hover out
-  const handlePopoverClose = () => {
-    setAnchorEl(null)
-  }
+  const { defaultTheme } = useMiddleware()
+  const { t } = useLocales()
+  const [drawerView, setDrawerView] = useState(false)
+
   return (
     <>
       <Dialog
@@ -56,16 +59,17 @@ const CustomFullDialog = ({
         maxWidth={maxWidth}
         TransitionComponent={Transition}
       >
-        <AppBar position="fixed" className={styles.noPrint}>
-          <Toolbar sx={{ backgroundColor: '#1b2c37' }}>
+        <StyledAppBar position="fixed">
+          <Toolbar sx={{ backgroundColor: defaultTheme }}>
             {toolBarTitle}
             <IconButton
               edge="end"
               color="inherit"
-              aria-owns={hoverOpen ? 'mouse-over-popover' : undefined}
+              aria-owns={drawerView ? 'mouse-over-popover' : 'null'}
               aria-haspopup="true"
-              onMouseEnter={handlePopoverOpen}
-              onMouseLeave={handlePopoverClose}
+              // onMouseEnter={handlePopoverOpen}
+              // onMouseLeave={handlePopoverClose}
+              onClick={() => setDrawerView(true)}
               sx={{ position: 'absolute', right: '6rem', top: '.3rem' }}
             >
               <HelpIcon
@@ -73,7 +77,7 @@ const CustomFullDialog = ({
                   fontSize: '2rem',
                   cursor: 'pointer',
                   mr: 1,
-                  '&:hover': { backgroundColor: '#32404F', borderRadius: '3rem' },
+                  '&:hover': { backgroundColor: COMPONENTS_COMMON_GREY_BLUE, borderRadius: '3rem' },
                 }}
               />
             </IconButton>
@@ -89,7 +93,7 @@ const CustomFullDialog = ({
                   fontSize: '2rem',
                   cursor: 'pointer',
                   mr: 1,
-                  '&:hover': { backgroundColor: '#32404F', borderRadius: '3rem' },
+                  '&:hover': { backgroundColor: COMPONENTS_COMMON_GREY_BLUE, borderRadius: '3rem' },
                 }}
               />
             </IconButton>
@@ -104,12 +108,12 @@ const CustomFullDialog = ({
                 sx={{
                   fontSize: '2rem',
                   cursor: 'pointer',
-                  '&:hover': { backgroundColor: '#32404F', borderRadius: '3rem' },
+                  '&:hover': { backgroundColor: COMPONENTS_COMMON_GREY_BLUE, borderRadius: '3rem' },
                 }}
               />
             </IconButton>
           </Toolbar>
-        </AppBar>
+        </StyledAppBar>
         <Paper
           elevation={fullScreen ? 0 : 3}
           sx={{
@@ -121,42 +125,49 @@ const CustomFullDialog = ({
           {contentComponent}
         </Paper>
       </Dialog>
-      <Popover
-        id="mouse-over-popover"
-        sx={{
-          pointerEvents: 'none',
-          display: anchorEl ? 'block' : 'none',
-        }}
-        open={open}
-        anchorEl={anchorEl}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
-        }}
-        onClose={handlePopoverClose}
-        disableRestoreFocus
+      <Drawer
+        sx={{ zIndex: 1500 }}
+        BackdropProps={{ style: { backgroundColor: 'none', opacity: 0 } }}
+        anchor="right"
+        open={drawerView}
+        onClose={() => setDrawerView(false)}
       >
         {printExample1 ? (
-          <img src="printExample.png" height="500" title="列印範例" alt="列印範例" />
+          <Image
+            src="/images/print-sample/print-sample-A4-105X74-8.png"
+            sx={{
+              width: 'auto',
+              height: '600px',
+              objectFit: '-moz-initial',
+            }}
+            alt={`${t('DIALOG_QR_CODE.title')}`}
+            title={`${t('DIALOG_QR_CODE.title')}`}
+          />
         ) : (
-          <img src="printExample2.png" height="500" title="列印範例" alt="列印範例" />
+          <Image
+            src="/images/print-sample/print-sample-A4-70X37-24.png"
+            sx={{
+              width: 'auto',
+              height: '600px',
+              objectFit: '-moz-initial',
+            }}
+            title={`${t('DIALOG_QR_CODE.title')}`}
+            alt={`${t('DIALOG_QR_CODE.title')}`}
+          />
         )}
-      </Popover>
+        <Button
+          variant="outlined"
+          color="primary"
+          startIcon={<CloseIcon fontSize="large" />}
+          size="small"
+          sx={{ height: '36px', width: '6rem', mx: 'auto', mt: 1 }}
+          onClick={() => setDrawerView(false)}
+        >
+          {`${t('DIALOG.closeBtn')}`}
+        </Button>
+      </Drawer>
     </>
   )
 }
 
 export default CustomFullDialog
-
-CustomFullDialog.propTypes = {
-  toolBarTitle: PropTypes.string,
-  open: PropTypes.bool,
-  closeFunc: PropTypes.func,
-  contentComponent: PropTypes.node,
-  fullScreen: PropTypes.bool,
-  maxWidth: PropTypes.string,
-}

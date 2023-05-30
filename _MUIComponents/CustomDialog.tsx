@@ -1,13 +1,13 @@
 import { forwardRef } from 'react'
-import { TransitionProps } from '@mui/material/transitions'
-import Slide from '@mui/material/Slide'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import PropTypes from 'prop-types'
+import Slide from '@mui/material/Slide'
+import { TransitionProps } from '@mui/material/transitions'
+import { COMPONENTS_COMMON_GREY } from '@theme/colorManager'
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -36,7 +36,7 @@ interface Props {
 
 const CustomDialog = ({
   open,
-  dialogTitle = '通知',
+  dialogTitle = '',
   maxWidth = 'sm',
   fullWidth = true,
   fullScreen = false,
@@ -57,7 +57,9 @@ const CustomDialog = ({
       aria-describedby="alert-dialog-slide-description"
       sx={{ zIndex: '2000' }}
     >
-      <DialogTitle sx={{ borderBottom: '1px solid #DDDDDD' }}>{dialogTitle}</DialogTitle>
+      <DialogTitle sx={{ borderBottom: `1px solid ${COMPONENTS_COMMON_GREY}` }}>
+        {dialogTitle}
+      </DialogTitle>
       <DialogContent sx={{ marginTop: '1rem' }}>
         <DialogContentText id="alert-dialog-slide-description">{dialogContent}</DialogContentText>
       </DialogContent>
@@ -76,26 +78,4 @@ const CustomDialog = ({
 }
 
 export default CustomDialog
-
-CustomDialog.propTypes = {
-  open: PropTypes.bool,
-  dialogTitle: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.array,
-    PropTypes.object,
-  ]),
-  maxWidth: PropTypes.string,
-  fullWidth: PropTypes.bool,
-  fullScreen: PropTypes.bool,
-  dialogContent: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.array,
-    PropTypes.object,
-  ]),
-  labelSuccess: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  successFunc: PropTypes.func,
-  cancelFunc: PropTypes.func,
-  labelFailed: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-}
+export { Transition }

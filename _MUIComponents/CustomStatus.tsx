@@ -1,5 +1,4 @@
-import { FormControl, FormLabel, Radio, RadioGroup, FormControlLabel } from '@mui/material'
-import PropTypes from 'prop-types'
+import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material'
 
 interface Props {
   statusTitle?: string
@@ -12,22 +11,20 @@ interface Props {
 }
 
 const CustomStatus = ({
-  statusTitle = '狀態',
+  statusTitle = '',
   statusValue,
-  successValue = '啟用',
-  failedValue = '停用',
+  successValue = '',
+  failedValue = '',
   disabled = false,
   enableStatusFunc = () => {},
   disableStatusFunc = () => {},
 }: Props) => {
-
-
   return (
     <FormControl component="fieldset" disabled={disabled}>
       <FormLabel component="legend">{statusTitle}</FormLabel>
       <RadioGroup
         row
-        aria-label="狀態"
+        aria-label=""
         name="row-radio-buttons-group"
         value={statusValue ? successValue : failedValue}
         onChange={(e, value) => {
@@ -46,13 +43,3 @@ const CustomStatus = ({
 }
 
 export default CustomStatus
-
-CustomStatus.propTypes = {
-  statusTitle: PropTypes.string,
-  statusValue: PropTypes.bool,
-  disabled: PropTypes.bool,
-  successValue: PropTypes.string,
-  failedValue: PropTypes.string,
-  enableStatusFunc: PropTypes.func,
-  disableStatusFunc: PropTypes.func,
-}

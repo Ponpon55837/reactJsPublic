@@ -1,15 +1,22 @@
-import { ListDivCenter } from '@styles/generalStyle'
 import CustomToolTypography from '@components/CustomToolTypography'
+import { useLocales } from '@locales/index'
+import { ListDivCenter } from '@styles/styles_normal/generalStyle'
+import { COMPONENTS_COMMON_CLEAN_GREEN, COMPONENTS_COMMON_LOW_GREY } from '@theme/colorManager'
+
 interface Props {
   isEnabled: boolean
-  success?: string
-  failed?: string
 }
 
-const EnabledStatus = ({ isEnabled, success = '啟用中', failed = '已停用' }: Props) => {
+const EnabledStatus = ({ isEnabled }: Props) => {
+  const { t } = useLocales()
+
   return (
-    <ListDivCenter sx={{ color: isEnabled ? '#2e7d32' : '#797979' }}>
-      <CustomToolTypography title={isEnabled ? success : failed} />
+    <ListDivCenter
+      sx={{ color: isEnabled ? COMPONENTS_COMMON_CLEAN_GREEN : COMPONENTS_COMMON_LOW_GREY }}
+    >
+      <CustomToolTypography
+        title={isEnabled ? `${t('ENABLE_STATUS.success')}` : `${t('ENABLE_STATUS.disabled')}`}
+      />
     </ListDivCenter>
   )
 }

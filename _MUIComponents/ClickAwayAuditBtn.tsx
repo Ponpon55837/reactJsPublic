@@ -1,36 +1,17 @@
 import { useState } from 'react'
-import { Typography, Button, Tooltip, ClickAwayListener } from '@mui/material'
-import { styled } from '@mui/material/styles'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import { StyledDiv, StyledTooltip } from '@components/ClickAwayBtn'
+import { useLocales } from '@locales/index'
 import CancelIcon from '@mui/icons-material/Cancel'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn'
-import PropTypes from 'prop-types'
-
-const StyledTooltip = styled(Tooltip)(() => ({
-  width: 'auto',
-  textAlign: 'center',
-  alignItems: 'center',
-  '&::before': {
-    border: '1px solid rgba(97, 97, 97, 0.92)',
-    backgroundColor: 'rgba(97, 97, 97, 0.92)',
-    boxSizing: 'border-box',
-  },
-}))
-
-const StyledDiv = styled('div')(() => ({
-  textAlign: 'center',
-  padding: '.5rem .2rem',
-}))
+import { Button, ClickAwayListener, Typography } from '@mui/material'
 
 interface ClickAwayAuditBtnProps {
   successClick: () => void
   failedClick: () => void
-  executeDescription: string
   disabledFailBtn?: boolean
-  successLabel?: string
-  cancelLabel?: string
+  disabled?: boolean
   executeLabel?: string
-  failedLabel?: string
   successColor?: 'inherit' | 'success' | 'primary' | 'secondary' | 'error' | 'info' | 'warning'
   executeColor?: 'inherit' | 'success' | 'primary' | 'secondary' | 'error' | 'info' | 'warning'
   failedColor?: 'inherit' | 'success' | 'primary' | 'secondary' | 'error' | 'info' | 'warning'
@@ -39,21 +20,19 @@ interface ClickAwayAuditBtnProps {
 }
 
 const ClickAwayAuditBtn = ({
-  executeDescription = '',
-  successLabel = '確定',
   executeLabel = '',
-  cancelLabel = '關閉',
-  failedLabel = '拒絕',
   successColor = 'success',
   failedColor = 'error',
   executeColor = 'success',
   successClick = () => {},
   failedClick = () => {},
   disabledFailBtn = false,
+  disabled = false,
   startIcon = <CheckCircleIcon fontSize="small" />,
   variant = 'outlined',
 }: ClickAwayAuditBtnProps) => {
   const [open, setOpen] = useState(false)
+  const { t } = useLocales()
 
   return (
     <ClickAwayListener onClickAway={() => setOpen(false)}>
@@ -64,7 +43,7 @@ const ClickAwayAuditBtn = ({
         title={
           <StyledDiv>
             <Typography sx={{ display: 'block', mb: 1, fontWeight: 400 }}>
-              {executeDescription}
+              {`${t('CLICK_AWAY_BUTTON.executeDescription')}`}
             </Typography>
             <Button
               size="small"
@@ -72,12 +51,12 @@ const ClickAwayAuditBtn = ({
               color="primary"
               startIcon={<CancelIcon fontSize="small" />}
               sx={{
-                p: '0 !important',
+                p: '0 .3rem !important',
                 mr: 2,
               }}
               onClick={() => setOpen(false)}
             >
-              {cancelLabel}
+              {`${t('CLICK_AWAY_BUTTON.cancelLabel')}`}
             </Button>
             {!disabledFailBtn && (
               <Button
@@ -91,7 +70,7 @@ const ClickAwayAuditBtn = ({
                 }}
                 onClick={() => failedClick()}
               >
-                {failedLabel}
+                {`${t('CLICK_AWAY_BUTTON.failedLabel')}`}
               </Button>
             )}
             <Button
@@ -100,11 +79,11 @@ const ClickAwayAuditBtn = ({
               color={successColor}
               startIcon={<CheckCircleIcon fontSize="small" />}
               sx={{
-                p: '0 .2rem !important',
+                p: '0 .3rem !important',
               }}
               onClick={() => successClick()}
             >
-              {successLabel}
+              {`${t('CLICK_AWAY_BUTTON.successLabel')}`}
             </Button>
           </StyledDiv>
         }
@@ -114,6 +93,7 @@ const ClickAwayAuditBtn = ({
           variant={variant}
           color={executeColor}
           startIcon={startIcon}
+          disabled={disabled}
           sx={{
             p: '0 .4rem !important',
           }}
@@ -127,12 +107,3 @@ const ClickAwayAuditBtn = ({
 }
 
 export default ClickAwayAuditBtn
-
-ClickAwayAuditBtn.propTypes = {
-  executeDescription: PropTypes.string,
-  successLabel: PropTypes.string,
-  executeLabel: PropTypes.string,
-  successColor: PropTypes.string,
-  executeColor: PropTypes.string,
-  successClick: PropTypes.func,
-}

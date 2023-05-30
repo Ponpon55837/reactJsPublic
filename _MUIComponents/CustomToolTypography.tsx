@@ -1,6 +1,5 @@
 import { useCss } from 'react-use'
 import { Tooltip, Typography } from '@mui/material'
-import PropTypes from 'prop-types'
 
 interface Props {
   title?: any
@@ -39,9 +38,3 @@ const CustomToolTypography = ({
 }
 
 export default CustomToolTypography
-
-CustomToolTypography.propTypes = {
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.number]),
-  placement: PropTypes.string,
-  arrow: PropTypes.bool,
-}

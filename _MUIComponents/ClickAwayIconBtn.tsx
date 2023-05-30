@@ -1,32 +1,13 @@
 import { useState } from 'react'
-import { Typography, Button, Tooltip, ClickAwayListener, IconButton } from '@mui/material'
-import { styled } from '@mui/material/styles'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import { StyledDiv, StyledTooltip } from '@components/ClickAwayBtn'
+import { useLocales } from '@locales/index'
 import CancelIcon from '@mui/icons-material/Cancel'
-import DeleteIcon from '@mui/icons-material/Delete'
-import PropTypes from 'prop-types'
-
-const StyledTooltip = styled(Tooltip)(() => ({
-  width: 'auto',
-  textAlign: 'center',
-  alignItems: 'center',
-  '&::before': {
-    border: '1px solid rgba(97, 97, 97, 0.92)',
-    backgroundColor: 'rgba(97, 97, 97, 0.92)',
-    boxSizing: 'border-box',
-  },
-}))
-
-const StyledDiv = styled('div')(() => ({
-  textAlign: 'center',
-  padding: '.5rem .2rem',
-}))
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import { Button, ClickAwayListener, IconButton, Typography } from '@mui/material'
 
 interface ClickAwayBtnProps {
   successClick: () => void
   executeDescription: string
-  successLabel?: string
-  executeLabel?: string
   successColor?: 'inherit' | 'success' | 'primary' | 'secondary' | 'error' | 'info' | 'warning'
   executeColor?: 'inherit' | 'success' | 'primary' | 'secondary' | 'error' | 'info' | 'warning'
   startIcon?: React.ReactElement
@@ -35,8 +16,6 @@ interface ClickAwayBtnProps {
 
 const ClickAwayIconBtn = ({
   executeDescription = '',
-  successLabel = '確定',
-  executeLabel = '',
   successColor = 'success',
   executeColor = 'success',
   successClick = () => {},
@@ -44,6 +23,7 @@ const ClickAwayIconBtn = ({
   variant = 'outlined',
 }: ClickAwayBtnProps) => {
   const [open, setOpen] = useState(false)
+  const { t } = useLocales()
 
   return (
     <ClickAwayListener onClickAway={() => setOpen(false)}>
@@ -67,7 +47,7 @@ const ClickAwayIconBtn = ({
               }}
               onClick={() => setOpen(false)}
             >
-              取消
+              {`${t('COMMON.no')}`}
             </Button>
             <Button
               size="small"
@@ -79,7 +59,7 @@ const ClickAwayIconBtn = ({
               }}
               onClick={() => successClick()}
             >
-              {successLabel}
+              {`${t('COMMON.yes')}`}
             </Button>
           </StyledDiv>
         }
@@ -93,12 +73,3 @@ const ClickAwayIconBtn = ({
 }
 
 export default ClickAwayIconBtn
-
-ClickAwayIconBtn.propTypes = {
-  executeDescription: PropTypes.string,
-  successLabel: PropTypes.string,
-  executeLabel: PropTypes.string,
-  successColor: PropTypes.string,
-  executeColor: PropTypes.string,
-  successClick: PropTypes.func,
-}

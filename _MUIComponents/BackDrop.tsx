@@ -1,22 +1,60 @@
 import Backdrop from '@mui/material/Backdrop'
-import CircularProgress from '@mui/material/CircularProgress'
 import Box from '@mui/material/Box'
+import CircularProgress from '@mui/material/CircularProgress'
 import Typography from '@mui/material/Typography'
-import PropTypes from 'prop-types'
+import { styled } from '@mui/material/styles'
+import { alpha } from '@mui/material/styles'
+import {
+  ADMIN_COMMON_ALPHA_BLACK,
+  COMPONENTS_COMMON_PURE_WHITE,
+  WEB_COMMON_WHITE_GREY,
+} from '@theme/colorManager'
 
+const StyledBackdrop = styled(Backdrop)(({}) => ({
+  '@media print': {
+    display: 'none !important',
+  },
+}))
 interface Props {
   backDropOpen: boolean
+  isSubmitting?: boolean
+  className?: any
+  loadingColor?: any
+  loadingColorOpacity?: number
+  backgroundColorOpacity?: number
+  circleSize?: string | number
+  defaultUseColor?: any
 }
 
-const BackDrop = ({ backDropOpen = false }: Props) => {
+export const BackDrop = ({
+  backDropOpen,
+  isSubmitting = false,
+  className,
+  loadingColor,
+  loadingColorOpacity = 0.4,
+  backgroundColorOpacity = 0,
+  circleSize,
+  defaultUseColor,
+}: Props) => {
   return (
-    <Backdrop
-      sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }}
+    <StyledBackdrop
+      sx={{
+        color: COMPONENTS_COMMON_PURE_WHITE,
+        zIndex: (theme) => theme.zIndex.drawer + 1,
+        backgroundColor: alpha(loadingColor, backgroundColorOpacity),
+      }}
       open={backDropOpen}
       onClick={() => {}}
+      className={className}
     >
-      <Box sx={{ position: 'relative', display: 'inline-flex' }}>
-        <CircularProgress size="10rem" color="inherit" />
+      <Box
+        sx={{
+          position: 'relative',
+          display: 'inline-flex',
+          color: alpha(loadingColor, loadingColorOpacity),
+        }}
+      >
+        <CircularProgress size={circleSize} color={defaultUseColor} />
         <Box
           sx={{
             top: 0,
@@ -29,17 +67,59 @@ const BackDrop = ({ backDropOpen = false }: Props) => {
             justifyContent: 'center',
           }}
         >
-          <Typography variant="h6" component="div" color="inherit">
-            Loading...
+          <Typography variant="h4" component="div" color={defaultUseColor}>
+            {isSubmitting ? 'Saving...' : 'Loading...'}
           </Typography>
         </Box>
       </Box>
-    </Backdrop>
+    </StyledBackdrop>
   )
 }
 
-export default BackDrop
+export const WebBackDrop = ({
+  backDropOpen = false,
+  isSubmitting = false,
+  className,
+  loadingColor = WEB_COMMON_WHITE_GREY,
+  loadingColorOpacity = 0.7,
+  backgroundColorOpacity = 0,
+  circleSize = '11rem',
+  defaultUseColor = 'inherit',
+}: Props) => {
+  return (
+    <BackDrop
+      backDropOpen={backDropOpen}
+      isSubmitting={isSubmitting}
+      className={className}
+      loadingColor={loadingColor}
+      loadingColorOpacity={loadingColorOpacity}
+      backgroundColorOpacity={backgroundColorOpacity}
+      circleSize={circleSize}
+      defaultUseColor={defaultUseColor}
+    />
+  )
+}
 
-BackDrop.propTypes = {
-  backDropOpen: PropTypes.bool,
+export const AdminBackDrop = ({
+  backDropOpen = false,
+  isSubmitting = false,
+  className,
+  loadingColor = ADMIN_COMMON_ALPHA_BLACK,
+  loadingColorOpacity = 0.4,
+  backgroundColorOpacity = 0,
+  circleSize = '11rem',
+  defaultUseColor = 'inherit',
+}: Props) => {
+  return (
+    <BackDrop
+      backDropOpen={backDropOpen}
+      isSubmitting={isSubmitting}
+      className={className}
+      loadingColor={loadingColor}
+      loadingColorOpacity={loadingColorOpacity}
+      backgroundColorOpacity={backgroundColorOpacity}
+      circleSize={circleSize}
+      defaultUseColor={defaultUseColor}
+    />
+  )
 }

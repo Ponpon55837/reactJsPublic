@@ -1,17 +1,36 @@
-import { Button, Stack } from '@mui/material'
-import CloseIcon from '@mui/icons-material/Close'
+import { useLocales } from '@locales/index'
 import CheckIcon from '@mui/icons-material/Check'
-import PropTypes from 'prop-types'
+import CloseIcon from '@mui/icons-material/Close'
+import DeleteIcon from '@mui/icons-material/Delete'
+import { Button, Stack } from '@mui/material'
+import { COMPONENTS_COMMON_DEEP_BLUE } from '@theme/colorManager'
+
 interface Props {
   viewDialog: boolean
   closeFunc: () => void
-  successLabel?: string
+  deleteFunc?: () => void
+  deleteDialog?: boolean
 }
 
-const CustomSubmit = ({ viewDialog, closeFunc, successLabel = '確定' }: Props) => {
+const CustomSubmit = ({ viewDialog, closeFunc, deleteFunc, deleteDialog }: Props) => {
+  const { t } = useLocales()
+
   return (
     <>
       <Stack direction="row" spacing={2} sx={{ justifyContent: 'center' }}>
+        {deleteDialog && (
+          <Button
+            variant="outlined"
+            color="error"
+            type="submit"
+            startIcon={<DeleteIcon fontSize="large" />}
+            size="small"
+            sx={{ height: '36px' }}
+            onClick={deleteFunc}
+          >
+            {`${t('DIALOG.deleteBtn')}`}
+          </Button>
+        )}
         <Button
           variant="outlined"
           color="primary"
@@ -21,21 +40,25 @@ const CustomSubmit = ({ viewDialog, closeFunc, successLabel = '確定' }: Props)
           sx={{ height: '36px' }}
           onClick={closeFunc}
         >
-          {viewDialog ? '關閉' : '取消'}
+          {viewDialog ? `${t('DIALOG.closeBtn')}` : `${t('COMMON.cancel')}`}
         </Button>
         <Button
-          form="myform"
+          form="submitForm"
           variant="contained"
           type="submit"
           size="small"
           startIcon={<CheckIcon fontSize="large" />}
           sx={{
-            backgroundColor: '#3878CC',
+            backgroundColor: COMPONENTS_COMMON_DEEP_BLUE,
+            '&:hover': {
+              backgroundColor: COMPONENTS_COMMON_DEEP_BLUE,
+              opacity: 0.9,
+            },
             display: viewDialog ? 'none' : 'flex',
             height: '36px',
           }}
         >
-          {successLabel}
+          {`${t('DIALOG.successBtn')}`}
         </Button>
       </Stack>
     </>
@@ -43,8 +66,3 @@ const CustomSubmit = ({ viewDialog, closeFunc, successLabel = '確定' }: Props)
 }
 
 export default CustomSubmit
-
-CustomSubmit.propTypes = {
-  subLoading: PropTypes.bool,
-  successLabel: PropTypes.bool,
-}

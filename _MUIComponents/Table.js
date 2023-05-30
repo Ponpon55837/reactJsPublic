@@ -1,27 +1,30 @@
-import { useState, useMemo } from 'react'
-import { useEffectOnce, useUpdateEffect } from 'react-use'
-import { useTable, usePagination, useFlexLayout, useRowSelect, useSortBy } from 'react-table'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import PropTypes from 'prop-types'
+import { useMemo, useState } from 'react'
+import { useFlexLayout, usePagination, useRowSelect, useSortBy, useTable } from 'react-table'
+import { useEffectOnce, useUpdateEffect } from 'react-use'
+import useMiddleWare from '@hooks/use-middleware'
+import { useLocales } from '@locales/index'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
+import SwapVertIcon from '@mui/icons-material/SwapVert'
+import { Typography } from '@mui/material'
+import Box from '@mui/material/Box'
+import FormControl from '@mui/material/FormControl'
+import LinearProgress from '@mui/material/LinearProgress'
+import MenuItem from '@mui/material/MenuItem'
+import Pagination from '@mui/material/Pagination'
+import Select from '@mui/material/Select'
 import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
-import TableBody from '@mui/material/TableBody'
 import TableRow from '@mui/material/TableRow'
-import TableCell from '@mui/material/TableCell'
-import Box from '@mui/material/Box'
-import Pagination from '@mui/material/Pagination'
-import FormControl from '@mui/material/FormControl'
-import Select from '@mui/material/Select'
-import MenuItem from '@mui/material/MenuItem'
-import LinearProgress from '@mui/material/LinearProgress'
 import { styled } from '@mui/material/styles'
-import SwapVertIcon from '@mui/icons-material/SwapVert'
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
-import { Typography } from '@mui/material'
-import useMiddleWare from '@hooks/use-middleware'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { COMPONENTS_COMMON_PINK_WHITE, COMPONENTS_COMMON_PURE_WHITE } from '@theme/colorManager'
+import { GetMoneyThousands } from '@utils/utilsFunction'
 
 const mergeProps = (props, { align = 'left', stickyLeft = false, stickyRight = false }) => {
   // align = align.replace("left", "start")
@@ -43,25 +46,26 @@ const cellProps = (props, { cell }) => mergeProps(props, cell.column)
 const StyledTableContainer = styled(TableContainer)(({}) => ({
   overflow: 'scroll',
   overflowX: 'initial',
-  border: '5px solid #f3f3f4',
-  borderRadius: '5px',
+  border: `1px solid ${COMPONENTS_COMMON_PINK_WHITE}`,
+  borderRadius: '8px',
   '& .MuiTableHead-root': {
     position: 'sticky',
     top: '0px',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: COMPONENTS_COMMON_PURE_WHITE,
     zIndex: 1,
   },
 }))
 
 const StyledTableRow = styled(TableRow)(({}) => ({
-  '&:nth-of-type(odd)': {
+  '&:nth-of-type(even)': {
     '& td': {
-      backgroundColor: '#f3f3f4',
+      backgroundColor: COMPONENTS_COMMON_PINK_WHITE,
     },
   },
 }))
 
 const CustomTable = ({
+  sortName,
   tableStyle = false,
   columns,
   data,
@@ -76,7 +80,8 @@ const CustomTable = ({
   resultPageSize,
   pageOnChange,
   pageSizeOnChange,
-  noPagin = false,
+  noPaging = false,
+  tableDefaultMinusHeight = 260,
 }) => {
   const defaultColumn = useMemo(
     () => ({
@@ -113,9 +118,10 @@ const CustomTable = ({
     useFlexLayout,
     useRowSelect,
   )
+  const { t } = useLocales()
   const [initFlag, setInitFlag] = useState(true)
-  const [sortFlag, setSortFlag] = useState(null)
-  const [tableHeight, setTableHeight] = useState(window.innerHeight - 252)
+  const [sortFlag, setSortFlag] = useState(sortName ?? null)
+  const [tableHeight, setTableHeight] = useState(window.innerHeight - tableDefaultMinusHeight)
   const small = useMediaQuery('(max-width:600px)')
   const { menuListOpen, setTabMaxWidthValue } = useMiddleWare()
 
@@ -123,6 +129,15 @@ const CustomTable = ({
     onClick(id)
     setSortFlag(id)
     setInitFlag(!initFlag)
+  }
+
+  const flagCheckAndChange = (columnId, sortFlag) => {
+    if (sortFlag === columnId && initFlag) {
+      return <KeyboardArrowDownIcon fontSize="small" color="primary" sx={{ cursor: 'pointer' }} />
+    } else if (sortFlag === columnId) {
+      return <KeyboardArrowUpIcon fontSize="small" color="primary" sx={{ cursor: 'pointer' }} />
+    }
+    return <SwapVertIcon fontSize="small" color="primary" sx={{ cursor: 'pointer' }} />
   }
 
   useUpdateEffect(() => {
@@ -142,7 +157,7 @@ const CustomTable = ({
   }, [pageSize])
 
   useUpdateEffect(() => {
-    const handleResize = () => setTableHeight(window.innerHeight - 252)
+    const handleResize = () => setTableHeight(window.innerHeight - tableDefaultMinusHeight)
     window.addEventListener('resize', handleResize)
   }, [window.innerHeight])
 
@@ -178,34 +193,13 @@ const CustomTable = ({
                   >
                     {/* Add a sort direction indicator */}
                     {column.sort ? (
-                      <div style={{ display: 'flex', fontWeight: 'bold' }}>
-                        <span style={{ cursor: 'pointer' }} onClick={() => changeSort(column.id)}>
-                          {column.Header}
-                        </span>
-                        {sortFlag === column.id ? (
-                          initFlag ? (
-                            <KeyboardArrowUpIcon
-                              fontSize="small"
-                              color="primary"
-                              sx={{ cursor: 'pointer' }}
-                              onClick={() => changeSort(column.id)}
-                            />
-                          ) : (
-                            <KeyboardArrowDownIcon
-                              fontSize="small"
-                              color="primary"
-                              sx={{ cursor: 'pointer' }}
-                              onClick={() => changeSort(column.id)}
-                            />
-                          )
-                        ) : (
-                          <SwapVertIcon
-                            fontSize="small"
-                            color="primary"
-                            sx={{ cursor: 'pointer' }}
-                            onClick={() => changeSort(column.id)}
-                          />
-                        )}
+                      <div
+                        style={{ display: 'flex', fontWeight: 'bold' }}
+                        onClick={() => changeSort(column.id)}
+                      >
+                        <span style={{ cursor: 'pointer' }}>{column.Header}</span>
+                        {/* 排序標籤 */}
+                        {flagCheckAndChange(column.id, sortFlag)}
                       </div>
                     ) : (
                       <div style={{ fontWeight: 'bold' }}>{column.render('Header')}</div>
@@ -245,14 +239,14 @@ const CustomTable = ({
             {page.length === 0 && !loading && (
               <TableRow>
                 <TableCell size="small" component="td" style={{ textAlign: 'center' }}>
-                  目前無資料
+                  {`${t('TABLE.noData')}`}
                 </TableCell>
               </TableRow>
             )}
           </TableBody>
         </Table>
       </StyledTableContainer>
-      <Box sx={{ padding: '0.4rem 0', display: noPagin ? 'none' : 'inline-flex' }}>
+      <Box sx={{ padding: '0.4rem 0', display: noPaging ? 'none' : 'inline-flex' }}>
         <Pagination
           count={resultPageSize}
           page={pageValue}
@@ -260,7 +254,7 @@ const CustomTable = ({
           size={small ? 'small' : 'default'}
         />
         <Typography sx={{ mt: small ? '.1rem' : '.2rem', mr: '1rem' }}>
-          資料總數： {dataCount} 筆
+          {`${t('TABLE.total')}`}： {GetMoneyThousands(dataCount)} {`${t('TABLE.count')}`}
         </Typography>
         <FormControl variant="standard" sx={{ display: small ? 'none' : 'inline-flex' }}>
           <Select
@@ -271,7 +265,7 @@ const CustomTable = ({
           >
             {pageSizeOptions.map((size, idx) => (
               <MenuItem key={idx} value={size}>
-                每頁筆數：{size}
+                {`${t('TABLE.rowsPage')}`}：{GetMoneyThousands(size)}
               </MenuItem>
             ))}
           </Select>
@@ -289,6 +283,7 @@ CustomTable.defaultProps = {
 }
 
 CustomTable.propTypes = {
+  sortName: PropTypes.any,
   tableStyle: PropTypes.bool,
   columns: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
@@ -303,5 +298,6 @@ CustomTable.propTypes = {
   resultPageSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   pageOnChange: PropTypes.func,
   pageSizeOnChange: PropTypes.func,
-  noPagin: PropTypes.bool,
+  noPaging: PropTypes.bool,
+  tableDefaultMinusHeight: PropTypes.number,
 }

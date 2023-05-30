@@ -1,9 +1,8 @@
+import FormControl from '@mui/material/FormControl'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import FormLabel from '@mui/material/FormLabel'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import FormControl from '@mui/material/FormControl'
-import FormLabel from '@mui/material/FormLabel'
-import PropTypes from 'prop-types'
 
 interface Props {
   title?: string
@@ -14,7 +13,7 @@ interface Props {
 }
 
 const CustomRadioGroups = ({
-  title = '標題',
+  title = '',
   optionArr = [{ id: 0, name: 'test' }],
   value = '0',
   onChange = () => {},
@@ -38,11 +37,3 @@ const CustomRadioGroups = ({
 }
 
 export default CustomRadioGroups
-
-CustomRadioGroups.propTypes = {
-  title: PropTypes.string,
-  optionArr: PropTypes.array,
-  value: PropTypes.string,
-  onChange: PropTypes.func,
-  disabled: PropTypes.bool,
-}

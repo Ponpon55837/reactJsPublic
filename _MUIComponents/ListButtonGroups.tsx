@@ -1,12 +1,14 @@
+import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { Typography, Button, Tooltip, ClickAwayListener, IconButton } from '@mui/material'
-import { styled } from '@mui/material/styles'
-import PageviewIcon from '@mui/icons-material/Pageview'
-import EditIcon from '@mui/icons-material/Edit'
-import DeleteIcon from '@mui/icons-material/Delete'
+import { useLocales } from '@locales/index'
 import CancelIcon from '@mui/icons-material/Cancel'
-import PropTypes from 'prop-types'
-import { CustomBox2 } from '@components/CustomStyle'
+import DeleteIcon from '@mui/icons-material/Delete'
+import EditIcon from '@mui/icons-material/Edit'
+import PageviewIcon from '@mui/icons-material/Pageview'
+import { Button, ClickAwayListener, IconButton, Tooltip, Typography } from '@mui/material'
+import { styled } from '@mui/material/styles'
+import { CustomBox2 } from '@styles/styles_normal/boxStyle'
+import { COMPONENTS_COMMON_DEEP_GREY } from '@theme/colorManager'
 
 const RootDiv = styled('div')(({ theme }) => ({
   display: 'inline-table',
@@ -21,9 +23,19 @@ const RootDiv = styled('div')(({ theme }) => ({
 const StyledTooltip = styled(Tooltip)(() => ({
   width: 17,
   '&::before': {
-    border: '1px solid rgba(97, 97, 97, 0.92)',
-    backgroundColor: 'rgba(97, 97, 97, 0.92)',
+    border: `1px solid ${COMPONENTS_COMMON_DEEP_GREY}`,
+    backgroundColor: COMPONENTS_COMMON_DEEP_GREY,
     boxSizing: 'border-box',
+  },
+}))
+
+const StyledIconButton = styled(IconButton)(() => ({
+  padding: '0 !important',
+  marginRight: '10px !important',
+  width: 'fit-content',
+  '&[disabled]': {
+    cursor: 'not-allowed', // and custom cursor can be defined without :hover state
+    pointerEvents: 'all',
   },
 }))
 
@@ -32,6 +44,7 @@ const ButtonGroup = ({ children }: any) => {
 }
 
 interface ListButtonGroupsProps {
+  actionSet: string[]
   deleteClick?: () => void
   editClick?: () => void
   viewClick?: () => void
@@ -42,46 +55,57 @@ interface ListButtonGroupsProps {
   viewNone?: boolean
   editNone?: boolean
   deleteNone?: boolean
+  viewShow?: boolean
+  editShow?: boolean
+  deleteShow?: boolean
+  InputEditIcon?: React.ReactElement<any, any>
 }
 
 const ListButtonGroups = ({
+  actionSet,
   viewNone = false,
   editNone = false,
   deleteNone = false,
+  viewShow = true,
+  editShow = true,
+  deleteShow = true,
   deleteClick = () => {},
   editClick = () => {},
   viewClick = () => {},
+  InputEditIcon = <EditIcon fontSize="small" />,
 }: ListButtonGroupsProps) => {
+  const router = useRouter()
   const [open, setOpen] = useState(false)
+  const { t } = useLocales()
+
+  // if (actionSet === undefined) router.reload()
+
+  const checkDisabledFunc = (none: boolean, action: string): boolean => {
+    if (none && actionSet?.includes(action) && !actionSet?.includes('Update')) return false
+    if (none) return true
+    if (actionSet?.includes(action)) return false
+    return true
+  }
+
+  const checkEditBtnWithOnlyRead = (show: boolean): string => {
+    if (show && !actionSet?.includes('Update')) return 'none'
+    if (show) return 'default'
+
+    if (actionSet?.includes('Read') && !actionSet?.includes('Update')) return 'none'
+
+    return 'default'
+  }
+
+  const checkViewBtnWithOnlyRead = (show: boolean): string => {
+    if (show) return 'default'
+
+    if (actionSet?.includes('Read') && !actionSet?.includes('Update')) return 'default'
+
+    return 'none'
+  }
 
   return (
     <ButtonGroup aria-label="outlined button group">
-      <IconButton
-        aria-label="delete"
-        color="primary"
-        sx={{
-          p: '0 !important',
-          mr: '16px !important',
-          display: viewNone ? 'none' : 'default',
-        }}
-        onClick={() => viewClick()}
-      >
-        <PageviewIcon />
-      </IconButton>
-
-      <IconButton
-        color="warning"
-        sx={{
-          p: '0 !important',
-          mr: '20px !important',
-          display: editNone ? 'none' : 'default',
-          width: 'fit-content',
-        }}
-        onClick={() => editClick()}
-      >
-        <EditIcon fontSize="small" />
-      </IconButton>
-
       <ClickAwayListener onClickAway={() => setOpen(false)}>
         <StyledTooltip
           arrow
@@ -89,7 +113,9 @@ const ListButtonGroups = ({
           open={open}
           title={
             <CustomBox2>
-              <Typography sx={{ display: 'block', mb: 1 }}>是否刪除此筆資料？</Typography>
+              <Typography sx={{ display: 'block', mb: 1 }}>
+                {`${t('CLICK_AWAY_BUTTON.checkMessage')}`}
+              </Typography>
               <Button
                 size="small"
                 variant="contained"
@@ -101,7 +127,7 @@ const ListButtonGroups = ({
                 }}
                 onClick={() => setOpen(false)}
               >
-                取消
+                {`${t('COMMON.no')}`}
               </Button>
               <Button
                 size="small"
@@ -113,43 +139,43 @@ const ListButtonGroups = ({
                 }}
                 onClick={() => deleteClick()}
               >
-                刪除
+                {`${t('COMMON.yes')}`}
               </Button>
             </CustomBox2>
           }
         >
-          <IconButton
+          <StyledIconButton
             color="error"
-            sx={{
-              p: '0 !important',
-              display: deleteNone ? 'none' : 'default',
-              width: 'fit-content',
-            }}
+            sx={{ display: !deleteShow ? 'none' : 'default' }}
+            disabled={checkDisabledFunc(deleteNone, 'Delete')}
             onClick={() => setOpen(true)}
           >
             <DeleteIcon fontSize="small" />
-          </IconButton>
+          </StyledIconButton>
         </StyledTooltip>
       </ClickAwayListener>
+
+      <StyledIconButton
+        color="warning"
+        sx={{ display: checkEditBtnWithOnlyRead(editShow) }}
+        disabled={checkDisabledFunc(editNone, 'Update')}
+        onClick={() => editClick()}
+      >
+        {InputEditIcon}
+      </StyledIconButton>
+
+      <StyledIconButton
+        aria-label="view"
+        color="primary"
+        sx={{ display: checkViewBtnWithOnlyRead(viewShow), marginRight: '0px !important' }}
+        disabled={checkDisabledFunc(viewNone, 'Read')}
+        onClick={() => viewClick()}
+      >
+        <PageviewIcon />
+      </StyledIconButton>
     </ButtonGroup>
   )
 }
 
 export default ListButtonGroups
-export { StyledTooltip }
-ButtonGroup.propTypes = {
-  children: PropTypes.node,
-}
-
-ListButtonGroups.propTypes = {
-  status: PropTypes.number,
-  isCloseDay: PropTypes.bool,
-  sign: PropTypes.bool,
-  otherCheck: PropTypes.bool,
-  deleteClick: PropTypes.func,
-  editClick: PropTypes.func,
-  viewClick: PropTypes.func,
-  viewNone: PropTypes.bool,
-  editNone: PropTypes.bool,
-  deleteNone: PropTypes.bool,
-}
+export { RootDiv, StyledTooltip, ButtonGroup }

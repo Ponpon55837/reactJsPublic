@@ -1,5 +1,5 @@
-import { TextField, MenuItem } from '@mui/material'
-import PropTypes from 'prop-types'
+import { useLocales } from '@locales/index'
+import { MenuItem, TextField } from '@mui/material'
 
 interface Props {
   fullWidth?: boolean
@@ -26,6 +26,8 @@ const CustomTextFieldSelect = ({
   helperText = '',
   register,
 }: Props) => {
+  const { t } = useLocales()
+
   return (
     <TextField
       select
@@ -37,6 +39,7 @@ const CustomTextFieldSelect = ({
       inputProps={register}
       error={error}
       helperText={helperText}
+      sx={{ width: { sm: 160 } }}
     >
       {nullValueOption && <MenuItem value={''}>{nullValueOptionValue}</MenuItem>}
       {selectOptions.length > 0 &&
@@ -45,23 +48,11 @@ const CustomTextFieldSelect = ({
             {sle.name}
           </MenuItem>
         ))}
-      {selectOptions.length === 0 && !nullValueOption && <MenuItem value="">暫無資料</MenuItem>}
+      {selectOptions.length === 0 && !nullValueOption && (
+        <MenuItem value="">{`${t('MULTI_SELECT_OPTION.noData')}`}</MenuItem>
+      )}
     </TextField>
   )
 }
 
 export default CustomTextFieldSelect
-
-CustomTextFieldSelect.propTypes = {
-  fullWidth: PropTypes.bool,
-  label: PropTypes.string,
-  variant: PropTypes.string,
-  defaultValue: PropTypes.string,
-  nullValueOption: PropTypes.bool,
-  nullValueOptionValue: PropTypes.string,
-  disabled: PropTypes.bool,
-  selectOptions: PropTypes.array,
-  error: PropTypes.bool,
-  helperText: PropTypes.node,
-  register: PropTypes.object,
-}

@@ -1,11 +1,11 @@
-import { TextField, InputAdornment } from '@mui/material'
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined'
-import PropTypes from 'prop-types'
+import { InputAdornment, TextField, useMediaQuery } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
 
 interface Props {
   label?: string
   type?: 'text' | 'number' | 'password'
-  variant?: 'outlined' | 'standard'
+  variant?: 'outlined' | 'standard' | 'filled'
   helperText?: string
   placeholder?: string
   autoComplete?: null | boolean
@@ -15,9 +15,12 @@ interface Props {
   shrink?: boolean
   iconStatus?: boolean
   multiline?: boolean
+  minRows?: number
+  step?: string
   readOnly?: boolean
   icon?: React.ReactElement<any, any>
   register: any
+  onKeyDown?: any
 }
 
 const CustomTextField = ({
@@ -33,22 +36,33 @@ const CustomTextField = ({
   shrink = true,
   iconStatus = false,
   multiline = false,
+  minRows = 1,
+  step = '1',
   readOnly = false,
   icon = <BorderColorOutlinedIcon fontSize="small" />,
   register,
+  onKeyDown,
 }: Props) => {
+  const theme = useTheme()
+  const windowBig = useMediaQuery(theme.breakpoints.up('sm'))
+
   return (
     <TextField
       fullWidth={fullWidth}
       label={label}
       type={type}
+      size={windowBig ? 'medium' : 'small'}
+      step={type === 'number' ? step : null}
       variant={readOnly ? 'filled' : variant}
       helperText={helperText}
       autoComplete={autoComplete}
       disabled={disabled}
       multiline={multiline}
+      minRows={minRows}
       error={error}
       placeholder={placeholder}
+      onKeyDown={onKeyDown}
+      onWheel={(e) => e.target instanceof HTMLElement && e.target.blur()}
       {...register}
       InputLabelProps={{
         shrink: shrink,
@@ -64,20 +78,3 @@ const CustomTextField = ({
 }
 
 export default CustomTextField
-
-CustomTextField.propTypes = {
-  label: PropTypes.string,
-  type: PropTypes.string,
-  variant: PropTypes.string,
-  helperText: PropTypes.node,
-  placeholder: PropTypes.string,
-  autoComplete: PropTypes.node,
-  error: PropTypes.bool,
-  multiline: PropTypes.bool,
-  disabled: PropTypes.bool,
-  fullWidth: PropTypes.bool,
-  shrink: PropTypes.bool,
-  iconStatus: PropTypes.bool,
-  icon: PropTypes.node,
-  register: PropTypes.object,
-}

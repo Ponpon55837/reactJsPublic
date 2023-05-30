@@ -1,17 +1,18 @@
 import { useState } from 'react'
-import { Typography, Button, Tooltip, ClickAwayListener } from '@mui/material'
-import { styled } from '@mui/material/styles'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import { useLocales } from '@locales/index'
 import CancelIcon from '@mui/icons-material/Cancel'
-import PropTypes from 'prop-types'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import { Button, ClickAwayListener, Tooltip, Typography } from '@mui/material'
+import { styled } from '@mui/material/styles'
+import { COMPONENTS_COMMON_DEEP_GREY } from '@theme/colorManager'
 
 const StyledTooltip = styled(Tooltip)(() => ({
   width: 'auto',
   textAlign: 'center',
   alignItems: 'center',
   '&::before': {
-    border: '1px solid rgba(97, 97, 97, 0.92)',
-    backgroundColor: 'rgba(97, 97, 97, 0.92)',
+    border: `1px solid ${COMPONENTS_COMMON_DEEP_GREY}`,
+    backgroundColor: COMPONENTS_COMMON_DEEP_GREY,
     boxSizing: 'border-box',
   },
 }))
@@ -26,6 +27,7 @@ interface ClickAwayBtnProps {
   executeDescription: string
   successLabel?: string
   executeLabel?: string
+  disabled?: boolean
   successColor?: 'inherit' | 'success' | 'primary' | 'secondary' | 'error' | 'info' | 'warning'
   executeColor?: 'inherit' | 'success' | 'primary' | 'secondary' | 'error' | 'info' | 'warning'
   startIcon?: React.ReactElement
@@ -34,15 +36,17 @@ interface ClickAwayBtnProps {
 
 const ClickAwayBtn = ({
   executeDescription = '',
-  successLabel = '確定',
+  successLabel = '',
   executeLabel = '',
   successColor = 'success',
   executeColor = 'success',
+  disabled = false,
   successClick = () => {},
   startIcon = <CheckCircleIcon fontSize="small" />,
   variant = 'outlined',
 }: ClickAwayBtnProps) => {
   const [open, setOpen] = useState(false)
+  const { t } = useLocales()
 
   return (
     <ClickAwayListener onClickAway={() => setOpen(false)}>
@@ -66,7 +70,7 @@ const ClickAwayBtn = ({
               }}
               onClick={() => setOpen(false)}
             >
-              取消
+              {`${t('COMMON.no')}`}
             </Button>
             <Button
               size="small"
@@ -87,6 +91,7 @@ const ClickAwayBtn = ({
           size="small"
           variant={variant}
           color={executeColor}
+          disabled={disabled}
           // startIcon={startIcon ? startIcon : null}
           sx={{
             p: '0 .4rem !important',
@@ -101,12 +106,4 @@ const ClickAwayBtn = ({
 }
 
 export default ClickAwayBtn
-
-ClickAwayBtn.propTypes = {
-  executeDescription: PropTypes.string,
-  successLabel: PropTypes.string,
-  executeLabel: PropTypes.string,
-  successColor: PropTypes.string,
-  executeColor: PropTypes.string,
-  successClick: PropTypes.func,
-}
+export { StyledTooltip, StyledDiv }

@@ -1,24 +1,24 @@
-import { Box, InputBase, Divider } from '@mui/material'
-import IconButton from '@mui/material/IconButton'
-import SearchIcon from '@mui/icons-material/Search'
-import CancelSharpIcon from '@mui/icons-material/CancelSharp'
-import PropTypes from 'prop-types'
 import { KeyboardEvent } from 'react'
+import CancelSharpIcon from '@mui/icons-material/CancelSharp'
+import SearchIcon from '@mui/icons-material/Search'
+import { Box, Divider, InputBase } from '@mui/material'
+import IconButton from '@mui/material/IconButton'
+import { COMPONENTS_COMMON_GREY } from '@theme/colorManager'
 
 interface Props {
   placeholder?: string
   inputValue?: string
   width?: string
-  minWidth?: string | number
+  minWidth?: string | number | object
   inputSub?: () => void
   clear?: () => void
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 const CustomSearch = ({
-  placeholder = '請輸入搜尋內容',
+  placeholder = '',
   inputValue = '',
   width = 'calc(80% - 200px)',
-  minWidth = 300,
+  minWidth = '18rem',
   inputSub = () => {},
   clear,
   onChange,
@@ -40,17 +40,10 @@ const CustomSearch = ({
         display: 'inline-flex',
         alignItems: 'center',
         minWidth: minWidth,
-        maxWidth: 470,
-        border: '1px solid #DDDDDD',
-        borderRadius: 1,
-        height: '2.6rem',
-        width: {
-          xs: '100%',
-          sm: 'calc(100% - 100px)',
-          md: 'calc(90% - 100px)',
-          lg: 'calc(90% - 200px)',
-          xl: 'calc(90% - 300px)',
-        },
+        border: `1px solid ${COMPONENTS_COMMON_GREY}`,
+        borderRadius: '8px',
+        height: '40px',
+        maxWidth: '25rem',
         mr: 1,
         mb: 1,
       }}
@@ -77,12 +70,3 @@ const CustomSearch = ({
 }
 
 export default CustomSearch
-
-CustomSearch.propTypes = {
-  placeholder: PropTypes.string,
-  inputValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  width: PropTypes.string,
-  inputSub: PropTypes.func,
-  clear: PropTypes.func,
-  onChange: PropTypes.func,
-}

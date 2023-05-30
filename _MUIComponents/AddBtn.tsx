@@ -1,29 +1,27 @@
-import Button from '@mui/material/Button'
 import AddCircleSharpIcon from '@mui/icons-material/AddCircleSharp'
-import PropTypes from 'prop-types'
+import Button from '@mui/material/Button'
 
 interface Props {
+  actionSet: string[]
   btnName?: string
   onClick?: () => void
+  style?: any
 }
 
-const AddBtn = ({ btnName = '新增一筆', onClick = () => {} }: Props) => {
+const AddBtn = ({ actionSet, btnName = '新增一筆', onClick = () => {}, style }: Props) => {
   return (
     <Button
       variant="contained"
       color="success"
       onClick={() => onClick()}
-      sx={{ display: 'inline-flex', mr: 1, px: 1, mb: 1, mt: '3px', height: '40px' }}
+      sx={{ display: 'inline-flex', mr: 1, px: 1, height: '40px', mb: { xs: 1, sm: 0 } }}
+      style={style}
+      startIcon={<AddCircleSharpIcon />}
+      disabled={!actionSet?.includes('Create')}
     >
-      <AddCircleSharpIcon sx={{ mr: 1 }} />
       {btnName}
     </Button>
   )
 }
 
 export default AddBtn
-
-AddBtn.propTypes = {
-  btnName: PropTypes.string,
-  onClick: PropTypes.func,
-}

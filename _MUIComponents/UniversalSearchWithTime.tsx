@@ -1,12 +1,12 @@
-import Grid from '@mui/material/Grid'
-import { CustomBox3 } from '@components/CustomStyle'
+import AddBtn from '@components/AddBtn'
 import CustomSearch from '@components/CustomSearch'
 import SelectYearAndMonth from '@components/SelectYearAndMonth'
-import AddBtn from '@components/AddBtn'
-import PropTypes from 'prop-types'
+import Grid from '@mui/material/Grid'
+import { CustomBox4 } from '@styles/styles_normal/boxStyle'
 
 interface Props {
-  searchWidth?: string | undefined
+  actionSet: string[]
+  searchMinWidth?: string | number | object
   placeholder?: string
   inputSub?: () => void
   inputValue?: string
@@ -23,7 +23,8 @@ interface Props {
 }
 
 const UniversalSearchWithTime = ({
-  searchWidth,
+  actionSet,
+  searchMinWidth,
   placeholder,
   inputSub,
   inputValue,
@@ -41,42 +42,27 @@ const UniversalSearchWithTime = ({
   return (
     <Grid container spacing={2} sx={{ mb: 1 }}>
       <Grid item xs={12}>
-        {btnChecked && <AddBtn btnName={btnName} onClick={addOnClick} />}
+        {btnChecked && <AddBtn actionSet={actionSet} btnName={btnName} onClick={addOnClick} />}
         <CustomSearch
-          width={searchWidth}
+          minWidth={searchMinWidth}
           placeholder={placeholder}
           inputSub={inputSub}
           inputValue={inputValue}
           clear={clear}
           onChange={onChange}
         />
-        <SelectYearAndMonth
-          yearValue={yearValue}
-          monthValue={monthValue}
-          monthOpen={monthOpen}
-          yearOnChange={yearOnChange}
-          monthOnChange={monthOnChange}
-        />
+        <CustomBox4>
+          <SelectYearAndMonth
+            yearValue={yearValue}
+            monthValue={monthValue}
+            monthOpen={monthOpen}
+            yearOnChange={yearOnChange}
+            monthOnChange={monthOnChange}
+          />
+        </CustomBox4>
       </Grid>
     </Grid>
   )
 }
 
 export default UniversalSearchWithTime
-
-UniversalSearchWithTime.propTypes = {
-  searchWidth: PropTypes.string,
-  placeholder: PropTypes.string,
-  inputSub: PropTypes.func,
-  inputValue: PropTypes.string,
-  clear: PropTypes.func,
-  onChange: PropTypes.func,
-  yearValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  monthValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  monthOpen: PropTypes.bool,
-  yearOnChange: PropTypes.func,
-  monthOnChange: PropTypes.func,
-  btnChecked: PropTypes.bool,
-  btnName: PropTypes.string,
-  addOnClick: PropTypes.func,
-}
