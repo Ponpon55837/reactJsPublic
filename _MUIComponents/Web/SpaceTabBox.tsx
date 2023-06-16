@@ -1,3 +1,4 @@
+import { useLocales } from '@locales/index'
 import PeopleIcon from '@mui/icons-material/People'
 import { Box, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
@@ -19,10 +20,9 @@ interface InputStatus {
 }
 
 const SpaceTabBox = ({ name, no, capacity, deposit, hourRent }: InputStatus) => {
-  // 千分位~
+  const { t } = useLocales()
   const addCommas = (num: any) => num?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
   const removeNonNumeric = (num: any) => num?.toString().replace(/[^0-9]/g, '')
-
   return (
     <Box sx={{ textAlign: 'left' }}>
       <Box>
@@ -49,7 +49,7 @@ const SpaceTabBox = ({ name, no, capacity, deposit, hourRent }: InputStatus) => 
             fontWeight: '300',
           }}
         >
-          押金
+          {`${t('SPACE_COMMON.deposit')}`}
         </Typography>
         <Typography
           variant="caption"
@@ -61,14 +61,14 @@ const SpaceTabBox = ({ name, no, capacity, deposit, hourRent }: InputStatus) => 
             marginLeft: '0.5rem',
           }}
         >
-          新台幣 {addCommas(removeNonNumeric(deposit))} 元
+          NT$ {addCommas(removeNonNumeric(deposit))}
         </Typography>
       </Box>
 
       <Box>
-        <StyledTypography variant="caption">租金</StyledTypography>
+        <StyledTypography variant="caption">{`${t('SPACE_COMMON.fee')}`}</StyledTypography>
         <StyledTypography variant="caption" sx={{ marginLeft: '0.5rem' }}>
-          每小時新台幣 {addCommas(removeNonNumeric(hourRent))} 元
+          NT$ {addCommas(removeNonNumeric(hourRent))}
         </StyledTypography>
       </Box>
     </Box>

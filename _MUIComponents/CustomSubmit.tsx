@@ -10,9 +10,16 @@ interface Props {
   closeFunc: () => void
   deleteFunc?: () => void
   deleteDialog?: boolean
+  formId?: string
 }
 
-const CustomSubmit = ({ viewDialog, closeFunc, deleteFunc, deleteDialog }: Props) => {
+const CustomSubmit = ({
+  viewDialog,
+  closeFunc,
+  deleteFunc,
+  deleteDialog,
+  formId = 'submitForm',
+}: Props) => {
   const { t } = useLocales()
 
   return (
@@ -43,7 +50,7 @@ const CustomSubmit = ({ viewDialog, closeFunc, deleteFunc, deleteDialog }: Props
           {viewDialog ? `${t('DIALOG.closeBtn')}` : `${t('COMMON.cancel')}`}
         </Button>
         <Button
-          form="submitForm"
+          form={formId}
           variant="contained"
           type="submit"
           size="small"

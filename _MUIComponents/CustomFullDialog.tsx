@@ -27,6 +27,7 @@ interface Props {
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl'
   fullDialog?: boolean
   contentComponent: React.ReactElement<any, any>
+  formId?: string
 }
 
 const CustomFullDialog = ({
@@ -40,6 +41,7 @@ const CustomFullDialog = ({
   maxWidth = 'sm',
   initialExtendClose = true,
   fullDialog = false,
+  formId = 'submitForm',
 }: Props) => {
   const { extendState, setExtendState, dialogSizeState, defaultTheme, setDialogSizeState } =
     useMiddleware()

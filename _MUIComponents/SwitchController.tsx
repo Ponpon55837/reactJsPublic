@@ -1,5 +1,5 @@
 import { Controller } from 'react-hook-form'
-import { FormControlLabel, Switch } from '@mui/material'
+import { Divider, FormControlLabel, FormHelperText, Switch } from '@mui/material'
 
 interface InputStatus {
   name: string
@@ -9,6 +9,7 @@ interface InputStatus {
   required?: boolean
   disabled?: boolean
   defaultValue?: boolean
+  helperText?: string
 }
 
 const SwitchController = ({
@@ -18,6 +19,7 @@ const SwitchController = ({
   required,
   disabled = false,
   defaultValue = false,
+  helperText,
 }: InputStatus) => {
   return (
     <Controller
@@ -30,11 +32,17 @@ const SwitchController = ({
       render={({ field, fieldState: { error } }) => {
         const { value, onChange, ref } = field
         return (
-          <FormControlLabel
-            sx={{ my: 1 }}
-            control={<Switch disabled={disabled} {...field} />}
-            label={label}
-          />
+          <>
+            <FormControlLabel
+              sx={{ my: 1 }}
+              control={<Switch checked={value} disabled={disabled} {...field} />}
+              label={label}
+            />
+            <Divider sx={{ opacity: 0 }} />
+            <FormHelperText sx={{ width: error ? '100%' : 'default' }} error={error ? true : false}>
+              {error && helperText}
+            </FormHelperText>
+          </>
         )
       }}
     />

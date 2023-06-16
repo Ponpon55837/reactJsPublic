@@ -3,7 +3,7 @@ import { Box, Stack, TextField, Typography } from '@mui/material'
 interface InputValues {
   noWrap?: boolean
   spacing?: number
-  title: string
+  title?: string
   content?: string
   contentText?: boolean
   fontSize?: any
@@ -41,7 +41,7 @@ const StyleTypography = ({
       sx={{ fontSize: fontSize, fontWeight: 400 }}
     >
       <Stack direction="row" spacing={spacing}>
-        <Box>{title}</Box>
+        {title && <Box>{title}</Box>}
         <Box>
           {contentText ? (
             <TextField multiline fullWidth defaultValue={content} inputProps={{ readOnly: true }} />

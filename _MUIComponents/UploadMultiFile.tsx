@@ -151,7 +151,7 @@ const UploadMultiFile = ({
             href={file.link}
             style={{ textDecoration: 'none' }}
           >
-            {file?.name.length > fileNameLengthLimit
+            {file?.name?.length > fileNameLengthLimit
               ? file?.name.slice(0, fileNameLengthLimit) + '... .' + file?.name.split('.').pop()
               : file?.name}
           </a>

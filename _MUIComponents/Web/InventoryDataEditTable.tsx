@@ -26,17 +26,13 @@ const StyledTableRow = styled(TableRow)(() => ({
 }))
 
 const StyledSureBtn = styled(Button)(() => ({
-  fontSize: '1rem',
-  display: 'flex',
-  margin: ' 2rem auto',
-  padding: '4px 0px 5px',
+  fontSize: '14px',
   color: COMMON_PURE_WHITE,
-  height: '38px',
+  height: '30px',
   letterSpacing: '0.05em',
   border: `1px solid ${WEB_COMMON_GREY}`,
   borderRadius: '7px',
   background: 'transparent',
-  width: '20px',
 }))
 
 interface InputStatus {
@@ -99,26 +95,33 @@ const InventoryDataEditTable = ({ number, name, quantity, onUpdateQuantity }: In
             <StyledTableRow>
               <StyledListCell>{`${t('MATERIALS_INVENTORY_WEB.inventoryCount')}`}</StyledListCell>
               <StyledListCell>
-                <Box style={{ display: 'flex', alignItems: 'center', maxHeight: '50px' }}>
+                <Box
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'left',
+                    maxHeight: '65px',
+                  }}
+                >
                   <StyledTextField
                     sx={{ minWidth: '8rem', marginRight: '0.5rem' }}
                     size="small"
                     margin="dense"
                     variant="outlined"
+                    type="number"
                     value={updateQuantity}
-                    inputProps={{
-                      style: { color: WEB_COMMON_WHITE_GREY, fontSize: '18px' },
-                      inputMode: 'numeric',
-                    }}
+                    inputProps={{ style: { color: WEB_COMMON_WHITE_GREY, fontSize: '14px' } }}
                     {...register('updateQuantity', {
                       onChange: (e) => {
                         produce((draft) => {
                           draft.updateQuantity = e.target.value
                         })
                       },
+                      required: true,
+                      min: { value: 0, message: `${t('TEXTFIELD.minMessage', { value: 0 })}` },
                       pattern: {
-                        value: Regex.DIGITS,
-                        message: `${t('COMMON.numberPlaceholder')}`,
+                        value: Regex.POSITIVE_NUMBER,
+                        message: `${t('COMMON.positiveNumber')}`,
                       },
                     })}
                     InputLabelProps={{ shrink: true }}

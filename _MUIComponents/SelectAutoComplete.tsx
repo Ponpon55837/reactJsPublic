@@ -87,7 +87,7 @@ export const SelectAutoComplete = ({
                 {...params}
                 inputRef={ref}
                 label={required ? `* ${label}` : label}
-                placeholder={`${t('MULTI_SELECT_OPTION.select')}${label}`}
+                placeholder={viewStatus ? '' : `${t('MULTI_SELECT_OPTION.select')}${label}`}
                 variant={viewStatus ? 'filled' : 'outlined'}
                 error={error ? true : false}
                 helperText={error && `${t('MULTI_SELECT_OPTION.select')}${label}`}

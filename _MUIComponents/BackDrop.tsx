@@ -17,7 +17,6 @@ const StyledBackdrop = styled(Backdrop)(({}) => ({
 }))
 interface Props {
   backDropOpen: boolean
-  isSubmitting?: boolean
   className?: any
   loadingColor?: any
   loadingColorOpacity?: number
@@ -28,7 +27,6 @@ interface Props {
 
 export const BackDrop = ({
   backDropOpen,
-  isSubmitting = false,
   className,
   loadingColor,
   loadingColorOpacity = 0.4,
@@ -66,11 +64,7 @@ export const BackDrop = ({
             alignItems: 'center',
             justifyContent: 'center',
           }}
-        >
-          <Typography variant="h4" component="div" color={defaultUseColor}>
-            {isSubmitting ? 'Saving...' : 'Loading...'}
-          </Typography>
-        </Box>
+        ></Box>
       </Box>
     </StyledBackdrop>
   )
@@ -78,7 +72,6 @@ export const BackDrop = ({
 
 export const WebBackDrop = ({
   backDropOpen = false,
-  isSubmitting = false,
   className,
   loadingColor = WEB_COMMON_WHITE_GREY,
   loadingColorOpacity = 0.7,
@@ -89,7 +82,6 @@ export const WebBackDrop = ({
   return (
     <BackDrop
       backDropOpen={backDropOpen}
-      isSubmitting={isSubmitting}
       className={className}
       loadingColor={loadingColor}
       loadingColorOpacity={loadingColorOpacity}
@@ -102,7 +94,6 @@ export const WebBackDrop = ({
 
 export const AdminBackDrop = ({
   backDropOpen = false,
-  isSubmitting = false,
   className,
   loadingColor = ADMIN_COMMON_ALPHA_BLACK,
   loadingColorOpacity = 0.4,
@@ -113,7 +104,6 @@ export const AdminBackDrop = ({
   return (
     <BackDrop
       backDropOpen={backDropOpen}
-      isSubmitting={isSubmitting}
       className={className}
       loadingColor={loadingColor}
       loadingColorOpacity={loadingColorOpacity}

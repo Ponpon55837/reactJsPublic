@@ -174,6 +174,7 @@ interface dateTimePickerValues {
   time: string
   onChange: any
   disabled?: boolean
+  disableFuture?: boolean
   ampm?: boolean
   views?: string[]
   format?: string
@@ -194,6 +195,7 @@ const CustomDateTimePicker = ({
   helperText = '',
   error = false,
   disabled = false,
+  disableFuture = false,
   variant = 'standard',
   minutesStep = 1,
   sx,
@@ -212,6 +214,7 @@ const CustomDateTimePicker = ({
         label={label}
         value={time}
         ampm={ampm}
+        disableFuture={disableFuture}
         inputFormat={inputFormat}
         minutesStep={minutesStep}
         mask="____-__-__ __:__"
@@ -222,7 +225,7 @@ const CustomDateTimePicker = ({
             variant={disabled ? 'filled' : variant}
             {...params}
             error={error}
-            helperText={helperText}
+            helperText={error && helperText}
             sx={sx}
           />
         )}

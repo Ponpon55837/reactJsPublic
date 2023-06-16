@@ -5,6 +5,7 @@ import { useFlexLayout, usePagination, useRowSelect, useSortBy, useTable } from 
 import { useEffectOnce, useUpdateEffect } from 'react-use'
 import useMiddleWare from '@hooks/use-middleware'
 import useResponsive from '@hooks/useResponsive'
+import useLocales from '@locales/useLocales'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import SwapVertIcon from '@mui/icons-material/SwapVert'
@@ -102,6 +103,7 @@ const CustomGrid = ({
     useRowSelect,
   )
 
+  const { t } = useLocales()
   const isDesktop = useResponsive('up', 'md')
   const [initFlag, setInitFlag] = useState(true)
   const [sortFlag, setSortFlag] = useState(null)

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined'
 import { InputAdornment, TextField, useMediaQuery } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
@@ -23,6 +24,8 @@ interface Props {
   onKeyDown?: any
 }
 
+const handleInputComposition = (state: any) => ({ value: state.value })
+
 const CustomTextField = ({
   label,
   type = 'text',
@@ -45,6 +48,7 @@ const CustomTextField = ({
 }: Props) => {
   const theme = useTheme()
   const windowBig = useMediaQuery(theme.breakpoints.up('sm'))
+  const [composition, setComposition] = useState(false)
 
   return (
     <TextField
@@ -61,7 +65,17 @@ const CustomTextField = ({
       minRows={minRows}
       error={error}
       placeholder={placeholder}
-      onKeyDown={onKeyDown}
+      onKeyDown={(e) => onKeyDown && onKeyDown(e, composition)}
+      onCompositionStart={(e) => {
+        if (e.type === 'compositionstart') {
+          setComposition(true)
+        }
+      }}
+      onCompositionEnd={(e) => {
+        if (e.type === 'compositionend') {
+          setComposition(false)
+        }
+      }}
       onWheel={(e) => e.target instanceof HTMLElement && e.target.blur()}
       {...register}
       InputLabelProps={{

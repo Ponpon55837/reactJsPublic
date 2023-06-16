@@ -12,7 +12,6 @@ export default function ChartOrganizational({
   ...other
 }: OrganizationalChartProps) {
   const theme = useTheme()
-
   return (
     <Tree
       lineWidth="1.5px"
@@ -28,8 +27,6 @@ export default function ChartOrganizational({
     </Tree>
   )
 }
-
-// ------------------------------
 
 export function List({ data, depth, variant, sx }: ListProps) {
   const hasChild = data.children && !!data.children
@@ -51,8 +48,6 @@ export function List({ data, depth, variant, sx }: ListProps) {
     </TreeNode>
   )
 }
-
-// ------------------------------
 
 function SubList({ data, depth, variant, sx }: SubListProps) {
   return (

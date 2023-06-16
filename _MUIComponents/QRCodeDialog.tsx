@@ -5,7 +5,7 @@ import { useLocales } from '@locales/index'
 import CloseIcon from '@mui/icons-material/Close'
 import HelpIcon from '@mui/icons-material/Help'
 import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop'
-import { AppBar, Box, Button, Dialog, Drawer, Paper, Slide, Toolbar } from '@mui/material'
+import { AppBar, Button, Dialog, Drawer, Paper, Slide, Toolbar } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import { styled } from '@mui/material/styles'
 import { TransitionProps } from '@mui/material/transitions'
@@ -132,29 +132,16 @@ const CustomFullDialog = ({
         open={drawerView}
         onClose={() => setDrawerView(false)}
       >
-        {printExample1 ? (
-          <Image
-            src="/images/print-sample/print-sample-A4-105X74-8.png"
-            sx={{
-              width: 'auto',
-              height: '600px',
-              objectFit: '-moz-initial',
-            }}
-            alt={`${t('DIALOG_QR_CODE.title')}`}
-            title={`${t('DIALOG_QR_CODE.title')}`}
-          />
-        ) : (
-          <Image
-            src="/images/print-sample/print-sample-A4-70X37-24.png"
-            sx={{
-              width: 'auto',
-              height: '600px',
-              objectFit: '-moz-initial',
-            }}
-            title={`${t('DIALOG_QR_CODE.title')}`}
-            alt={`${t('DIALOG_QR_CODE.title')}`}
-          />
-        )}
+        <Image
+          src="/images/print-sample/print-sample-A4-70X495-18.png"
+          sx={{
+            width: 'auto',
+            height: '600px',
+            objectFit: '-moz-initial',
+          }}
+          alt={`${t('DIALOG_QR_CODE.title')}`}
+          title={`${t('DIALOG_QR_CODE.title')}`}
+        />
         <Button
           variant="outlined"
           color="primary"

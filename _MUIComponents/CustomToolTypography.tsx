@@ -1,5 +1,6 @@
 import { useCss } from 'react-use'
 import { Tooltip, Typography } from '@mui/material'
+import { HasValueNotEmpty } from '@utils/utilsFunction'
 
 interface Props {
   title?: any
@@ -22,15 +23,15 @@ const CustomToolTypography = ({
 
   return (
     <>
-      {toolTipTrigger ? (
-        <Tooltip title={title ?? '-'} placement={placement} arrow={arrow} className={toolClass}>
+      {toolTipTrigger && HasValueNotEmpty(title) ? (
+        <Tooltip title={title} placement={placement} arrow={arrow} className={toolClass}>
           <Typography noWrap sx={{ fontSize: '.95rem' }}>
-            {title ?? '-'}
+            {title}
           </Typography>
         </Tooltip>
       ) : (
         <Typography noWrap sx={{ fontSize: '.95rem' }}>
-          {title ?? '-'}
+          {!HasValueNotEmpty(title) ? '-' : title}
         </Typography>
       )}
     </>

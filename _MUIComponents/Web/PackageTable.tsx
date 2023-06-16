@@ -47,7 +47,7 @@ const PackageTable = ({
         {/* First Line */}
         <TableBody>
           <TableRow>
-            <StyledListCell sx={{ width: '35%' }}>{firstLabel}</StyledListCell>
+            <StyledListCell sx={{ width: '32%' }}>{firstLabel}</StyledListCell>
             <StyledListCell sx={{ width: '35%' }}>{firstContent}</StyledListCell>
             <StyledListCell align="right">{createdAt}</StyledListCell>
           </TableRow>
@@ -58,7 +58,7 @@ const PackageTable = ({
           <TableRow>
             <StyledListCell>{secondLabel}</StyledListCell>
             <StyledListCell>{secondContent}</StyledListCell>
-            <StyledListCell align="right" sx={{ width: '30%', color: statusColor }}>
+            <StyledListCell align="right" sx={{ width: '33%', color: statusColor }}>
               {status}
             </StyledListCell>
           </TableRow>
