@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined'
-import { InputAdornment, TextField, useMediaQuery } from '@mui/material'
+import { InputAdornment, TextField } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 
 interface Props {
@@ -19,12 +19,12 @@ interface Props {
   minRows?: number
   step?: string
   readOnly?: boolean
+  autoFocus?: boolean
+  fontSize?: 'small' | 'medium'
   icon?: React.ReactElement<any, any>
   register: any
   onKeyDown?: any
 }
-
-const handleInputComposition = (state: any) => ({ value: state.value })
 
 const CustomTextField = ({
   label,
@@ -42,12 +42,13 @@ const CustomTextField = ({
   minRows = 1,
   step = '1',
   readOnly = false,
+  autoFocus = false,
+  fontSize = 'small',
   icon = <BorderColorOutlinedIcon fontSize="small" />,
   register,
   onKeyDown,
 }: Props) => {
   const theme = useTheme()
-  const windowBig = useMediaQuery(theme.breakpoints.up('sm'))
   const [composition, setComposition] = useState(false)
 
   return (
@@ -55,7 +56,8 @@ const CustomTextField = ({
       fullWidth={fullWidth}
       label={label}
       type={type}
-      size={windowBig ? 'medium' : 'small'}
+      size={fontSize}
+      autoFocus={autoFocus}
       step={type === 'number' ? step : null}
       variant={readOnly ? 'filled' : variant}
       helperText={helperText}

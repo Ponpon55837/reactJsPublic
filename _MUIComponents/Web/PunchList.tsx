@@ -40,7 +40,7 @@ const PunchList = ({ punchIn, punchOut, workDate }: InputStatus) => {
         <StyledPunchBox
           sx={{
             borderRight:
-              !punchIn || !punchOut
+              punchIn === '-' || punchOut === '-'
                 ? `8px solid ${WEB_PUNCH_ERROR}`
                 : `8px solid ${WEB_PUNCH_CORRECT}`,
           }}

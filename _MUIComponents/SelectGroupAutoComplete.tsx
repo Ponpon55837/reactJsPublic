@@ -1,24 +1,39 @@
+import { useState } from 'react'
 import { Controller } from 'react-hook-form'
 import useLocales from '@locales/useLocales'
 import { Autocomplete, TextField } from '@mui/material'
 import { darken, lighten, styled } from '@mui/system'
 import { StyledTextField } from '@styles/styles_normal/Web/commonStyle'
 import {
+  ADMIN_GENERAL_EDIT_SUB_BG,
+  ADMIN_GENERAL_EDIT_SUB_COLOR,
   COMMON_PURE_WHITE,
   WEB_BORDER_DARK,
   WEB_SELECT_DISABLED_BG,
   WEB_SELECT_DISABLED_TEXT,
 } from '@theme/colorManager'
 
-const GroupHeader = styled('div')(({ theme }) => ({
+const AdminGroupHeader = styled('div')(({ theme }) => ({
   position: 'sticky',
   top: '5px',
   padding: '4px 10px',
-  color: theme.palette.primary.main,
+  color: ADMIN_GENERAL_EDIT_SUB_COLOR,
   borderRadius: '8px',
   backgroundColor:
     theme.palette.mode === 'light'
-      ? lighten(theme.palette.primary.light, 0.45)
+      ? ADMIN_GENERAL_EDIT_SUB_BG
+      : darken(theme.palette.primary.main, 0.8),
+}))
+
+const WebGroupHeader = styled('div')(({ theme }) => ({
+  position: 'sticky',
+  top: '5px',
+  padding: '4px 10px',
+  color: theme.palette.primary.common,
+  borderRadius: '8px',
+  backgroundColor:
+    theme.palette.mode === 'light'
+      ? lighten(theme.palette.color.SECONDARY_WEB, 0)
       : darken(theme.palette.primary.main, 0.8),
 }))
 
@@ -111,7 +126,7 @@ export const SelectGroupAutoComplete = ({
             )}
             renderGroup={(params) => (
               <li key={params.key}>
-                <GroupHeader>{params.group}</GroupHeader>
+                <AdminGroupHeader>{params.group}</AdminGroupHeader>
                 <GroupItems>{params.children}</GroupItems>
               </li>
             )}
@@ -223,7 +238,85 @@ export const WebSelectGroupAutoComplete = ({
             )}
             renderGroup={(params) => (
               <li key={params.key}>
-                <GroupHeader>{params.group}</GroupHeader>
+                <WebGroupHeader>{params.group}</WebGroupHeader>
+                <GroupItems>{params.children}</GroupItems>
+              </li>
+            )}
+          />
+        )
+      }}
+    />
+  )
+}
+
+export const SelectMultiGroupAutoComplete = ({
+  name,
+  control,
+  label,
+  selectOptions = [],
+  required = false,
+  disabled = false,
+  triggerOnChange,
+  viewStatus = false,
+  disableClearable = false,
+  minWidth = 176,
+  maxWidth = 200,
+  inputSx,
+  selectSx,
+}: InputStatus) => {
+  const { t } = useLocales()
+
+  return (
+    <Controller
+      name={name}
+      control={control}
+      rules={{
+        required: required,
+      }}
+      render={({ field, fieldState: { error } }) => {
+        const { value, onChange, ref } = field
+        return (
+          <Autocomplete
+            size="small"
+            multiple
+            value={value}
+            onChange={(event: any, newValue) => {
+              onChange(newValue ? newValue : null)
+              triggerOnChange && triggerOnChange()
+            }}
+            disableCloseOnSelect
+            options={selectOptions}
+            groupBy={(option) => option.group}
+            getOptionLabel={(option) => {
+              return option.name
+            }}
+            isOptionEqualToValue={(option, optValue) => option.id === optValue.id}
+            readOnly={viewStatus}
+            disabled={disabled}
+            autoHighlight
+            openOnFocus
+            disableClearable={disableClearable}
+            noOptionsText={`${t('MULTI_SELECT_OPTION.noData')}`}
+            sx={{
+              minWidth: minWidth,
+              maxWidth: maxWidth,
+              ...inputSx,
+              ...selectSx,
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                inputRef={ref}
+                label={required ? `* ${label}` : label}
+                placeholder={`${t('MULTI_SELECT_OPTION.select')}${label}`}
+                variant={viewStatus ? 'filled' : 'outlined'}
+                error={error ? true : false}
+                helperText={error && `${t('MULTI_SELECT_OPTION.select')}${label}`}
+              />
+            )}
+            renderGroup={(params) => (
+              <li key={params.key}>
+                <AdminGroupHeader>{params.group}</AdminGroupHeader>
                 <GroupItems>{params.children}</GroupItems>
               </li>
             )}

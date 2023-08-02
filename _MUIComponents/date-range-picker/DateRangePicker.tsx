@@ -16,6 +16,7 @@ import {
 } from '@mui/material'
 import { CalendarPicker, DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { ADMIN_COMMON_GREY } from '@theme/colorManager'
 import { HandlePickerLanguage } from '@utils/utilsFunction'
 
 export default function DateRangePicker({
@@ -60,7 +61,7 @@ export default function DateRangePicker({
       }}
     >
       <DialogTitle
-        sx={{ pb: 2, textAlign: 'center', backgroundColor: defaultTheme, color: '#DDDDDD' }}
+        sx={{ pb: 2, textAlign: 'center', backgroundColor: defaultTheme, color: ADMIN_COMMON_GREY }}
       >
         {title}
       </DialogTitle>

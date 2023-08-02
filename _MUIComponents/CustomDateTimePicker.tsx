@@ -1,5 +1,5 @@
 import { useLocales } from '@locales/index'
-import { TextField, useMediaQuery } from '@mui/material'
+import { TextField } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
@@ -37,7 +37,6 @@ const CustomDatePicker = ({
 }: datePickerValues) => {
   const { currentLang } = useLocales()
   const theme = useTheme()
-  const windowBig = useMediaQuery(theme.breakpoints.up('sm'))
 
   return (
     <LocalizationProvider
@@ -54,7 +53,7 @@ const CustomDatePicker = ({
         renderInput={(params) => (
           <TextField
             {...params}
-            size={windowBig ? 'medium' : 'small'}
+            size="small"
             variant={disabled ? 'filled' : variant}
             helperText={helperText}
             error={error}
@@ -138,7 +137,6 @@ const CustomTimePicker = ({
 }: timePickerValues) => {
   const { currentLang } = useLocales()
   const theme = useTheme()
-  const windowBig = useMediaQuery(theme.breakpoints.up('sm'))
 
   return (
     <LocalizationProvider
@@ -157,7 +155,7 @@ const CustomTimePicker = ({
         renderInput={(params) => (
           <TextField
             {...params}
-            size={windowBig ? 'medium' : 'small'}
+            size="small"
             variant={disabled ? 'filled' : variant}
             helperText={helperText}
             error={error}
@@ -202,7 +200,6 @@ const CustomDateTimePicker = ({
 }: dateTimePickerValues) => {
   const { currentLang } = useLocales()
   const theme = useTheme()
-  const windowBig = useMediaQuery(theme.breakpoints.up('sm'))
 
   return (
     <LocalizationProvider
@@ -221,7 +218,7 @@ const CustomDateTimePicker = ({
         onChange={onChange}
         renderInput={(params) => (
           <TextField
-            size={windowBig ? 'medium' : 'small'}
+            size="small"
             variant={disabled ? 'filled' : variant}
             {...params}
             error={error}

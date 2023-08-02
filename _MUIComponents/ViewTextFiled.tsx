@@ -1,4 +1,4 @@
-import { TextField, useMediaQuery } from '@mui/material'
+import { TextField } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 
 const ViewTextFiled = ({
@@ -13,13 +13,12 @@ const ViewTextFiled = ({
   multiline?: boolean
 }) => {
   const theme = useTheme()
-  const windowBig = useMediaQuery(theme.breakpoints.up('sm'))
 
   return (
     <TextField
       label={label}
       variant="filled"
-      size={windowBig ? 'medium' : 'small'}
+      size="small"
       minRows={minRows}
       multiline={multiline}
       defaultValue={defaultValue}

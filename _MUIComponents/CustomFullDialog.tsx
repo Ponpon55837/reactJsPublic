@@ -154,6 +154,7 @@ const CustomFullDialog = ({
           closeFunc={closeFunc}
           deleteDialog={deleteDialog}
           deleteFunc={deleteFunc}
+          formId={formId}
         />
       </DialogActions>
     </Dialog>

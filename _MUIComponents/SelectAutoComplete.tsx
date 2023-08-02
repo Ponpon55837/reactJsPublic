@@ -2,7 +2,7 @@ import match from 'autosuggest-highlight/match'
 import parse from 'autosuggest-highlight/parse'
 import { Controller } from 'react-hook-form'
 import useLocales from '@locales/useLocales'
-import { Autocomplete, TextField } from '@mui/material'
+import { Autocomplete, Chip, TextField } from '@mui/material'
 import { StyledTextField } from '@styles/styles_normal/Web/commonStyle'
 import {
   COMMON_PURE_WHITE,
@@ -10,6 +10,7 @@ import {
   WEB_SELECT_DISABLED_BG,
   WEB_SELECT_DISABLED_TEXT,
 } from '@theme/colorManager'
+import Regex from '@utils/regex'
 
 interface InputStatus {
   name: string
@@ -25,6 +26,7 @@ interface InputStatus {
   selectSx?: object
   minWidth?: any
   maxWidth?: any
+  multiple?: boolean
 }
 
 export const SelectAutoComplete = ({
@@ -41,6 +43,7 @@ export const SelectAutoComplete = ({
   selectSx,
   minWidth,
   maxWidth,
+  multiple,
 }: InputStatus) => {
   const { t } = useLocales()
 
@@ -134,6 +137,7 @@ export const AdminSelectAutoComplete = ({
   disableClearable = false,
   minWidth = 176,
   maxWidth = 200,
+  multiple = false,
 }: InputStatus) => {
   return (
     <SelectAutoComplete
@@ -240,6 +244,153 @@ export const WebSelectAutoComplete = ({
                 </li>
               )
             }}
+          />
+        )
+      }}
+    />
+  )
+}
+
+export const SelectFreeSoloAutoComplete = ({
+  name,
+  control,
+  label,
+  required = false,
+  disabled = false,
+  viewStatus = false,
+  disableClearable = false,
+  minWidth = 176,
+  maxWidth = 200,
+  inputSx,
+  selectSx,
+}: InputStatus) => {
+  const { t } = useLocales()
+
+  return (
+    <Controller
+      name={name}
+      control={control}
+      rules={{
+        required: required,
+      }}
+      render={({ field, fieldState: { error } }) => {
+        const { value, onChange, ref } = field
+        return (
+          <Autocomplete
+            size="small"
+            freeSolo
+            multiple
+            value={value}
+            onChange={(event: any, newValue) => {
+              const tempLastValue = newValue.at(-1)
+              if (newValue.length !== 0 && tempLastValue.match(Regex.EMAIL)) {
+                onChange(newValue)
+              } else if (newValue.length === 0) {
+                onChange(newValue)
+              }
+            }}
+            renderTags={(value: readonly string[], getTagProps) =>
+              value.map((option: string, index: number) => (
+                // eslint-disable-next-line react/jsx-key
+                <Chip variant="filled" label={option} {...getTagProps({ index })} />
+              ))
+            }
+            options={[]}
+            readOnly={viewStatus}
+            disabled={disabled}
+            noOptionsText={`${t('MULTI_SELECT_OPTION.noData')}`}
+            autoHighlight
+            openOnFocus
+            disableClearable={disableClearable}
+            sx={{
+              minWidth: minWidth,
+              maxWidth: maxWidth,
+              ...inputSx,
+              ...selectSx,
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                inputRef={ref}
+                label={required ? `* ${label}` : label}
+                placeholder={viewStatus ? '' : `${t('MULTI_SELECT_OPTION.input')}${label}`}
+                variant={viewStatus ? 'filled' : 'outlined'}
+                error={error ? true : false}
+                helperText={error && `${t('MULTI_SELECT_OPTION.input')}${label}`}
+              />
+            )}
+          />
+        )
+      }}
+    />
+  )
+}
+
+export const SelectMultiAutoComplete = ({
+  name,
+  control,
+  label,
+  selectOptions = [],
+  required = false,
+  disabled = false,
+  triggerOnChange,
+  viewStatus = false,
+  disableClearable = false,
+  minWidth = 176,
+  maxWidth = 200,
+  inputSx,
+  selectSx,
+}: InputStatus) => {
+  const { t } = useLocales()
+
+  return (
+    <Controller
+      name={name}
+      control={control}
+      rules={{
+        required: required,
+      }}
+      render={({ field, fieldState: { error } }) => {
+        const { value, onChange, ref } = field
+        return (
+          <Autocomplete
+            size="small"
+            multiple
+            value={value}
+            onChange={(event: any, newValue) => {
+              onChange(newValue ? newValue : null)
+              triggerOnChange && triggerOnChange()
+            }}
+            disableCloseOnSelect
+            options={selectOptions}
+            groupBy={(option) => option.group}
+            getOptionLabel={(option) => {
+              return option.name
+            }}
+            isOptionEqualToValue={(option, optValue) => option.id === optValue.id}
+            readOnly={viewStatus}
+            disabled={disabled}
+            autoHighlight
+            openOnFocus
+            disableClearable={disableClearable}
+            noOptionsText={`${t('MULTI_SELECT_OPTION.noData')}`}
+            sx={{
+              minWidth: minWidth,
+              maxWidth: maxWidth,
+              ...inputSx,
+              ...selectSx,
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                inputRef={ref}
+                label={required ? `* ${label}` : label}
+                placeholder={`${t('MULTI_SELECT_OPTION.select')}${label}`}
+                variant={viewStatus ? 'filled' : 'outlined'}
+                error={error ? true : false}
+                helperText={error && `${t('MULTI_SELECT_OPTION.select')}${label}`}
+              />
+            )}
           />
         )
       }}

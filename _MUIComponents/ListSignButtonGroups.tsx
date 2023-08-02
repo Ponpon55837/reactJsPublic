@@ -79,7 +79,6 @@ const ListSignButtonGroups = ({
                 color="primary"
                 startIcon={<CancelIcon fontSize="small" />}
                 sx={{
-                  p: '0 !important',
                   mr: 2,
                 }}
                 onClick={() => setOpen(false)}
@@ -91,9 +90,6 @@ const ListSignButtonGroups = ({
                 variant="contained"
                 color="error"
                 startIcon={<CancelPresentationOutlinedIcon fontSize="small" />}
-                sx={{
-                  p: '0 !important',
-                }}
                 onClick={() => deleteClick()}
               >
                 {`${t('COMMON.cancel')}`}
@@ -109,7 +105,7 @@ const ListSignButtonGroups = ({
               width: 'fit-content',
               color: COMPONENTS_COMMON_CLEAN_RED,
             }}
-            disabled={checkDisabledFunc(deleteNone, 'Delete')}
+            disabled={checkDisabledFunc(deleteNone, 'Update')}
             onClick={() => setOpen(true)}
           >
             <CancelPresentationOutlinedIcon fontSize="small" />

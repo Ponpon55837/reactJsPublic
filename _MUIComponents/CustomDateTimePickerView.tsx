@@ -1,5 +1,5 @@
 import { useLocales } from '@locales/index'
-import { TextField, useMediaQuery } from '@mui/material'
+import { TextField } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
@@ -33,7 +33,6 @@ const CustomDatePickerView = ({
 }: datePickerValues) => {
   const { currentLang } = useLocales()
   const theme = useTheme()
-  const windowBig = useMediaQuery(theme.breakpoints.up('sm'))
 
   return (
     <LocalizationProvider
@@ -45,11 +44,12 @@ const CustomDatePickerView = ({
         inputFormat={format}
         mask="____-__-__"
         value={FormatDatePickerValue(time)}
+        disabled={readOnly}
         onChange={() => {}}
         renderInput={(params) => (
           <TextField
             {...params}
-            size={windowBig ? 'medium' : 'small'}
+            size="small"
             variant={variant}
             sx={sx}
             InputProps={{
@@ -83,7 +83,6 @@ const CustomTimePickerView = ({
 }: timePickerValues) => {
   const { currentLang } = useLocales()
   const theme = useTheme()
-  const windowBig = useMediaQuery(theme.breakpoints.up('sm'))
 
   return (
     <LocalizationProvider
@@ -101,7 +100,7 @@ const CustomTimePickerView = ({
         renderInput={(params) => (
           <TextField
             {...params}
-            size={windowBig ? 'medium' : 'small'}
+            size="small"
             variant={variant}
             sx={sx}
             InputProps={{
@@ -137,7 +136,6 @@ const CustomDateTimePickerView = ({
 }: dateTimePickerValues) => {
   const { currentLang } = useLocales()
   const theme = useTheme()
-  const windowBig = useMediaQuery(theme.breakpoints.up('sm'))
 
   return (
     <LocalizationProvider
@@ -148,13 +146,14 @@ const CustomDateTimePickerView = ({
         label={label}
         value={FormatDateTimePickerValue(time)}
         ampm={ampm}
+        disabled={readOnly}
         inputFormat={inputFormat}
         minutesStep={minutesStep}
         mask="____-__-__ __:__"
         onChange={() => {}}
         renderInput={(params) => (
           <TextField
-            size={windowBig ? 'medium' : 'small'}
+            size="small"
             variant={variant}
             {...params}
             sx={sx}

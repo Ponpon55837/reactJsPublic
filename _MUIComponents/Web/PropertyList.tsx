@@ -59,85 +59,87 @@ const PropertyList = ({
 }: InputStatus) => {
   const { t } = useLocales()
   return (
-    <PropertyListBox>
-      <Grid container sx={{ mb: '4px' }}>
-        <Grid item xs={12} sx={{ fontSize: '1rem', letterSpacing: '0.1em' }}>
-          <PropertyNameBox>{propertyName}</PropertyNameBox>
-        </Grid>
-      </Grid>
-
-      <Grid container>
-        <Grid item xs={7}>
-          {`${t('MANAGEMENT_FEE_COMMON.propertyId')}`}
-        </Grid>
-        <Grid item xs={5}>
-          {number}
-        </Grid>
-      </Grid>
-
-      <StyledDivider />
-
-      <Grid container>
-        <Grid item xs={7}>
-          {`${t('MANAGEMENT_FEE_COMMON.head')}`}
-        </Grid>
-        <Grid item xs={5}>
-          {name}
-        </Grid>
-        <Grid item xs={7}>
-          {`${t('COMMON.phone')}`}
-        </Grid>
-        <Grid item xs={5}>
-          {phone}
-        </Grid>
-      </Grid>
-
-      <StyledDivider />
-
-      <Grid container>
-        <Grid item xs={7}>
-          {`${t('MANAGEMENT_FEE_COMMON.cycle')}`}
-        </Grid>
-        {isMonthlyPayment === true ? (
-          <Grid item xs={5}>
-            {`${t('MANAGEMENT_FEE_COMMON.quarterly')}`}
+    <li>
+      <PropertyListBox>
+        <Grid container sx={{ mb: '4px' }}>
+          <Grid item xs={12} sx={{ fontSize: '1rem', letterSpacing: '0.1em' }}>
+            <PropertyNameBox>{propertyName}</PropertyNameBox>
           </Grid>
-        ) : (
-          <Grid item xs={5}>
-            {`${t('MANAGEMENT_FEE_COMMON.month')}`}
+        </Grid>
+
+        <Grid container>
+          <Grid item xs={7}>
+            {`${t('MANAGEMENT_FEE_COMMON.propertyId')}`}
           </Grid>
-        )}
-        <Grid item xs={7}>
-          {`${t('MANAGEMENT_FEE_COMMON.fee')}`}
+          <Grid item xs={5}>
+            {number}
+          </Grid>
         </Grid>
-        <Grid item xs={5}>
-          NT$ {managementFee}
-        </Grid>
-        <Grid item xs={7}>
-          {`${t('MANAGEMENT_FEE_COMMON.lastPayment')}`}
-        </Grid>
-        <Grid item xs={5}>
-          {lastPaymentDate}
-        </Grid>
-      </Grid>
 
-      <StyledDivider />
+        <StyledDivider />
 
-      <Grid container>
-        <Grid item xs={7}>
-          {`${t('MANAGEMENT_FEE_COMMON.owner')}`}
+        <Grid container>
+          <Grid item xs={7}>
+            {`${t('MANAGEMENT_FEE_COMMON.head')}`}
+          </Grid>
+          <Grid item xs={5}>
+            {name}
+          </Grid>
+          <Grid item xs={7}>
+            {`${t('COMMON.phone')}`}
+          </Grid>
+          <Grid item xs={5}>
+            {phone}
+          </Grid>
         </Grid>
-        <Grid item xs={5}>
-          {ownerName}
+
+        <StyledDivider />
+
+        <Grid container>
+          <Grid item xs={7}>
+            {`${t('MANAGEMENT_FEE_COMMON.cycle')}`}
+          </Grid>
+          {isMonthlyPayment === true ? (
+            <Grid item xs={5}>
+              {`${t('MANAGEMENT_FEE_COMMON.quarterly')}`}
+            </Grid>
+          ) : (
+            <Grid item xs={5}>
+              {`${t('MANAGEMENT_FEE_COMMON.month')}`}
+            </Grid>
+          )}
+          <Grid item xs={7}>
+            {`${t('MANAGEMENT_FEE_COMMON.fee')}`}
+          </Grid>
+          <Grid item xs={5}>
+            NT$ {managementFee}
+          </Grid>
+          <Grid item xs={7}>
+            {`${t('MANAGEMENT_FEE_COMMON.lastPayment')}`}
+          </Grid>
+          <Grid item xs={5}>
+            {lastPaymentDate}
+          </Grid>
         </Grid>
-        <Grid item xs={7}>
-          {`${t('COMMON.phone')}`}
+
+        <StyledDivider />
+
+        <Grid container>
+          <Grid item xs={7}>
+            {`${t('MANAGEMENT_FEE_COMMON.owner')}`}
+          </Grid>
+          <Grid item xs={5}>
+            {ownerName}
+          </Grid>
+          <Grid item xs={7}>
+            {`${t('COMMON.phone')}`}
+          </Grid>
+          <Grid item xs={5}>
+            {ownerPhone}
+          </Grid>
         </Grid>
-        <Grid item xs={5}>
-          {ownerPhone}
-        </Grid>
-      </Grid>
-    </PropertyListBox>
+      </PropertyListBox>
+    </li>
   )
 }
 
