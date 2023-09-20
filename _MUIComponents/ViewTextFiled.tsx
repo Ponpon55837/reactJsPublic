@@ -1,5 +1,4 @@
 import { TextField } from '@mui/material'
-import { useTheme } from '@mui/material/styles'
 
 const ViewTextFiled = ({
   label,
@@ -12,8 +11,6 @@ const ViewTextFiled = ({
   minRows?: number
   multiline?: boolean
 }) => {
-  const theme = useTheme()
-
   return (
     <TextField
       label={label}

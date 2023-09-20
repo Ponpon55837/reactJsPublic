@@ -91,7 +91,7 @@ function CarouselItem({ item }: { item: CarouselItemProps }) {
   return (
     <Image
       alt="Background Image Preview"
-      src={`/images/cover/${name}`}
+      src={`${process.env.NEXT_PUBLIC_BASE_PATH}/images/cover/${name}`}
       sx={{ maxWidth: '100%', mt: 3, borderRadius: '10px' }}
     />
   )

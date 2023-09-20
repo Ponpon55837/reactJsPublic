@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useLocales } from '@locales/index'
+import BuildIcon from '@mui/icons-material/Build'
 import CancelIcon from '@mui/icons-material/Cancel'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -181,7 +182,7 @@ const ListEditBtn = ({
 // 複製按鈕
 const ListCopyBtn = ({
   copyClick = () => {},
-  copyShow = false,
+  copyShow = true,
   copyNone = false,
   actionSet,
 }: {
@@ -229,6 +230,34 @@ const ListViewBtn = ({
       onClick={() => viewClick()}
     >
       <PageviewIcon />
+    </StyledIconButton>
+  )
+}
+
+// 綁定按鈕
+const ListBindBtn = ({
+  bindClick = () => {},
+  bindShow = true,
+  bindNone = false,
+  actionSet,
+  InputBindIcon = <BuildIcon fontSize="small" />,
+}: {
+  bindClick?: () => void
+  bindShow?: boolean
+  bindNone?: boolean
+  actionSet: string[]
+  InputBindIcon?: React.ReactElement<any, any>
+}) => {
+  return (
+    <StyledIconButton
+      aria-label="bind"
+      title="bind"
+      color="info"
+      sx={{ display: checkEditBtnWithOnlyRead(bindShow, actionSet) }}
+      disabled={checkDisabledFunc(bindNone, 'Update', actionSet)}
+      onClick={() => bindClick()}
+    >
+      {InputBindIcon}
     </StyledIconButton>
   )
 }
@@ -305,4 +334,13 @@ const ListButtonGroups = ({
 }
 
 export default ListButtonGroups
-export { RootDiv, StyledTooltip, ButtonGroup, ListDeleteBtn, ListEditBtn, ListCopyBtn, ListViewBtn }
+export {
+  RootDiv,
+  StyledTooltip,
+  ButtonGroup,
+  ListDeleteBtn,
+  ListEditBtn,
+  ListCopyBtn,
+  ListViewBtn,
+  ListBindBtn,
+}

@@ -149,20 +149,24 @@ export const AdminSelectGroupAutoComplete = ({
   disableClearable = false,
   minWidth = 176,
   maxWidth = 200,
+  selectSx,
 }: InputStatus) => {
   return (
     <SelectGroupAutoComplete
-      minWidth={minWidth}
-      maxWidth={maxWidth}
-      name={name}
-      control={control}
-      label={label}
-      selectOptions={selectOptions}
-      required={required}
-      disabled={disabled}
-      triggerOnChange={triggerOnChange}
-      viewStatus={viewStatus}
-      disableClearable={disableClearable}
+      {...{
+        minWidth,
+        maxWidth,
+        name,
+        control,
+        label,
+        selectOptions,
+        required,
+        disabled,
+        triggerOnChange,
+        viewStatus,
+        disableClearable,
+        selectSx,
+      }}
     />
   )
 }

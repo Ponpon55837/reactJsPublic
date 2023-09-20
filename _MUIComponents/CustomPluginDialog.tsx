@@ -43,7 +43,6 @@ const CustomPluginDialog = ({
       scroll="paper"
       maxWidth={maxWidth}
       open={open}
-      onClose={closeFunc}
       TransitionComponent={Transition}
     >
       <DialogTitle sx={{ backgroundColor: defaultTheme, color: COMPONENTS_COMMON_PURE_WHITE }}>

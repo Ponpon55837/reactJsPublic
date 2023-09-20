@@ -7,7 +7,7 @@ import RadioGroup from '@mui/material/RadioGroup'
 interface Props {
   title?: string
   optionArr?: Array<{ id: number | string; name: string }>
-  value?: number | string
+  value?: number | string | null
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   disabled?: boolean
 }
