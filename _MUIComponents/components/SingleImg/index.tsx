@@ -1,4 +1,4 @@
-import React, { createRef } from 'react'
+import React, { ChangeEvent, createRef } from 'react'
 import { useImmer } from 'use-immer'
 import Image from '@components/image'
 import { useLocales } from '@locales/index'
@@ -14,41 +14,48 @@ import {
   StyledImgText,
   StyledImgTextBox,
 } from '@styles/styles_normal/Web/imageStyle'
-import { CustomBox2 } from '@styles/styles_normal/boxStyle'
 
-const SingleImg = ({
+interface ImageItem {
+  name: string
+  file: any
+  image: any
+}
+
+interface InitialImageItem {
+  id: string
+  name: string
+  link: string
+}
+
+interface SingleImgProps {
+  localStoreImg: ImageItem | null
+  initialImg: InitialImageItem | null
+  onImageChange: (e: ChangeEvent<HTMLInputElement>) => void
+  handleLocalImageDelete: () => void
+  handleInitialImageDelete: () => void
+  viewStatus?: boolean
+  imageLengthLimit?: number
+}
+
+const SingleImg: React.FC<SingleImgProps> = ({
   localStoreImg,
   initialImg,
   onImageChange,
   handleLocalImageDelete,
   handleInitialImageDelete,
   viewStatus = false,
-}: {
-  localStoreImg: {
-    name: string
-    file: any
-    image: any
-  } | null
-  initialImg: { id: string; name: string; link: string } | null
-  onImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  handleLocalImageDelete: () => void
-  handleInitialImageDelete: () => void
-  viewStatus: boolean
-  imageLengthLimit?: number
 }) => {
   const { t } = useLocales()
-  const fieldImgRef = createRef() as any
+  const fieldImgRef = createRef<HTMLInputElement>()
   const [state, produce] = useImmer<{ showFullImage: boolean; fullImage: string | null }>({
     showFullImage: false,
     fullImage: null,
   })
 
-  // 先清空路徑
-  const onImageClick = (event: any) => {
-    event.target.value = ''
+  const onImageClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+    event.currentTarget.value = ''
   }
 
-  // 點擊以選擇圖片
   const handleImageClick = () => {
     const fileElem = fieldImgRef.current
     if (fileElem) {
@@ -56,14 +63,13 @@ const SingleImg = ({
     }
   }
 
-  // 放大圖片
   const handleImageShow = (link: string) => {
     produce((draft) => {
       draft.fullImage = link
       draft.showFullImage = true
     })
   }
-  // 縮小圖片
+
   const handleImageClose = () => {
     produce((draft) => {
       draft.fullImage = null
@@ -82,9 +88,7 @@ const SingleImg = ({
               hidden
               ref={fieldImgRef}
               onClick={onImageClick}
-              onChange={(event: any) => {
-                onImageChange(event)
-              }}
+              onChange={onImageChange}
             />
             <StyledPointerBox onClick={handleImageClick}>
               <NewImageBox sx={{ borderRadius: '10px' }}>
@@ -110,12 +114,7 @@ const SingleImg = ({
           <StyledPointerBox>
             {!viewStatus && localStoreImg && (
               <StyledImageClosed>
-                <CloseIconButton
-                  sx={{ color: '#797979' }}
-                  onClick={() => {
-                    handleLocalImageDelete()
-                  }}
-                >
+                <CloseIconButton sx={{ color: '#797979' }} onClick={handleLocalImageDelete}>
                   <CancelIcon />
                 </CloseIconButton>
               </StyledImageClosed>
@@ -137,12 +136,7 @@ const SingleImg = ({
           <StyledPointerBox>
             {!viewStatus && (
               <StyledImageClosed>
-                <CloseIconButton
-                  sx={{ color: '#797979' }}
-                  onClick={() => {
-                    handleInitialImageDelete()
-                  }}
-                >
+                <CloseIconButton sx={{ color: '#797979' }} onClick={handleInitialImageDelete}>
                   <CancelIcon />
                 </CloseIconButton>
               </StyledImageClosed>

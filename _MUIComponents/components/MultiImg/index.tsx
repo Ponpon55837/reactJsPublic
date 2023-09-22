@@ -1,4 +1,4 @@
-import React, { createRef } from 'react'
+import React, { ChangeEvent, createRef } from 'react'
 import { useImmer } from 'use-immer'
 import Image from '@components/image'
 import { useLocales } from '@locales/index'
@@ -16,7 +16,29 @@ import {
 } from '@styles/styles_normal/Web/imageStyle'
 import { CustomBox2 } from '@styles/styles_normal/boxStyle'
 
-const MultiImg = ({
+interface ImageItem {
+  name: string
+  file: any
+  image: any
+}
+
+interface InitialImageItem {
+  id: string
+  name: string
+  link: string
+}
+
+interface MultiImgProps {
+  localStoreImgArr: ImageItem[]
+  initialImgArr: InitialImageItem[]
+  onImageChange: (e: ChangeEvent<HTMLInputElement>) => void
+  handleLocalImageDelete: (idx: number) => void
+  handleInitialImageDelete: (idx: number) => void
+  viewStatus?: boolean
+  imageLengthLimit?: number
+}
+
+const MultiImg: React.FC<MultiImgProps> = ({
   localStoreImgArr,
   initialImgArr,
   onImageChange,
@@ -24,32 +46,18 @@ const MultiImg = ({
   handleInitialImageDelete,
   viewStatus = false,
   imageLengthLimit = 10,
-}: {
-  localStoreImgArr: {
-    name: string
-    file: any
-    image: any
-  }[]
-  initialImgArr: { id: string; name: string; link: string }[]
-  onImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  handleLocalImageDelete: (e: number) => void
-  handleInitialImageDelete: (e: number) => void
-  viewStatus: boolean
-  imageLengthLimit?: number
 }) => {
   const { t } = useLocales()
-  const fieldImgRef = createRef() as any
+  const fieldImgRef = createRef<HTMLInputElement>()
   const [state, produce] = useImmer<{ showFullImage: boolean; fullImage: string | null }>({
     showFullImage: false,
     fullImage: null,
   })
 
-  // 先清空路徑
-  const onImageClick = (event: any) => {
-    event.target.value = ''
+  const onImageClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+    event.currentTarget.value = ''
   }
 
-  // 點擊以選擇圖片
   const handleImageClick = () => {
     const fileElem = fieldImgRef.current
     if (fileElem) {
@@ -57,16 +65,18 @@ const MultiImg = ({
     }
   }
 
-  const totalLength = localStoreImgArr?.length + initialImgArr?.length
-  // 放大圖片
+  const totalLength = localStoreImgArr.length + initialImgArr.length
+
   const handleImageShow = (link: string) => {
+    // 顯示放大的圖片
     produce((draft) => {
       draft.fullImage = link
       draft.showFullImage = true
     })
   }
-  // 縮小圖片
+
   const handleImageClose = () => {
+    // 關閉放大的圖片
     produce((draft) => {
       draft.fullImage = null
       draft.showFullImage = false
@@ -75,7 +85,9 @@ const MultiImg = ({
 
   return (
     <CustomBox2>
+      {/* 顯示圖片區域 */}
       <Grid container spacing={0.5}>
+        {/* 上傳圖片的按鈕 */}
         {!viewStatus && totalLength < imageLengthLimit && (
           <CenterGrid item xs={6} md={3} lg={2.4}>
             <input
@@ -84,9 +96,7 @@ const MultiImg = ({
               hidden
               ref={fieldImgRef}
               onClick={onImageClick}
-              onChange={(event: any) => {
-                onImageChange(event)
-              }}
+              onChange={onImageChange}
             />
             <StyledPointerBox onClick={handleImageClick}>
               <NewImageBox sx={{ borderRadius: '10px' }}>
@@ -102,7 +112,8 @@ const MultiImg = ({
           </CenterGrid>
         )}
 
-        {localStoreImgArr?.map((items: any, idx: number) => (
+        {/* 顯示本地上傳的圖片 */}
+        {localStoreImgArr.map((items: ImageItem, idx: number) => (
           <CenterGrid item xs={6} md={3} lg={2.4} key={idx}>
             <StyledPointerBox>
               {!viewStatus && (
@@ -110,6 +121,7 @@ const MultiImg = ({
                   <CloseIconButton
                     sx={{ color: '#797979' }}
                     onClick={() => {
+                      // 刪除本地上傳的圖片
                       handleLocalImageDelete(idx)
                     }}
                   >
@@ -131,7 +143,8 @@ const MultiImg = ({
           </CenterGrid>
         ))}
 
-        {initialImgArr?.map((imgItem: { name: string; link: string }, imgIdx: number) => (
+        {/* 顯示初始圖片 */}
+        {initialImgArr.map((imgItem: InitialImageItem, imgIdx: number) => (
           <CenterGrid item xs={6} md={3} lg={2.4} key={imgIdx}>
             <StyledPointerBox>
               {!viewStatus && (
@@ -139,6 +152,7 @@ const MultiImg = ({
                   <CloseIconButton
                     sx={{ color: '#797979' }}
                     onClick={() => {
+                      // 刪除初始圖片
                       handleInitialImageDelete(imgIdx)
                     }}
                   >
@@ -161,7 +175,7 @@ const MultiImg = ({
         ))}
       </Grid>
 
-      {/* 放大圖片 */}
+      {/* 顯示放大的圖片 */}
       {state.showFullImage && (
         <FullScreenImagePreview image={state.fullImage} onClick={handleImageClose} />
       )}
